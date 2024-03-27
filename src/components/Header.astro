@@ -1,0 +1,15 @@
+---
+// Header.astro
+import Headernav from '@/components/Headernav.astro';
+
+---
+
+<header>
+    <Headernav fields={['Inicio','Agenda','Tienda','Sobre','FAQ']} />
+</header>
+
+<style>
+  header {
+    background-color: var(--header-bg-color);
+  }
+</style>

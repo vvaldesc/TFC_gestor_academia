@@ -1,0 +1,13 @@
+---
+const cr = 'all rights reserved';
+import CurrentDate from '@/components/getdate.svelte'
+---
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>&copy; { cr }, <CurrentDate client:idle field="Year"/></p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,48 @@
+---
+interface Props {
+  fields: string[];
+}
+const { fields } = Astro.props;
+/* Navigation component that receives a list of fields and renders a list of links*/
+---
+  <nav>
+    <ul>
+        {fields.map((field: string) => (
+          <li>
+            <a href=
+            {`/${
+              field === 'Inicio' 
+              ? 'index' 
+              : field.toLowerCase()
+            }`}>
+              {field}
+            </a>
+          </li>
+        ))}
+    </ul>
+  </nav>
+
+<style>
+  nav {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
+    border: 1px solid #333;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    margin: 0 1rem;
+  }
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+  a:hover {
+    color: #0070f3;
+  }
+</style>
