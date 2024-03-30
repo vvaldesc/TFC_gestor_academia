@@ -11,7 +11,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -32,16 +32,15 @@ const { title } = Astro.props;
   </body>
   <style>
     #App {
+      position: relative;
+      z-index: 0;
         display: grid;
         grid-template-areas:
           "header"
           "main"
           "footer";
-        grid-template-rows: 100px auto 100px;
+        grid-template-rows: 0px auto 100px;
         width: 100%;
-    }
-    main {
-      background-color: antiquewhite;
     }
   </style>
 
@@ -58,7 +57,7 @@ const { title } = Astro.props;
       );
       --header-bg-color: #ffd1f2;
       --header-dark-color: #ffa4e5;
-      --header_nav-color: 255, 155, 227, 0.22;
+      --header-nav-color: rgba(255, 155, 227, 0.22);
       --global-black: #000000;
       --global-white: #ffffff;
     }
@@ -79,6 +78,11 @@ const { title } = Astro.props;
     html {
       font-family: system-ui, sans-serif;
       background-size: 224px;
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     code {

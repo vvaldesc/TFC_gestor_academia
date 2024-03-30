@@ -12,7 +12,7 @@ const { fields } = Astro.props;
             <a href=
             {`/${
               field === 'Inicio' 
-              ? 'index' 
+              ? '' 
               : field.toLowerCase()
             }`}>
               {field}
@@ -26,11 +26,13 @@ const { fields } = Astro.props;
   nav {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 0;
     height: 100%;
     border: 1px solid #333;
   }
   ul {
+    margin: 0;
     display: flex;
     list-style: none;
     padding: 0;
@@ -39,6 +41,7 @@ const { fields } = Astro.props;
     margin: 0 1rem;
   }
   a {
+    border: 1px solid #333;
     text-decoration: none;
     color: #333;
   }
