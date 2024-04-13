@@ -3,15 +3,16 @@ import { ViewTransitions } from "astro:transitions";
 interface Props {
   // TypeScript interface for props
   title: string;
+  slider?: boolean;
 }
 
 import Header from "@/components/Header.astro";
 import Footer from "@/sections/Footer.astro";
-const { title } = Astro.props;
+const { title,slider } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" transition:animate={slider ? 'slide' : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
