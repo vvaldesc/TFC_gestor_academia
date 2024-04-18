@@ -20,9 +20,6 @@
       ],
       "@/sections/*": [
         "./src/sections/*"
-      ],
-      "@/services/*": [
-        "./src/services/*"
       ]
     }
   },
