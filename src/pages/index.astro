@@ -3,11 +3,13 @@ title: "Home"
 import Layout from '@/layouts/Layout.astro';
 import Index_main_nav from '@/sections/Index_main_nav.astro';
 import Slider from '@/sections/Slider.astro';
+
+const response = await fetch('http://localhost:4321/api/clients/clients');
+const data = await response.json();
+console.log(data);
 ---
 
 <Layout title='Home'>
   <Slider/>
   <Index_main_nav/>
 </Layout>
-
-
