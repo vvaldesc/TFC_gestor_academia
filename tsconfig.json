@@ -20,6 +20,9 @@
       ],
       "@/sections/*": [
         "./src/sections/*"
+      ],
+      "@/consts/*": [
+        "./src/consts/*"
       ]
     },
     "jsx": "react-jsx",

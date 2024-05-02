@@ -5,6 +5,12 @@ interface Props {
 const { fields } = Astro.props;
 /* Navigation component that receives a list of fields and renders a list of links*/
 ---
+<div>
+  <p>
+    <strong>Navigation</strong>
+  </p>
+</div>
+<div>
   <nav>
     <ul>
         {fields.map((field: string) => (
@@ -21,8 +27,14 @@ const { fields } = Astro.props;
         ))}
     </ul>
   </nav>
+</div>
+
 
 <style>
+  *{
+    display: flex;
+    color: red;
+  }
   nav {
     display: flex;
     justify-content: center;
