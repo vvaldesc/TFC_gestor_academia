@@ -6,7 +6,7 @@ interface Props {
   slider?: boolean;
 }
 
-import Header from "@/components/Header.astro";
+import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
 const { title,slider } = Astro.props;
 ---
@@ -41,7 +41,10 @@ const { title,slider } = Astro.props;
           "main"
           "footer";
         grid-template-rows: 0px auto 100px;
+        margin: auto;
+        padding: 0;
         width: 100%;
+        max-width: 1700px;
     }
   </style>
 
@@ -57,7 +60,7 @@ const { title,slider } = Astro.props;
           white 60%
       );
       --header-bg-color: #ffd1f2;
-      --header-dark-color: #ffa4e5;
+      --header-dark-color: #ffa4e500;
       --header-nav-color: rgba(255, 155, 227, 0.22);
       --global-black: #000000;
       --global-white: #ffffff;
