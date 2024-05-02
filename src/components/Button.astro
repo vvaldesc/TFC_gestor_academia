@@ -1,0 +1,22 @@
+---
+interface Props {
+  texto: string;
+}
+const { texto } = Astro.props;
+---
+
+<astro:button>
+  <style>
+    button {
+      padding: 10px 20px;
+      color: #fff;
+      border: 1px solid red;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+
+  <button>
+    {texto}
+  </button>
+</astro:button>
