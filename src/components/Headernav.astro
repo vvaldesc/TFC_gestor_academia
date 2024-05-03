@@ -1,4 +1,5 @@
 ---
+import Button from "@/components/Button.astro";
 interface Props {
   fields: string[];
 }
@@ -6,34 +7,34 @@ const { fields } = Astro.props;
 /* Navigation component that receives a list of fields and renders a list of links*/
 ---
 <div>
-  <p>
-    <strong>Navigation</strong>
-  </p>
-</div>
-<div>
   <nav>
     <ul>
-        {fields.map((field: string) => (
+      {
+        fields.map((field: string) => (
           <li>
-            <a href=
-            {`/${
-              field === 'Inicio' 
-              ? '' 
-              : field.toLowerCase()
-            }`}>
-              {field}
-            </a>
+            <Button 
+              texto={field} 
+              href={
+                `/${
+                  field === "Inicio" 
+                    ? "" 
+                    : field.toLowerCase()
+                }`
+              } />
           </li>
-        ))}
+        ))
+      }
     </ul>
   </nav>
 </div>
 
-
 <style>
-  *{
+  div {
     display: flex;
-    color: red;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
   nav {
     display: flex;
