@@ -1,8 +1,9 @@
 ---
 interface Props {
   texto: string;
+  href?: string;
 }
-const { texto } = Astro.props;
+const { texto, href } = Astro.props;
 ---
 
 <astro:button>
@@ -16,8 +17,7 @@ const { texto } = Astro.props;
       margin: 0;
       height: 38px;
       width: 120px;
-      transition: all
-        0.2s;
+      transition: all 0.2s;
     }
     button:hover {
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -25,7 +25,11 @@ const { texto } = Astro.props;
     }
   </style>
 
-  <button>
-    {texto}
-  </button>
+  {
+    href && (
+      <a href={href}>
+        <button>{texto}</button>
+      </a>
+    )
+  }
 </astro:button>

@@ -38,7 +38,7 @@ const { title,slider } = Astro.props;
           "header"
           "main"
           "footer";
-        grid-template-rows: 0px auto 100px;
+        grid-template-rows: 70px auto 100px;
         margin: auto;
         padding: 0;
         width: 100%;
@@ -50,6 +50,12 @@ const { title,slider } = Astro.props;
     @font-face {
       font-family: 'Julius Sans One';
       src: url('/assets/fonts/JuliusSansOne-Regular.ttf') format('truetype');
+    }
+
+    .stylized-text {
+      font-family: 'Julius Sans One', sans-serif;
+      font-weight: 600;
+      text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
     }
 
     :root {
@@ -67,6 +73,7 @@ const { title,slider } = Astro.props;
       --header-nav-color: rgba(255, 155, 227, 0.22);
       --global-black: #000000;
       --global-white: #ffffff;
+      --background-light: rgba(255, 204, 240, 0.089);
     }
 
     body::-webkit-scrollbar {
@@ -83,9 +90,7 @@ const { title,slider } = Astro.props;
     }
 
     body {
-      font-family: 'Julius Sans One', sans-serif;
-      font-weight: 600;
-      text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+      background-color: var(--background-light);
     }
 
     html {

@@ -12,9 +12,15 @@ const { fields } = Astro.props;
       {
         fields.map((field: string) => (
           <li>
-            <a href={`/${field === "Inicio" ? "" : field.toLowerCase()}`}>
-              <Button texto={field} />
-            </a>
+            <Button 
+              texto={field} 
+              href={
+                `/${
+                  field === "Inicio" 
+                    ? "" 
+                    : field.toLowerCase()
+                }`
+              } />
           </li>
         ))
       }
