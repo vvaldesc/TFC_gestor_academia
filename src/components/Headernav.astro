@@ -7,14 +7,13 @@ const { fields } = Astro.props;
 /* Navigation component that receives a list of fields and renders a list of links*/
 ---
 <div>
-  <Button texto={"prueba"} />
   <nav>
     <ul>
       {
         fields.map((field: string) => (
           <li>
             <a href={`/${field === "Inicio" ? "" : field.toLowerCase()}`}>
-              {field}
+              <Button texto={field} />
             </a>
           </li>
         ))
@@ -28,8 +27,7 @@ const { fields } = Astro.props;
     display: flex;
     z-index: 1000;
     align-items: center;
-    border: 6px solid red;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
   }
   nav {

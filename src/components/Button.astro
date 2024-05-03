@@ -9,10 +9,19 @@ const { texto } = Astro.props;
   <style>
     button {
       padding: 10px 20px;
-      color: #fff;
-      border: 1px solid red;
       border-radius: 4px;
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 0;
+      margin: 0;
+      height: 38px;
+      width: 120px;
+      transition: all
+        0.2s;
+    }
+    button:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: rgba(255, 255, 255, 0.123);
     }
   </style>
 
