@@ -1,13 +1,14 @@
 ---
 // Div-href-big.astro
 interface Props {
-  title: string
-  href: string
+  title: string,
+  href: string,
+  style: string
 }
-const {title,href} = Astro.props;
+const {title,href,style} = Astro.props;
 ---
 <a href={href}>
-  <div class="header flex justify-center items-center stylized-text">
+  <div class={`header flex justify-center items-center stylized-text ${style === 'left' ? 'slideInFromLeft' : 'slideInFromRight'}`}>
     <p>{title}</p>
   </div>
 </a>
@@ -27,5 +28,34 @@ const {title,href} = Astro.props;
   div:hover {
     box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
     transform: scale(1.01);
+  }
+  @keyframes slideInFromRight {
+    0% {
+      opacity: 0%;
+      transform: translateX(10px);
+    }
+    100% {
+      opacity: 100%;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0%;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 100%;
+      transform: translateX(0);
+    }
+  }
+
+  .slideInFromLeft {
+    animation: slideInFromLeft 900ms ease-in-out;
+  }
+
+  .slideInFromRight {
+    animation: slideInFromRight 900ms ease-in-out;
   }
 </style>
