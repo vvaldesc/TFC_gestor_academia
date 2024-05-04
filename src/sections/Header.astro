@@ -1,20 +1,24 @@
 ---
-// Header.astro
 import Headernav from '@/components/Headernav.astro';
-
 ---
 
 <header>
-  <Headernav fields={['Inicio','Agenda','Tienda','Sobre','FAQ']} />
+  <!-- <Headernav fields={['Inicio','Agenda','Tienda','Sobre','FAQ']}/> -->
 </header>
 
 <style>
-  header {
-    height: fit-content;
-    padding-top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+header {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.26);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+}
 
 </style>
