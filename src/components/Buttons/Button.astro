@@ -1,7 +1,7 @@
 ---
 interface Props {
   texto: string;
-  href?: string;
+  href: string;
 }
 const { texto, href } = Astro.props;
 ---
@@ -26,7 +26,7 @@ const { texto, href } = Astro.props;
   </style>
 
   {
-    href && (
+    (
       <a href={href}>
         <button>{texto}</button>
       </a>

@@ -1,9 +1,24 @@
 ---
 title: "Home"
+import { SEO } from "astro-seo";
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+
 import Layout from '@/layouts/Layout.astro';
 import Index_main_nav from '@/sections/Index_main_nav.astro';
 import Slider from '@/sections/Slider.astro';
 import Main from '@/components/Main.astro';
+import Button_suggestion from '@/components/Buttons/Button_suggestion.astro';
+
+
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get('cdn/stories/home', {
+  version: 'draft',
+})
+
+const story = data.story
+---
+
 
 /*const response = await fetch('http://localhost:4321/api/clients/clients');
 const data = await response.json();
@@ -11,4 +26,7 @@ console.log(data);*/
 ---
 <Layout title='Home'>
   <Slider/>
+  <StoryblokComponent blok={story.content} />
+  <!-- <Index_main_nav/> -->
+  <Button_suggestion texto='Entra' href='Faq'/>
 </Layout>
