@@ -19,15 +19,13 @@ const {title,href,style} = Astro.props;
     width: 200px;
     height: 200px;
     background-color: white;
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+    box-shadow: 0 0 5px var(--primary);
     padding: 1rem;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.267);
     transition: all 0.2s ease-in-out;
     border-radius: 5px;
   }
   div:hover {
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-    transform: scale(1.01);
+    box-shadow: 0 0 15px var(--primary);
   }
   @keyframes slideInFromRight {
     0% {

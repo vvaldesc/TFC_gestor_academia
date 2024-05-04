@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import Seo from "./SEO/Seo.astro";
 interface Props {
   // TypeScript interface for props
   title: string;
@@ -14,6 +15,7 @@ const { title,slider } = Astro.props;
 <!doctype html>
 <html lang="es" transition:animate={slider ? 'slide' : undefined}>
   <head>
+    <Seo />
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
@@ -49,12 +51,17 @@ const { title,slider } = Astro.props;
   <style is:global>
     @font-face {
       font-family: 'Julius Sans One';
-      src: url('/assets/fonts/JuliusSansOne-Regular.ttf') format('truetype');
+      src: url('/assets/fonts/Julius/JuliusSansOne-Regular.ttf') format('truetype');
     }
 
     @font-face {
-      font-family: 'floelly';
-      src: url('/assets/fonts/floelly.otf') format('truetype');
+      font-family: 'Floelly';
+      src: url('/assets/fonts/Floelly/floelly.otf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Roboto';
+      src: url('/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
     }
 
     .stylized-text {
@@ -63,20 +70,18 @@ const { title,slider } = Astro.props;
       text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
     }
 
+    .header-text-logo {
+      font-family: 'Julius Sans One', sans-serif;
+      font-size: 120%;
+    }
+
+    .header-text-promoTitle, .header-text-promoSubtitle, .header-text-promoDescription {
+      font-family: 'Floelly', sans-serif;
+      letter-spacing: 2px;
+    }
+
     .header-text-promoTitle {
-      color: var(--header-bg-color-dark);
-      font-family: 'floelly', sans-serif;
-      
-    }
-
-    .header-text-promoSubtitle {
-      color: var(--header-bg-color-dark);
-      font-family: 'floelly', sans-serif;
-    }
-
-    .header-text-promoDescription {
-      color: var(--header-bg-color-dark);
-      font-family: 'floelly', sans-serif;
+      font-size: 230%;
     }
 
     :root {
@@ -118,6 +123,7 @@ const { title,slider } = Astro.props;
 
     body {
       background-color: var(--background-light);
+      font-family: 'Roboto', sans-serif;
       font-size: clamp(1rem, 100%, 2rem);
     }
 

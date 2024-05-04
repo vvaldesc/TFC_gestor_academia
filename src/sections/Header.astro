@@ -1,14 +1,19 @@
 ---
 import Headernav from '@/components/Headernav.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <header>
   <!-- <Headernav fields={['Inicio','Agenda','Tienda','Sobre','FAQ']}/> -->
+  <h3 class="header-text-logo">Imagen</h3>
+  <div></div>
+  <Icon name="mdi:account"/>
 </header>
 
 <style>
 header {
-  backdrop-filter: blur(10px);
+  padding: 0 40px;
+  backdrop-filter: blur(20px);
   background-color: rgba(255, 255, 255, 0.26);
   position: fixed;
   width: 100%;
@@ -16,7 +21,7 @@ header {
   top: 0;
   left: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 60px;
 }
