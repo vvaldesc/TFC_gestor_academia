@@ -1,14 +1,24 @@
 ---
-import Slider_main from "@/components/Slider/Slider_main.astro";
 ---
 
 <section>
-  <Slider_main />
+  <div class="section-div-color">
+
+  </div>
+  <div class="section-div-contenido">
+    
+  </div>
 </section>
 <style>
   section {
     height: 450px;
+    display: flex;
+  }
+  .section-div-color {
+    width: 50%;
     background-color: var(--header-bg-color);
-    box-shadow: 0px 0px 30px 0px var(--header-bg-color);
+  }
+  .section-div-contenido {
+    width: 50%;
   }
 </style>
