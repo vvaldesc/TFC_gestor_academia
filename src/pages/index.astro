@@ -1,9 +1,14 @@
 ---
 title: "Home"
+import { SEO } from "astro-seo";
+
 import Layout from '@/layouts/Layout.astro';
 import Index_main_nav from '@/sections/Index_main_nav.astro';
 import Slider from '@/sections/Slider.astro';
 import Main from '@/components/Main.astro';
+import Button_suggestion from '@/components/Buttons/Button_suggestion.astro';
+
+
 
 /*const response = await fetch('http://localhost:4321/api/clients/clients');
 const data = await response.json();
@@ -11,4 +16,6 @@ console.log(data);*/
 ---
 <Layout title='Home'>
   <Slider/>
+  <!-- <Index_main_nav/> -->
+  <Button_suggestion texto='Entra' href='Faq'/>
 </Layout>
