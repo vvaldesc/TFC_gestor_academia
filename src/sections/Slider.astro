@@ -1,7 +1,9 @@
 ---
+import { storyblokEditable } from "@storyblok/astro";
+const { blok } = Astro.props
 ---
 
-<section>
+<section {...storyblokEditable(blok)}>
   <div class="section-div-color">
 
   </div>
