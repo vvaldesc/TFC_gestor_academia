@@ -24,7 +24,7 @@ const { title,slider } = Astro.props;
   </head>
   <body>
     <div id="App" class="relative h-screen p-2 gap-2"> <!-- grid actúa como container -->
-      <Header class="[grid-area:header]"/>
+      <Header/>
       <main class="[grid-area:main]">
         <slot />
       </main>
@@ -32,14 +32,14 @@ const { title,slider } = Astro.props;
     </div>
   </body>
   <style>
+    //No pongo header en el grid porque no quiero que este se vea afectado por él
     #App {
         display: grid;
         grid-template-areas:
-          "header"
           "main"
           "footer";
-        grid-template-rows: 70px auto 100px;
-        margin: auto;
+        grid-template-rows: auto 100px;
+        margin: 0 auto;
         padding: 0;
         width: 100%;
         max-width: 1700px;
@@ -52,10 +52,31 @@ const { title,slider } = Astro.props;
       src: url('/assets/fonts/JuliusSansOne-Regular.ttf') format('truetype');
     }
 
+    @font-face {
+      font-family: 'floelly';
+      src: url('/assets/fonts/floelly.otf') format('truetype');
+    }
+
     .stylized-text {
       font-family: 'Julius Sans One', sans-serif;
       font-weight: 600;
       text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-text-promoTitle {
+      color: var(--header-bg-color-dark);
+      font-family: 'floelly', sans-serif;
+      
+    }
+
+    .header-text-promoSubtitle {
+      color: var(--header-bg-color-dark);
+      font-family: 'floelly', sans-serif;
+    }
+
+    .header-text-promoDescription {
+      color: var(--header-bg-color-dark);
+      font-family: 'floelly', sans-serif;
     }
 
     :root {
@@ -68,12 +89,18 @@ const { title,slider } = Astro.props;
           rgb(var(--accent-light)) 30%,
           white 60%
       );
-      --header-bg-color: #ffd1f2;
       --header-dark-color: #ffa4e500;
       --header-nav-color: rgba(255, 155, 227, 0.22);
       --global-black: #000000;
       --global-white: #ffffff;
       --background-light: rgba(255, 204, 240, 0.089);
+
+      --primary: #e88eed;
+      --header-bg-color: #ffd1f2;
+      --header-bg-color-dark: #ff69d4;
+      --tertiary: #f4c3c2;
+      --quaternary: #f3dad8;
+      --quinary: #d6d9ce;
     }
 
     body::-webkit-scrollbar {
@@ -91,6 +118,7 @@ const { title,slider } = Astro.props;
 
     body {
       background-color: var(--background-light);
+      font-size: clamp(1rem, 100%, 2rem);
     }
 
     html {
@@ -101,11 +129,6 @@ const { title,slider } = Astro.props;
 
     * {
       box-sizing: border-box;
-    }
-
-    p {
-      font-size: 1.25rem;
-      line-height: 1.75rem;
     }
 
   </style>

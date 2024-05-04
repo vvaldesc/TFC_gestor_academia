@@ -1,15 +1,39 @@
 ---
-import Slider_main from "@/components/Slider/Slider_main.astro";
 ---
 
 <section>
-  <Slider_main />
+  <div class="section-div-color">
+
+  </div>
+  <div class="section-div-contenido">
+    <h1 class="header-text-promoTitle">Make an impression, get attention, grow yourstartup</h1>
+  </div>
 </section>
 <style>
   section {
-    padding-top: 80px;
-    height: 450px;
-    background-color: var(--header-bg-color);
-    box-shadow: 0px 0px 30px 0px var(--header-bg-color);
+    height: 100vh;
+    display: flex;
   }
+  .section-div-color {
+    width: 50%;
+    padding: 20px;
+    background-color: var(--header-bg-color);
+  }
+  .section-div-contenido {
+    width: 50%;
+    padding: 20px;
+  }
+  .header-text-promoTitle {
+    /* Typography */
+    font-size: 300%;
+    color: var(--header-text-color);
+    text-align: left;
+    /* Spacing */
+    margin: 0;
+    padding: 0;
+    /* Positioning */
+    position: relative;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
 </style>
