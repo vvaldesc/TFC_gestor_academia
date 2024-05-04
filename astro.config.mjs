@@ -11,7 +11,7 @@ import metaTags from "astro-meta-tags";
 export default defineConfig({
   integrations: [tailwind(), svelte(), react(), icon(), metaTags(),
     storyblok({
-      accessToken: "dq66cq2mTAWPoyV4KnL3Gwtt",
+      accessToken: import.meta.env.VITE_STORYBLOK_API_TOKEN,
       region: "eu",
       bridge: true,
       apiOptions: {}, // storyblok-js-client options
