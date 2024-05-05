@@ -5,11 +5,13 @@ import react from "@astrojs/react";
 import icon from "astro-icon";
 import storyblok from "@storyblok/astro";
 import basicSsl from '@vitejs/plugin-basic-ssl'
-
 import metaTags from "astro-meta-tags";
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/home': '/'
+  },
   vite: {
     plugins: [basicSsl()],
     server: {
@@ -22,7 +24,6 @@ export default defineConfig({
       region: "eu",
       bridge: true,
       apiOptions: {}, // storyblok-js-client options
-      components: {},
       componentsDir: "src",
       enableFallbackComponent: false,
       customFallbackComponent: "",
@@ -32,7 +33,7 @@ export default defineConfig({
         feature: 'components/storyblok/Feature',
         grid: 'components/storyblok/Grid',
         teaser: 'components/storyblok/Teaser',
-      },
+      }
     }),
   ]
 });
