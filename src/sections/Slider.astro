@@ -1,27 +1,52 @@
----
-import { storyblokEditable } from "@storyblok/astro";
-const { blok } = Astro.props
----
-
-<section {...storyblokEditable(blok)}>
+<section>
   <div class="section-div-color">
-
   </div>
-  <div class="section-div-contenido">
+  <div class="section-div-contenido" >
     <h1 class="header-text-promoTitle">
       Imagen <i>Estética</i>
       <br>
-      <i>Aprende</i> Fórmate
+      <i>Practica</i> Fórmate
       <br>
-      Emprende <i>Practica</i>
+      Emprende <i>Aprende</i>
     </h1>
   </div>
 </section>
 <style>
+  h1 {
+    animation: slideInFromLeft 900ms ease-in-out;
+  }
+
+  i {
+    animation: slideInFromRight 900ms ease-in-out;
+  }
+
+  @keyframes slideInFromRight {
+    0% {
+      opacity: 0%;
+      transform: translateX(10px);
+    }
+    100% {
+      opacity: 100%;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0%;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 100%;
+      transform: translateX(0);
+    }
+  }
+
   section {
     height: 100vh;
     display: flex;
   }
+  
   .section-div-color {
     width: 50%;
     padding: 20px;

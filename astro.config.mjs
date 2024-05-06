@@ -5,34 +5,34 @@ import react from "@astrojs/react";
 import icon from "astro-icon";
 import storyblok from "@storyblok/astro";
 import basicSsl from '@vitejs/plugin-basic-ssl'
-
 import metaTags from "astro-meta-tags";
+import path from 'path'; // Añade esta línea
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    domains: [import.meta.env.VITE_IMAGE_DOMAIN]
+  },
+  redirects: {
+    '/home': '/'
+  },
   vite: {
     plugins: [basicSsl()],
     server: {
       https: true,
     },
-  },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags(),
-    storyblok({
-      accessToken: import.meta.env.VITE_STORYBLOK_API_TOKEN,
-      region: "eu",
-      bridge: true,
-      apiOptions: {}, // storyblok-js-client options
-      components: {},
-      componentsDir: "src",
-      enableFallbackComponent: false,
-      customFallbackComponent: "",
-      useCustomApi: false,
-      components: {
-        page: 'components/storyblok/Page',
-        feature: 'components/storyblok/Feature',
-        grid: 'components/storyblok/Grid',
-        teaser: 'components/storyblok/Teaser',
+    resolve: {
+      alias: {
+        '@/*': path.resolve('./src/*'),
+        '@/components/*': path.resolve('./src/components/*'),
+        '@/layouts/*': path.resolve('./src/layouts/*'),
+        '@/pages/*': path.resolve('./src/pages/*'),
+        '@/services/*': path.resolve('./src/services/*'),
+        '@/sections/*': path.resolve('./src/sections/*'),
+        '@/consts/*': path.resolve('./src/consts/*'),
+        '@/assets/*': path.resolve('./assets/*'),
       },
-    }),
-  ]
+    },
+  },
+  integrations: [tailwind(), svelte(), react(), icon(), metaTags()]
 });

@@ -1,0 +1,29 @@
+---
+type Props = {
+  image: string;
+};
+const { image } = Astro.props;
+const max = 5;
+---
+
+<div class="image-container">
+  <img src={image} alt="Imagen" class="image" />
+</div>
+
+<style>
+  .image-container {
+    width: 100%;
+    height: 700px;
+  }
+
+  .image {
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajustar imagen sin perder relación de aspecto */
+  }
+</style>
+
+

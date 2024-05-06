@@ -23,6 +23,9 @@
       ],
       "@/consts/*": [
         "./src/consts/*"
+      ],
+      "@/assets/*": [
+        "./assets/*"
       ]
     },
     "jsx": "react-jsx",

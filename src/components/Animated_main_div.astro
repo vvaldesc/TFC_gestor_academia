@@ -1,0 +1,76 @@
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class=`container ${className}` data-initial-zoom={Number} {...rest}>
+  <div id={`zoomDiv-${Date.now()}`} class="big-div">
+    <slot />
+  </div>
+</div>
+
+<script>
+  if (typeof window !== "undefined") {
+    const divs = document.querySelectorAll('[id^="zoomDiv-"]');
+    divs.forEach((div) => {
+      if (!(div instanceof HTMLElement)) {
+        return;
+      }
+
+      let ticking = false;
+
+      const handleScroll = () => {
+
+        const zoomMin = 0.2;
+        const zoomMax = 1;
+        // Define la altura a partir de la cual el zoom comienza a aplicarse.
+        // Puedes ajustar esto según sea necesario.
+        const startZoomAt = window.innerHeight / 2;
+
+        // Calcula la distancia desde el top del documento hasta el elemento.
+        const divRect = div.getBoundingClientRect();
+        const divTopRelativeToDocument = window.scrollY + divRect.top;
+
+        // Calcula la distancia entre el elemento y la parte superior visible de la ventana.
+        const distanceFromTop = divTopRelativeToDocument - window.scrollY;
+
+        // Calcula el scrollMax dinámicamente basado en la posición del elemento.
+        // Esto determina cuánto debe desplazarse el usuario para alcanzar el zoom máximo.
+        const scrollMax = divTopRelativeToDocument - startZoomAt;
+
+        // Calcula el factor de zoom basado en la posición de desplazamiento actual.
+        let zoom = zoomMin;
+        if (window.scrollY > startZoomAt) {
+          zoom +=
+            ((window.scrollY - startZoomAt) / scrollMax) * (zoomMax - zoomMin);
+        }
+        zoom = Math.min(Math.max(zoom, zoomMin), zoomMax);
+
+        // Aplica el zoom al div.
+        div.style.transform = `scale(${zoom})`;
+      };
+
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            handleScroll();
+            ticking = false;
+          });
+
+          ticking = true;
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .big-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .container {
+    width: 100%;
+  }
+</style>
