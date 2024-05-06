@@ -34,7 +34,9 @@ export default defineConfig({
         grid: 'components/Storyblok_native/Grid',
         teaser: 'components/Storyblok_native/Teaser',
         testblog: 'components/Storyblok_native/Testblog',
-        slider: 'sections/Slider',
+        animated_main_div: 'components/Animated_main_div',
+        main: 'components/Main',
+        slider: 'sections/Slider'
       }
     }),
   ]

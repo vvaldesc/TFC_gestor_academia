@@ -4,11 +4,7 @@ title: "Home"
 import { useStoryblokApi } from '@storyblok/astro'
 // @ts-ignore
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
-
 import Layout from '@/layouts/Layout.astro';
-import Slider from '@/sections/Slider.astro';
-import Button_suggestion from '@/components/Buttons/Button_suggestion.astro';
-
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get('cdn/stories/home', {
@@ -21,5 +17,4 @@ const story = data.story
   <!--<Slider blok={story.content}/> -->
   <StoryblokComponent blok={story.content} />
   <!-- <Index_main_nav/> -->
-  <Button_suggestion texto='Entra' href='Faq'/>
 </Layout>

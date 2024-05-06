@@ -1,5 +1,16 @@
-<div class="container">
-    <slot></slot>
+---
+// @ts-ignore
+import { storyblokEditable } from "@storyblok/astro";
+import { StoryblokComponent  } from "@storyblok/astro";
+
+
+const { blok } = Astro.props
+---
+<div {...storyblokEditable(blok)} class="container" >
+    <StoryblokComponent
+    className=""
+    blok={blok.content}
+  />
 </div>
 
 <style>
