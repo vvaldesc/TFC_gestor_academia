@@ -1,0 +1,8 @@
+---
+interface Props {
+    images: string[];
+}
+import Div_images from './Div_images/Div_images';
+let images = Astro.props.images;
+---
+<Div_images images={images} client:visible/>
