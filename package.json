@@ -31,6 +31,8 @@
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.66",
-    "@vitejs/plugin-basic-ssl": "^1.1.0"
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0"
   }
 }

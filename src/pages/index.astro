@@ -1,6 +1,6 @@
 ---
 title: "Home"
-
+//https://api.storyblok.com/v1/cdn/stories/home?token=YOUR_TOKEN
 import { useStoryblokApi } from '@storyblok/astro'
 // @ts-ignore
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
@@ -14,7 +14,7 @@ const { data } = await storyblokApi.get('cdn/stories/home', {
 const story = data.story
 ---
 <Layout title='Home'>
-  <!--<Slider blok={story.content}/> -->
+  <!--<Slider blok={story.content}/>-->
   <StoryblokComponent blok={story.content} />
   <!-- <Index_main_nav/> -->
 </Layout>
