@@ -13,7 +13,7 @@ const { title,slider } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" transition:animate={slider ? 'slide' : undefined}>
+<html lang="es">
   <head>
     <Seo />
     <meta charset="UTF-8" />
@@ -27,7 +27,7 @@ const { title,slider } = Astro.props;
   <body>
     <div id="App" class="relative h-screen p-2 gap-2"> <!-- grid actúa como container -->
       <Header/>
-      <main class="[grid-area:main]">
+      <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
       <Footer class="[grid-area:footer]"/>

@@ -6,9 +6,13 @@ import icon from "astro-icon";
 import storyblok from "@storyblok/astro";
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import metaTags from "astro-meta-tags";
+import path from 'path'; // Añade esta línea
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    domains: [import.meta.env.VITE_IMAGE_DOMAIN]
+  },
   redirects: {
     '/home': '/'
   },
@@ -17,27 +21,18 @@ export default defineConfig({
     server: {
       https: true,
     },
+    resolve: {
+      alias: {
+        '@/*': path.resolve('./src/*'),
+        '@/components/*': path.resolve('./src/components/*'),
+        '@/layouts/*': path.resolve('./src/layouts/*'),
+        '@/pages/*': path.resolve('./src/pages/*'),
+        '@/services/*': path.resolve('./src/services/*'),
+        '@/sections/*': path.resolve('./src/sections/*'),
+        '@/consts/*': path.resolve('./src/consts/*'),
+        '@/assets/*': path.resolve('./assets/*'),
+      },
+    },
   },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags(),
-    storyblok({
-      accessToken: import.meta.env.VITE_STORYBLOK_API_TOKEN,
-      region: "eu",
-      bridge: true,
-      apiOptions: {}, // storyblok-js-client options
-      componentsDir: "src",
-      enableFallbackComponent: false,
-      customFallbackComponent: "",
-      useCustomApi: false,
-      components: {
-        page: 'components/Storyblok_native/Page',
-        feature: 'components/Storyblok_native/Feature',
-        grid: 'components/Storyblok_native/Grid',
-        teaser: 'components/Storyblok_native/Teaser',
-        testblog: 'components/Storyblok_native/Testblog',
-        animated_main_div: 'components/Animated_main_div',
-        main: 'components/Main',
-        slider: 'sections/Slider'
-      }
-    }),
-  ]
+  integrations: [tailwind(), svelte(), react(), icon(), metaTags()]
 });

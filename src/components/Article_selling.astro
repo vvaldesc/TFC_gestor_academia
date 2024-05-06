@@ -1,0 +1,17 @@
+---
+export interface ArticleProps {
+    imgSrc: string;
+    imgAlt: string;
+    articleTitle: string;
+    articleDescription: string;
+    articlePrice: string;
+}
+const props = Astro.props;
+---
+
+<article>
+    <img src={props.imgSrc} alt={props.imgAlt}>
+    <h2>{props.articleTitle}</h2>
+    <p>{props.articleDescription}</p>
+    <p>Precio: {props.articlePrice}</p>
+</article>

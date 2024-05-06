@@ -1,20 +1,24 @@
 ---
 title: "Home"
-//https://api.storyblok.com/v1/cdn/stories/home?token=YOUR_TOKEN
-import { useStoryblokApi } from '@storyblok/astro'
-// @ts-ignore
-import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import Layout from '@/layouts/Layout.astro';
+import Slider from '@/sections/Slider.astro';
+import Animated_main_div from '@/components/Animated_main_div.astro';
+import Article_selling from '@/components/Article_selling.astro';
+import Main from '@/components/Main.astro';
+import Div_image from '@/components/Div_image.astro';
+import Div_images from '@/components/Div_images/Div_images';
 
-const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get('cdn/stories/home', {
-  version: 'draft',
-})
-
-const story = data.story
+import main_promo from '@/consts/main_promo.json';
+const hrefImages: string[] = main_promo.promos.map((item: { hrefImage: string }) => item.hrefImage);
 ---
 <Layout title='Home'>
-  <!--<Slider blok={story.content}/>-->
-  <StoryblokComponent blok={story.content} />
-  <!-- <Index_main_nav/> -->
+  <Slider/>
+  <Main>
+    <Animated_main_div class="mt-40">
+      <Div_images images={hrefImages} client:visible/>
+    </Animated_main_div>
+    <Animated_main_div class="mt-40">
+      <h2>NOS ADAPTAMOS A TODO</h2>
+    </Animated_main_div>
+  <Main/>
 </Layout>
