@@ -4,25 +4,25 @@
             "title": "IMAGY",
             "subtitle": "Descuento del 50%",
             "description": "¡Aprovecha esta oferta única y obtén un descuento del 50% en todos nuestros cursos de peluquería y estética!",
-            "urlImage": "https://ejemplo.com/Image_promocion.jpg"
+            "hrefImage": "/assets/img/promotional/photo_1.jpg"
         },
         {
             "title": "Curso intensivo de peinados",
             "subtitle": "Aprende las últimas tendencias",
             "description": "Descubre las técnicas más innovadoras en peinados y conviértete en un experto en el mundo de la peluquería.",
-            "urlImage": "https://ejemplo.com/Image_curso.jpg"
+            "hrefImage": "/assets/img/promotional/photo_2.jpg"
         },
         {
             "title": "Especialización en maquillaje",
             "subtitle": "Potencia tu talento",
             "description": "Conviértete en un profesional del maquillaje y aprende las técnicas más avanzadas para resaltar la belleza de tus clientes.",
-            "urlImage": "https://ejemplo.com/Image_especializacion.jpg"
+            "hrefImage": "/assets/img/promotional/photo_3.jpg"
         },
         {
             "title": "Curso de uñas acrílicas",
             "subtitle": "Crea diseños únicos",
             "description": "Aprende a realizar increíbles diseños de uñas acrílicas y conviértete en un experto en el arte de la manicura.",
-            "urlImage": "https://ejemplo.com/Image_curso_uñas.jpg"
+            "hrefImage": "/assets/img/promotional/photo_4.jpg"
         }
     ]
 }

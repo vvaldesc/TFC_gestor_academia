@@ -1,44 +1,32 @@
 ---
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 title: "tienda";
 import Layout from "../layouts/Layout.astro"; // Import the Layout component
 
-console.log("Hello from the server!"); // Add a semicolon at the end of the line
 
-try {
-  const response = await fetch(`${import.meta.env.VITE_WPGRAPHQL_URL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
+const response = await fetch(`${import.meta.env.VITE_WPGRAPHQL_URL}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    query: `
           query PageQuery {
-              nodeByUri(uri: "http://tfggestoracademia.local/sample-page/") {
+              nodeByUri(uri: "http://tfgwpacademia.local/sample-page/") {
                   ... on Page {
                   id
                   blocks
                   }
               }
           }`,
-    }), // Add missing arguments to JSON.stringify()
-  }); // Add a comma after the closing parenthesis of the fetch() function
+  }), 
+});
 
-  const data = await response.json(); // Add a semicolon at the end of the line
-  console.log(data.nodeByUri); // Add a semicolon at the end of the line
-} catch (error) {
-  console.error(error);
-}
-
-
-
-const data = await response.json(); // Add a semicolon at the end of the line
-console.log(data); // Add a semicolon at the end of the line
+const { data } = await response.json();
+console.log(data.nodeByUri);
 ---
 
 <Layout title="tienda">
-  <astro-slot slot="content">
     <div>
       <!-- Aquí puedes agregar el contenido principal de tu página de peluquería -->
       <h1>Bienvenido a nuestra peluquería</h1>
@@ -48,5 +36,4 @@ console.log(data); // Add a semicolon at the end of the line
       </p>
       <!-- Agrega más contenido aquí -->
     </div>
-  </astro-slot>
 </Layout>
