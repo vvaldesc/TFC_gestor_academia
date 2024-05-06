@@ -1,18 +1,13 @@
----
-import { storyblokEditable } from '@storyblok/astro'
- 
-const { blok } = Astro.props
----
-<div {...storyblokEditable(blok)}>
-    <div class="big-div" style={`--width: ${blok.width}%`}>
-        <h1>{blok.text}</h1>
+<div>
+    <div class="big-div">
+        <h1>prueba</h1>
     </div>
 </div>
 
 
 <style>
     .big-div {
-        width: var(--width);
+        width: 100%;
         height: 500px;
         display: flex;
         justify-content: center;

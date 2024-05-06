@@ -18,26 +18,5 @@ export default defineConfig({
       https: true,
     },
   },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags(),
-    storyblok({
-      accessToken: import.meta.env.VITE_STORYBLOK_API_TOKEN,
-      region: "eu",
-      bridge: true,
-      apiOptions: {}, // storyblok-js-client options
-      componentsDir: "src",
-      enableFallbackComponent: false,
-      customFallbackComponent: "",
-      useCustomApi: false,
-      components: {
-        page: 'components/Storyblok_native/Page',
-        feature: 'components/Storyblok_native/Feature',
-        grid: 'components/Storyblok_native/Grid',
-        teaser: 'components/Storyblok_native/Teaser',
-        testblog: 'components/Storyblok_native/Testblog',
-        animated_main_div: 'components/Animated_main_div',
-        main: 'components/Main',
-        slider: 'sections/Slider'
-      }
-    }),
-  ]
+  integrations: [tailwind(), svelte(), react(), icon(), metaTags()]
 });

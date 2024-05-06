@@ -1,16 +1,5 @@
----
-// @ts-ignore
-import { storyblokEditable } from "@storyblok/astro";
-import  StoryblokComponent  from "@storyblok/astro/StoryblokComponent.astro";
-
-
-const { blok } = Astro.props
----
-<div {...storyblokEditable(blok)} class="container" >
-    <StoryblokComponent
-        className=""
-        blok={blok.content}
-    />
+<div  class="container" >
+    <slot></slot>
 </div>
 
 <style>

@@ -1,0 +1,40 @@
+---
+title: "tienda";
+import Layout from "../layouts/Layout.astro"; // Import the Layout component
+
+console.log("Hello from the server!"); // Add a semicolon at the end of the line
+
+const response = await fetch(`${import.meta.env.VITE_WPGRAPHQL_URL}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    query: `
+        query PageQuery {
+            nodeByUri(uri: "http://tfggestoracademia.local/sample-page/") {
+                ... on Page {
+                id
+                blocks
+                }
+            }
+        }`,
+  }), // Add missing arguments to JSON.stringify()
+}); // Add a comma after the closing parenthesis of the fetch() function
+const data = await response.json(); // Add a semicolon at the end of the line
+console.log(data); // Add a semicolon at the end of the line
+---
+
+<Layout title="tienda">
+  <astro-slot slot="content">
+    <div>
+      <!-- Aquí puedes agregar el contenido principal de tu página de peluquería -->
+      <h1>Bienvenido a nuestra peluquería</h1>
+      <p>
+        ¡Ofrecemos una amplia gama de servicios de peluquería para hombres y
+        mujeres!
+      </p>
+      <!-- Agrega más contenido aquí -->
+    </div>
+  </astro-slot>
+</Layout>
