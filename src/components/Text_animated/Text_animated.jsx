@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Text_animated = () => {
-    const texts = ['Frase 1', 'Frase 2', 'Frase 3'];
+const Text_animated = ({ texts }) => {
     const [currentPhrase, setCurrentPhrase] = useState(texts[0]);
 
     useEffect(() => {
@@ -16,7 +15,7 @@ const Text_animated = () => {
 
     return (
         <div className="container">
-            <p>{currentPhrase}</p>
+            <h2>{currentPhrase}</h2>
         </div>
     );
 };
