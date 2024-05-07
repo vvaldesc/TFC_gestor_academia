@@ -6,15 +6,15 @@
   overflow: hidden;
 }
 
-.image-container:hover{
+.image-container:hover {
   filter: blur(4px);
-  transition: 0.2s;
+  transition: 0.5s ease-in-out;
 }
 
 .image-container:hover .image{
-  filter: opacity(0.3);
-  transition: 0.5s;
-  transform: scale(1.1);
+  filter: opacity(0.8) blur(10px);
+  transition: 0.7s ease-in-out;
+  transform:scale(5) translate(20%, 20%);
 }
 
 .image {

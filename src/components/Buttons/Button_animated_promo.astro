@@ -1,0 +1,58 @@
+---
+interface Props {
+  href: string;
+}
+
+import Esphera from '@/components/misc/Esphera.astro';
+
+const { href } = Astro.props;
+---
+
+<div class="flex align-middle justify-center container">
+    <a href={href}>
+        <div class="flex justify-center">
+            <!-- <Esphera class="animate_vertical animated_entity"/>
+            <Esphera class="animate_vertical animated_entity mx-4"/>
+            <Esphera class="animate_vertical animated_entity"/> -->
+        </div>
+    </a>
+</div>
+
+
+<style>
+    .animated_entity {
+        position: relative;
+        top: 15px;
+    }
+
+    .animate_vertical {
+        animation: animate_vertical 1s infinite;
+    }
+
+    @keyframes animate_vertical {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .container {
+        background-color: var(--primary);
+        height: 600px;
+        width: 400px;
+    }
+
+    a {
+        color: white;
+    }
+
+    p {
+        color: white;
+    }
+
+</style>
