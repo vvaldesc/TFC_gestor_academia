@@ -5,13 +5,16 @@ import { Icon } from 'astro-icon/components';
 
 <header>
   <h3 class="header-text-logo">Imagen</h3>
-  <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/>
-  <Icon name="mdi:account"/>
+  <!-- <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/> -->
+  <div class="flex">
+    <Icon name="mdi:account" size={22} class="mx-3"/>
+    <Icon name="mdi:menu" size={22}/>
+  </div>
 </header>
 
 <style>
 header {
-  padding: 0 40px;
+  padding: 0 70px;
   backdrop-filter: blur(20px);
   background-color: rgba(255, 255, 255, 0.26);
   position: fixed;
@@ -23,6 +26,11 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 60px;
+}
+
+.header-text-logo {
+      font-family: 'Julius Sans One', sans-serif;
+      font-size: 140%;
 }
 
 </style>

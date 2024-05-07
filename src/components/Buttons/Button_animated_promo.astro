@@ -1,0 +1,32 @@
+---
+interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<div class="rounded-3xl flex align-middle justify-center">
+    <a href={href}>
+        <p>prueba</p>
+    </a>
+</div>
+
+
+<style>
+
+    div {
+        background-color: var(--color9);
+        height: 600px;
+        width: 400px;
+    }
+
+    a {
+        color: white;
+    }
+
+    p {
+        color: white;
+    }
+
+</style>
