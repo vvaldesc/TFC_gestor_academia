@@ -3,10 +3,13 @@ import tailwind from "@astrojs/tailwind";
 import svelte from "@astrojs/svelte";
 import react from "@astrojs/react";
 import icon from "astro-icon";
-import storyblok from "@storyblok/astro";
-import basicSsl from '@vitejs/plugin-basic-ssl'
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import metaTags from "astro-meta-tags";
 import path from 'path'; // Añade esta línea
+
+import auth from "auth-astro";
+
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,7 +22,7 @@ export default defineConfig({
   vite: {
     plugins: [basicSsl()],
     server: {
-      https: true,
+      https: true
     },
     resolve: {
       alias: {
@@ -30,9 +33,11 @@ export default defineConfig({
         '@/services/*': path.resolve('./src/services/*'),
         '@/sections/*': path.resolve('./src/sections/*'),
         '@/consts/*': path.resolve('./src/consts/*'),
-        '@/assets/*': path.resolve('./assets/*'),
-      },
-    },
+        '@/assets/*': path.resolve('./assets/*')
+      }
+    }
   },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags()]
+  integrations: [tailwind(), svelte(), react(), icon(), metaTags(), auth()],
+  output: "server",
+  adapter: vercel()
 });
