@@ -1,24 +1,43 @@
 ---
-title: "Home"
-import Layout from '@/layouts/Layout.astro';
-import Slider from '@/sections/Slider.astro';
-import Animated_main_div from '@/components/Animated_main_div.astro';
-import Article_selling from '@/components/Article_selling.astro';
-import Main from '@/components/Main.astro';
-import Div_image from '@/components/Div_image.astro';
-import Div_images from '@/components/Div_images/Div_images';
+title: "Home";
+import Layout from "@/layouts/Layout.astro";
+import Slider from "@/sections/Slider.astro";
+import Section_plans from "@/sections/Section_plans.astro";
 
-import main_promo from '@/consts/main_promo.json';
-const hrefImages: string[] = main_promo.promos.map((item: { hrefImage: string }) => item.hrefImage);
+import Animated_main_div from "@/components/Animated_main_div.astro";
+import Main from "@/components/Main.astro";
+import Div_images from "@/components/Div_images.astro";
+import Button_suggestion from "@/components/buttons/Button_suggestion.astro";
+
+import main_promo from "@/consts/main_promo.json";
+
+const hrefImages: string[] = main_promo.promos.map(
+  (item: { hrefImage: string }) => item.hrefImage
+);
 ---
-<Layout title='Home'>
-  <Slider/>
+
+<Layout title="Home">
+  <Slider />
   <Main>
-    <Animated_main_div class="mt-40">
-      <Div_images images={hrefImages} client:visible/>
+    <Animated_main_div class="mt-40 grid-cols-2">
+      <div class="w-1/2 text-left p-3">
+        <h1 class="main-text-promoTitle pb-4">APÚNTATE A NUESTROS CURSOS</h1>
+        <Button_suggestion texto="INFÓRMATE" href="/cursos" />
+      </div>
+      <div class="w-1/2">
+        <Div_images images={hrefImages} />
+      </div>
     </Animated_main_div>
     <Animated_main_div class="mt-40">
-      <h2>NOS ADAPTAMOS A TODO</h2>
+      <Section_plans />
     </Animated_main_div>
-  <Main/>
+    <Animated_main_div class="mt-40">
+      <h1 class="main-text-promoTitle pb-4 text-center">
+        CIENTOS DE PERSONAS ACUDEN A NUESTRA ACADEMIA A DIARIO , EDUCACIÓN
+        PROFESIONAL Y PERSONALIZADA A TU ALCANCE. VARIEDAD DE CURSOS DE
+        ESTÉTICA, PELUQUERÍA, MAQUILLAJE Y UÑAS.
+      </h1>
+    </Animated_main_div>
+    <Main />
+  </Main>
 </Layout>

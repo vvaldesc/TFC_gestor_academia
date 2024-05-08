@@ -1,0 +1,8 @@
+---
+interface Props {
+    texts: string[];
+}
+import Text_animated from './Text_animated/Text_animated';
+let texts = Astro.props.texts;
+---
+<Text_animated texts={texts} client:visible/>

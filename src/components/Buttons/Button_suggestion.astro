@@ -15,13 +15,18 @@ const { texto, href } = Astro.props;
       padding: 10px 20px;
       border: none;
       cursor: pointer;
+      width: 140px;
+    }
+    p {
+      margin: 0;
+      font-size: large;
     }
   </style>
 
   {
     (
       <a href={href}>
-        <button>{texto}</button>
+        <button><p class="font-normal">{texto}</p></button>
       </a>
     )
   }
