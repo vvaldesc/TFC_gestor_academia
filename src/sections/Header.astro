@@ -1,6 +1,10 @@
 ---
-import Headernav from '@/components/Headernav.astro';
-import { Icon } from 'astro-icon/components';
+import Headernav from "@/components/Headernav.astro";
+import { Icon } from "astro-icon/components";
+
+import { SignIn, SignOut } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
 
 /*import { getSession } from 'auth-astro/server';
 const session = await getSession(Astro.request);
@@ -13,39 +17,39 @@ console.log(session);*/
   <!-- <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/> -->
   <div class="flex">
     <div class="flex">
-      <button id="login">Login</button>
-      <button id="logout">Logout</button>
+      <p>Bienvenido {session?.user?.name}</p>
+      <SignIn provider="google">Login</SignIn>
+      <SignOut >Logout</SignOut>
     </div>
     <a href="/profile">
-      <Icon name="mdi:account" size={22} class="mx-3"/>
+      <Icon name="mdi:account" size={22} class="mx-3" />
     </a>
     <a href="#">
-      <Icon name="mdi:menu" size={22}/>
+      <Icon name="mdi:menu" size={22} />
     </a>
   </div>
 </header>
 
 <style>
-header {
-  padding: 0 70px;
-  backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.26);
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-}
+  header {
+    padding: 0 70px;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.26);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
 
-.header-text-logo {
-      font-family: 'Julius Sans One', sans-serif;
-      font-size: 140%;
-}
-
+  .header-text-logo {
+    font-family: "Julius Sans One", sans-serif;
+    font-size: 140%;
+  }
 </style>
 
 <script>

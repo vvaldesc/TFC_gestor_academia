@@ -3,14 +3,13 @@ import tailwind from "@astrojs/tailwind";
 import svelte from "@astrojs/svelte";
 import react from "@astrojs/react";
 import icon from "astro-icon";
-import storyblok from "@storyblok/astro";
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import metaTags from "astro-meta-tags";
 import path from 'path'; // Añade esta línea
 
 import auth from "auth-astro";
 
-import netlify from "@astrojs/netlify";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,6 +38,6 @@ export default defineConfig({
     }
   },
   integrations: [tailwind(), svelte(), react(), icon(), metaTags(), auth()],
-  output: "hybrid",
-  adapter: netlify()
+  output: "server",
+  adapter: vercel()
 });
