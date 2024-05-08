@@ -1,12 +1,21 @@
 ---
 import Headernav from '@/components/Headernav.astro';
 import { Icon } from 'astro-icon/components';
+
+/*import { getSession } from 'auth-astro/server';
+const session = await getSession(Astro.request);
+
+console.log(session);*/
 ---
 
 <header>
   <h3 class="header-text-logo">Imagen</h3>
   <!-- <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/> -->
   <div class="flex">
+    <div class="flex">
+      <button id="login">Login</button>
+      <button id="logout">Logout</button>
+    </div>
     <a href="/profile">
       <Icon name="mdi:account" size={22} class="mx-3"/>
     </a>
@@ -38,3 +47,9 @@ header {
 }
 
 </style>
+
+<script>
+  /*const { signIn, signOut } = await import("auth-astro/client")
+  document.querySelector("#login").onclick = () => signIn("github")
+  document.querySelector("#logout").onclick = () => signOut()*/
+</script>
