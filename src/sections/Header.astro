@@ -12,7 +12,7 @@ const { session } = Astro.props;
 
 <header>
   <h3 class="header-text-logo">Imagen</h3>
-  <!-- <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/> -->
+  <Headernav fields={['Inicio','profile']}/>
   <div class="flex">
     <div class="flex">
       <p>Bienvenido {session?.user?.name}</p>
