@@ -11,7 +11,8 @@ import Button_suggestion from "@/components/buttons/Button_suggestion.astro";
 
 import main_promo from "@/consts/main_promo.json";
 
-
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
 
 const hrefImages: string[] = main_promo.promos.map(
   (item: { hrefImage: string }) => item.hrefImage
@@ -21,6 +22,9 @@ const hrefImages: string[] = main_promo.promos.map(
 <Layout title="Home">
   <Slider />
   <Main>
+    <Animated_main_div class="mt-40 grid-cols-2">
+        <h1 class="main-text-promoTitle pb-4">HOLA {session?.user?.name}</h1>
+    </Animated_main_div>
     <Animated_main_div class="mt-40 grid-cols-2">
       <div class="w-1/2 text-left p-3">
         <h1 class="main-text-promoTitle pb-4">APÚNTATE A NUESTROS CURSOS</h1>
@@ -41,5 +45,5 @@ const hrefImages: string[] = main_promo.promos.map(
       </h1>
     </Animated_main_div>
     <Main />
-  </Main>
-</Layout>
+  </Main></Layout
+>
