@@ -2,6 +2,23 @@
 import { Image } from "astro:assets";
 ---
 
-<div class="border-solid border-green-600 w-full">
-    <!-- <Image src="/img/profile/main_thumbnail/photo_1.jpg" alt="Profile photo" format="jpg"/> -->
-</div>
+<section class="border border-solid border-gray-500 w-full mt-24">
+  <Image
+    src="/img/profile/main_thumbnail/photo_1.jpg"
+    alt="Profile photo"
+    format="jpg"
+    width={200}
+    height={200}
+    quality={"low"}
+  />
+  <slot name="header" />
+  <main>
+    <slot />
+  </main>
+  <section>
+    <slot name="user" />
+  </section>
+  <section>
+    <slot name="mail" />
+  </section>
+</section>
