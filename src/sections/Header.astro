@@ -3,13 +3,11 @@ import Headernav from "@/components/Headernav.astro";
 import { Icon } from "astro-icon/components";
 
 import { SignIn, SignOut } from "auth-astro/components";
-import { getSession } from "auth-astro/server";
-const session = await getSession(Astro.request);
 
-/*import { getSession } from 'auth-astro/server';
-const session = await getSession(Astro.request);
-
-console.log(session);*/
+interface Props {
+  session: any | null;
+}
+const { session } = Astro.props;
 ---
 
 <header>
@@ -19,8 +17,8 @@ console.log(session);*/
     <div class="flex">
       <p>Bienvenido {session?.user?.name}</p>
       <SignIn provider="google">Login google</SignIn>
-      <SignIn provider="facebook">Login facebook</SignIn>
-      <SignOut >Logout</SignOut>
+      <!-- <SignIn provider="facebook">Login facebook</SignIn> -->
+      <SignOut>Logout</SignOut>
     </div>
     <a href="/profile">
       <Icon name="mdi:account" size={22} class="mx-3" />

@@ -1,6 +1,10 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import Seo from "./SEO/Seo.astro";
+
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+
 interface Props {
   // TypeScript interface for props
   title: string;
@@ -9,7 +13,8 @@ interface Props {
 
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
-const { title,slider } = Astro.props;
+
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,7 +31,7 @@ const { title,slider } = Astro.props;
   </head>
   <body>
     <div id="App" class="relative h-screen p-2 gap-2"> <!-- grid actúa como container -->
-      <Header/>
+      <Header session={session}/>
       <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
