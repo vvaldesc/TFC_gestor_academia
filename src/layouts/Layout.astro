@@ -1,6 +1,10 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import Seo from "./SEO/Seo.astro";
+
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+
 interface Props {
   // TypeScript interface for props
   title: string;
@@ -9,7 +13,8 @@ interface Props {
 
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
-const { title,slider } = Astro.props;
+
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,16 +30,16 @@ const { title,slider } = Astro.props;
     <ViewTransitions />
   </head>
   <body>
-    <div id="App" class="relative h-screen p-2 gap-2"> <!-- grid actúa como container -->
-      <Header/>
+    <div id="App" class="relative h-screen p-2 gap-2">
+      <!-- grid actúa como container -->
+      <Header session={session} />
       <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
-      <Footer class="[grid-area:footer]"/>
+      <Footer class="[grid-area:footer]" />
     </div>
-  </body>
-  <style>
-    //No pongo header en el grid porque no quiero que este se vea afectado por él
+    <style>
+      //No pongo header en el grid porque no quiero que este se vea afectado por él
     #App {
         display: grid;
         grid-template-areas:
@@ -45,112 +50,121 @@ const { title,slider } = Astro.props;
         padding: 0;
         width: 100%;
         max-width: 1700px;
-    }
-  </style>
+      }
+    </style>
 
-  <style is:global>
-    @font-face {
-      font-family: 'Julius Sans One';
-      src: url('/fonts/Julius/JuliusSansOne-Regular.ttf') format('truetype');
-    }
+    <style is:global>
+      @font-face {
+        font-family: "Julius Sans One";
+        src: url("/fonts/Julius/JuliusSansOne-Regular.ttf") format("truetype");
+      }
 
-    @font-face {
-      font-family: 'Floelly';
-      src: url('/fonts/Floelly/floelly.otf') format('truetype');
-    }
+      @font-face {
+        font-family: "Floelly";
+        src: url("/fonts/Floelly/floelly.otf") format("truetype");
+      }
 
-    @font-face {
-      font-family: 'Roboto';
-      src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
-    }
+      @font-face {
+        font-family: "Roboto";
+        src: url("/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+      }
 
-    .stylized-text {
-      font-family: 'Julius Sans One', sans-serif;
-      font-weight: 600;
-      text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-    }
+      .stylized-text {
+        font-family: "Julius Sans One", sans-serif;
+        font-weight: 600;
+        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+      }
 
-    .header-text-promoTitle, .header-text-promoSubtitle, .header-text-promoDescription {
-      font-family: 'Floelly', sans-serif;
-      letter-spacing: 2px;
-    }
+      .header-text-promoTitle,
+      .header-text-promoSubtitle,
+      .header-text-promoDescription {
+        font-family: "Floelly", sans-serif;
+        letter-spacing: 2px;
+      }
 
-    .header-text-promoTitle {
-      font-size: 230%;
-    }
+      .header-text-promoTitle {
+        font-size: 230%;
+      }
 
-    .main-text-promoTitle {
-      font-size: 350%;
-      font-weight: bold;
-    }
+      .main-text-promoTitle {
+        font-size: 350%;
+        font-weight: bold;
+      }
 
-    :root {
-      --accent: 136, 58, 234;
-      --accent-light: 224, 204, 250;
-      --accent-dark: 49, 10, 101;
-      --accent-gradient: linear-gradient(
+      .header-image-googleThumb {
+        width: 50px; /* Ajusta este valor según el tamaño que desees */
+        height: 50px; /* Asegúrate de que este valor sea el mismo que el de width para mantener la imagen cuadrada */
+        border-radius: 50%; /* Esto hace que la imagen sea redonda */
+        object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio, incluso si la imagen original no es cuadrada */
+      }
+
+      :root {
+        --accent: 136, 58, 234;
+        --accent-light: 224, 204, 250;
+        --accent-dark: 49, 10, 101;
+        --accent-gradient: linear-gradient(
           45deg,
           rgb(var(--accent)),
           rgb(var(--accent-light)) 30%,
           white 60%
-      );
-      --header-dark-color: #ffa4e500;
-      --header-nav-color: rgba(255, 155, 227, 0.22);
-      --global-black: #000000;
-      --global-white: #ffffff;
-      --background-light: rgba(255, 204, 240, 0.089);
+        );
+        --header-dark-color: #ffa4e500;
+        --header-nav-color: rgba(255, 155, 227, 0.22);
+        --global-black: #000000;
+        --global-white: #ffffff;
+        --background-light: rgba(255, 204, 240, 0.089);
 
-      --color1: #290628;
-      --color2: #3B0086;
-      --color3: #6200B3;
-      --color4: #B43E8F;
-      --color5: #EA7AF4;
+        --color1: #290628;
+        --color2: #3b0086;
+        --color3: #6200b3;
+        --color4: #b43e8f;
+        --color5: #ea7af4;
 
-      --color6: #D741A7;
-      --color7: #3A1772;
-      --color8: #5398BE;
-      --color9: #F2CD5D;
-      --color10: #DEA54B;
+        --color6: #d741a7;
+        --color7: #3a1772;
+        --color8: #5398be;
+        --color9: #f2cd5d;
+        --color10: #dea54b;
 
-      --primary: #e88eed;
-      --primary-opacity: #e88eed75;
-      --header-bg-color: #ffd1f2;
-      --header-bg-color-dark: #ff69d4;
-      --tertiary: #f4c3c2;
-      --quaternary: #f3dad8;
-      --quinary: #d6d9ce;
-    }
+        --primary: #e88eed;
+        --primary-opacity: #e88eed75;
+        --header-bg-color: #ffd1f2;
+        --header-bg-color-dark: #ff69d4;
+        --tertiary: #f4c3c2;
+        --quaternary: #f3dad8;
+        --quinary: #d6d9ce;
+      }
 
-    body::-webkit-scrollbar {
-      //width: 12px;
-      display: none;
-    }
+      body::-webkit-scrollbar {
+        //width: 12px;
+        display: none;
+      }
 
-    body::-webkit-scrollbar-track {
-      //box-shadow: inset 0 0 6px red;
-    }
+      body::-webkit-scrollbar-track {
+        //box-shadow: inset 0 0 6px red;
+      }
 
-    body::-webkit-scrollbar-thumb {
-      /*background-color: var(--primary);
+      body::-webkit-scrollbar-thumb {
+        /*background-color: var(--primary);
       backdrop-filter: blur(10px);
       border-radius: 20px;*/
-    }
+      }
 
-    body {
-      background-color: var(--background-light);
-      font-family: 'Roboto', sans-serif;
-      font-size: clamp(1rem, 100%, 2rem);
-    }
+      body {
+        background-color: var(--background-light);
+        font-family: "Roboto", sans-serif;
+        font-size: clamp(1rem, 100%, 2rem);
+      }
 
-    html {
-      font-family: system-ui, sans-serif;
-      background-size: 224px;
-      scroll-behavior: smooth;
-    }
+      html {
+        font-family: system-ui, sans-serif;
+        background-size: 224px;
+        scroll-behavior: smooth;
+      }
 
-    * {
-      box-sizing: border-box;
-    }
-
-  </style>
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </body>
 </html>

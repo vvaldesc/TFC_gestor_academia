@@ -1,0 +1,21 @@
+---
+title: "Profile";
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Profile_section from "@/sections/Profile_section.astro";
+
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+---
+
+<Layout title="Profile">
+    <Main>
+      <Profile_section>
+        <h1 slot="header">Este es el encabezado</h1>
+        <p>Este es el contenido principal</p>
+        <p>prueba</p>
+        <p slot="user">{ session?.user?.name }</p>
+        <p slot="mail">Este es el pie de página</p>
+      </Profile_section>
+    </Main>
+</Layout>
