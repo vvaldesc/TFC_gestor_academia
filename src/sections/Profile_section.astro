@@ -2,23 +2,40 @@
 import { Image } from "astro:assets";
 ---
 
-<section class="border border-solid border-gray-500 w-full mt-24">
-  <Image
+<section class="main-section-bigProfileCard w-full mt-24 flex">
+  <div class="w-1/2 border-l border-r border-gray-200 px-4">
+    <Image
     src="/img/profile/main_thumbnail/photo_1.jpg"
-    alt="Profile photo"
+    alt="Profile"
     format="jpg"
     width={200}
     height={200}
     quality={"low"}
   />
   <slot name="header" />
-  <main>
-    <slot />
-  </main>
   <section>
     <slot name="user" />
   </section>
-  <section>
-    <slot name="mail" />
-  </section>
+  </div>
+  <div class="w-1/2 border-r border-gray-200 px-4">
+    <section>
+      <slot name="id" />
+    </section>
+    <section>
+      <slot name="mail" />
+    </section>
+    <main>
+      <slot />
+    </main>
+  </div>
 </section>
+
+<style>
+  .main-section-bigProfileCard {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
