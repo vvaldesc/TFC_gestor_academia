@@ -1,23 +1,36 @@
 ---
-title: "Home";
+title: "Profile";
+
+import type { Client } from "@/consts/types";
+import { fetchClientById } from "@/services/server_side_fetch";
+
 import Layout from "@/layouts/Layout.astro";
-import Slider from "@/sections/Slider.astro";
-import Section_plans from "@/sections/Section_plans.astro";
-
-import Animated_main_div from "@/components/Animated_main_div.astro";
 import Main from "@/components/Main.astro";
-import Div_images from "@/components/Div_images.astro";
-import Button_suggestion from "@/components/buttons/Button_suggestion.astro";
+import Profile_section from "@/sections/Profile_section.astro";
 
-import main_promo from "@/consts/main_promo.json";
+import { getSession } from "auth-astro/server";
 
-const hrefImages: string[] = main_promo.promos.map(
-  (item: { hrefImage: string }) => item.hrefImage
-);
+const session = await getSession(Astro.request);
+
+console.log(session);
+
+const profileType = "cliente";
+
+const cliente: Client | undefined = await fetchClientById(1);
+const profilePhotoSrc: string | null | undefined = cliente?.image || session?.user?.image;
+
+console.log(cliente);
 ---
 
-<Layout title="Home">
+<Layout title="Profile">
     <Main>
-    <Main />
-  </Main></Layout
->
+      <Profile_section profilePhotoSrc={profilePhotoSrc}>
+        <h1 slot="header">Este es el encabezado</h1>
+        <p>{ profileType }</p>
+        <p>Este es el contenido principal</p>
+        <p slot="user">usuario: { cliente?.username }</p>
+        <p slot="id">id: { cliente?.id }</p>
+        <p slot="mail">mail: { cliente?.email }</p>
+      </Profile_section>
+    </Main>
+</Layout>

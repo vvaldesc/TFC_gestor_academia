@@ -1,8 +1,8 @@
 ---
 import Headernav from "@/components/Headernav.astro";
 import { Icon } from "astro-icon/components";
-
-import { SignIn, SignOut } from "auth-astro/components";
+import { Image } from "astro:assets";
+import { SignOut } from "auth-astro/components";
 
 interface Props {
   session: any | null;
@@ -12,13 +12,31 @@ const { session } = Astro.props;
 
 <header>
   <h3 class="header-text-logo">Imagen</h3>
-  <!-- <Headernav fields={['Inicio','Peluqueria','Tienda','Sobre','FAQ']}/> -->
+  <Headernav fields={['Inicio','profile']}/>
   <div class="flex">
     <div class="flex">
-      <p>Bienvenido {session?.user?.name}</p>
-      <SignIn provider="google">Login google</SignIn>
-      <!-- <SignIn provider="facebook">Login facebook</SignIn> -->
-      <SignOut>Logout</SignOut>
+
+      {session ? (
+        <>
+          <Image 
+            class="header-image-googleThumb"
+            src={session?.user?.image}
+            alt="Google Profile Picture"
+            width={50}
+            height={50}
+            quality={"low"}
+            decoding={"async"}
+            loading={"lazy"}
+            densities={[0.2, 1, 2]}
+            format="webp"
+          />
+          <p>Bienvenido {session?.user?.name}</p>
+          {<SignOut>Logout</SignOut>}
+        </>
+      ) : (
+        <button id="login">Login</button>
+      )}
+
     </div>
     <a href="/profile">
       <Icon name="mdi:account" size={22} class="mx-3" />
@@ -28,6 +46,17 @@ const { session } = Astro.props;
     </a>
   </div>
 </header>
+
+<script>
+    // Sign in with Google, i used an client side import to modify the signin function
+    const { signIn } = await import("auth-astro/client")
+    const loginButton = document.querySelector("#login");
+    if (loginButton) {
+      loginButton.addEventListener("click", async () => {
+        signIn("google", { callbackUrl: "/profile" });
+      });
+    }
+</script>
 
 <style>
   header {
@@ -50,9 +79,3 @@ const { session } = Astro.props;
     font-size: 140%;
   }
 </style>
-
-<script>
-  /*const { signIn, signOut } = await import("auth-astro/client")
-  document.querySelector("#login").onclick = () => signIn("github")
-  document.querySelector("#logout").onclick = () => signOut()*/
-</script>

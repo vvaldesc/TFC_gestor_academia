@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import type { Session } from "@auth/core/types";
+import type { Client } from "@/consts/types";
+import { fetchClientById } from "@/services/server_side_fetch";
+
+interface Props {
+    profilePhotoSrc: string | null | undefined;
+}
+
+const {profilePhotoSrc} = Astro.props;
+
+---
+<!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
+<section class="main-section-bigProfileCard w-full mt-24 flex">
+  <section class="w-1/2 border-l border-r border-gray-200 px-4">
+    <div class="w-full">
+      <h1>PERFIL CLIENTE</h1>
+    </div>
+    <div class="section-div-profilePhoto">
+      {profilePhotoSrc ? (
+        <Image
+          src={profilePhotoSrc}
+          alt="Profile"
+          format="webp"
+          width={100}
+          height={100}
+          quality={"low"}
+          decoding={"async"}
+          loading={"lazy"}
+          densities={[0.2, 1, 2]}
+          class={"object-cover h-full w-full"}
+        />
+      ) : (
+        <p>No hay imagen de perfil disponible.</p>
+      )}
+    </div>
+  <slot name="header" />
+  <section>
+    <slot name="user" />
+  </section>
+  </section>
+  <section class="w-1/2 border-r border-gray-200 px-4">
+    <section>
+      <slot name="id" />
+    </section>
+    <section>
+      <slot name="mail" />
+    </section>
+    <main>
+      <slot />
+    </main>
+  </section>
+</section>
+
+<style>
+  .section-div-profilePhoto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  .main-section-bigProfileCard {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
