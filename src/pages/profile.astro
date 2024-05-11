@@ -5,6 +5,7 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
 import { getSession } from "auth-astro/server";
+
 const session = await getSession(Astro.request);
 
 console.log(session);
@@ -14,7 +15,7 @@ const profileType = "cliente";
 
 <Layout title="Profile">
     <Main>
-      <Profile_section>
+      <Profile_section session={session}>
         <h1 slot="header">Este es el encabezado</h1>
         <p>{ profileType }</p>
         <p>Este es el contenido principal</p>

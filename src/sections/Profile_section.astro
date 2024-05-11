@@ -1,23 +1,43 @@
 ---
 import { Image } from "astro:assets";
----
+///import type { Session } from "@/consts/types";
+import type { Session } from "@auth/core/types";
 
+interface Props {
+    session: Session | null;
+}
+
+const {session} = Astro.props;
+const profilePhoto = "/img/profile/main_thumbnail/photo_1.jpg";
+//const profilePhoto = null;
+---
+<!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
 <section class="main-section-bigProfileCard w-full mt-24 flex">
-  <div class="w-1/2 border-l border-r border-gray-200 px-4">
-    <Image
-    src="/img/profile/main_thumbnail/photo_1.jpg"
-    alt="Profile"
-    format="jpg"
-    width={200}
-    height={200}
-    quality={"low"}
-  />
+  <section class="w-1/2 border-l border-r border-gray-200 px-4">
+    <div class="w-full">
+      <h1>PERFIL CLIENTE</h1>
+    </div>
+    <div class="section-div-profilePhoto">
+      <Image
+        src={profilePhoto || session?.user?.image || "/img/profile/main_thumbnail/photo_1.jpg"}
+        alt="Profile"
+        format="jpg"
+        width={100}
+        height={100}
+        quality={"low"}
+        format={"webp"}
+        decoding={"async"}
+        loading={"lazy"}
+        densities={[0.2, 1, 2]}
+        class={"object-cover h-full w-full"}
+      />
+    </div>
   <slot name="header" />
   <section>
     <slot name="user" />
   </section>
-  </div>
-  <div class="w-1/2 border-r border-gray-200 px-4">
+  </section>
+  <section class="w-1/2 border-r border-gray-200 px-4">
     <section>
       <slot name="id" />
     </section>
@@ -27,10 +47,16 @@ import { Image } from "astro:assets";
     <main>
       <slot />
     </main>
-  </div>
+  </section>
 </section>
 
 <style>
+  .section-div-profilePhoto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
   .main-section-bigProfileCard {
     border: 1px solid #e2e8f0;
     border-radius: 0.5rem;
