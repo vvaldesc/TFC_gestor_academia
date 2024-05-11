@@ -2,7 +2,7 @@
 import Headernav from "@/components/Headernav.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import {  SignOut } from "auth-astro/components";
+import { SignOut } from "auth-astro/components";
 
 interface Props {
   session: any | null;
@@ -21,16 +21,19 @@ const { session } = Astro.props;
           <Image 
             class="header-image-googleThumb"
             src={session?.user?.image}
-            alt=""
-            width={20}
-            height={20}
+            alt="Google Profile Picture"
+            width={50}
+            height={50}
+            quality={"low"}
+            decoding={"async"}
+            loading={"lazy"}
+            densities={[0.2, 1, 2]}
+            format="webp"
           />
           <p>Bienvenido {session?.user?.name}</p>
           {<SignOut>Logout</SignOut>}
-          {/* {<button id="logout">Logout</button>} */}
         </>
       ) : (
-        // <SignIn provider="google">Login</SignIn>
         <button id="login">Login</button>
       )}
 

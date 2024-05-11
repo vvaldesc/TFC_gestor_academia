@@ -1,5 +1,9 @@
 ---
 title: "Profile";
+
+import type { Client } from "@/consts/types";
+import { fetchClientById } from "@/services/server_side_fetch";
+
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
@@ -11,17 +15,22 @@ const session = await getSession(Astro.request);
 console.log(session);
 
 const profileType = "cliente";
+
+const cliente: Client | undefined = await fetchClientById(1);
+const profilePhotoSrc: string | null | undefined = cliente?.image || session?.user?.image;
+
+console.log(cliente);
 ---
 
 <Layout title="Profile">
     <Main>
-      <Profile_section session={session}>
+      <Profile_section profilePhotoSrc={profilePhotoSrc}>
         <h1 slot="header">Este es el encabezado</h1>
         <p>{ profileType }</p>
         <p>Este es el contenido principal</p>
-        <p slot="user">usuario: { session?.user?.name }</p>
-        <p slot="id">id: { session?.user?.id }</p>
-        <p slot="mail">mail: { session?.user?.email }</p>
+        <p slot="user">usuario: { cliente?.username }</p>
+        <p slot="id">id: { cliente?.id }</p>
+        <p slot="mail">mail: { cliente?.email }</p>
       </Profile_section>
     </Main>
 </Layout>
