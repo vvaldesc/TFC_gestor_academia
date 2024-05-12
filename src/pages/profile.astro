@@ -1,36 +1,31 @@
 ---
 title: "Profile";
 
-import type { Client } from "@/consts/types";
+//import type { Client } from "@/consts/types";
 import type { Session } from "@auth/core/types";
+import type { ClientSession } from "@/consts/types";
 
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
-import { fetchClientByEmail } from "@/services/server_side_fetch";
+import { sessionHandler } from "@/services/server_side_logic";
 import { getSession } from "auth-astro/server";
 
 
 let registroCompletado: boolean = false;
-let client: Client | undefined = undefined;
-let profilePhotoSrc: string | null = null;
+let session: Session | null = null;
+let sessionInfo: ClientSession = {} as ClientSession;
 
 try {
-  const session: Session | null = await getSession(Astro.request);
-  // If google login doesn't return name or email
-  if (!session || !session.user?.name || !session.user.email)
-    throw new Error("Google login didn't return valid data.");
-  // If google login doesn't return name or email
-  client = await fetchClientByEmail(session?.user?.email);
-  // If client is registered
-  if (client) {
-    registroCompletado = true;
+  session = await getSession(Astro.request);
+  if (session) {
+    sessionInfo = await sessionHandler(session);
+    console.log(sessionInfo);
+    registroCompletado = sessionInfo.client != null;
   } else {
-    throw new Error("Client is not registered.");
+    throw new Error("No session found.");
   }
-  // profile photo
-  profilePhotoSrc = client?.image || session?.user.image || "/images/default_profile.png";
 } catch (error) {
   console.error(error);
 }
@@ -38,13 +33,13 @@ try {
 <Layout title="Profile">
     <Main>
       {registroCompletado ? (
-        <Profile_section profilePhotoSrc={profilePhotoSrc}>
+        <Profile_section profilePhotoSrc={sessionInfo.profilePhotoSrc}>
           <h1 slot="header">Este es el encabezado</h1>
           <p>{ /*profileType*/ }</p>
           <p>Este es el contenido principal</p>
-          <p slot="user">usuario: { client?.username }</p>
-          <p slot="id">id: { client?.id }</p>
-          <p slot="mail">mail: { client?.email }</p>
+          <p slot="user">usuario: { sessionInfo.client?.username }</p>
+          <p slot="id">id: { sessionInfo.client?.id }</p>
+          <p slot="mail">mail: { sessionInfo.client?.email }</p>
         </Profile_section>
       ) : (
         <p>No hay imagen de perfil disponible.</p>
