@@ -1,38 +1,36 @@
 ---
 title: "Profile";
 
-//import type { Client } from "@/consts/types";
-import type { Session } from "@auth/core/types";
-import type { ClientSession } from "@/consts/types";
-
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
-import { sessionHandler } from "@/services/server_side_logic";
+//Session handling//////////////////////////
+import type { Session } from "@auth/core/types";
+import type { ClientSession,SessionState,sessionInfoState } from "@/consts/types";
+
+import { sessionHandler,sessionStateCheck } from "@/services/server_side_logic";
 import { getSession } from "auth-astro/server";
 
-
-let registroCompletado: boolean = false;
-let session: Session | null = null;
 let sessionInfo: ClientSession = {} as ClientSession;
+let sessionInfoState: sessionInfoState = {} as sessionInfoState;
 
 try {
-  session = await getSession(Astro.request);
-  if (session) {
-    sessionInfo = await sessionHandler(session);
-    console.log(sessionInfo);
-    registroCompletado = sessionInfo.client != null;
-  } else {
-    throw new Error("No session found.");
-  }
-} catch (error) {
+  sessionInfo = await sessionHandler(await getSession(Astro.request) as Session);
+  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+  sessionInfoState = {
+    sessionState,
+    sessionInfo
+  };
+  console.log(sessionInfoState);
+} catch (error) { 
   console.error(error);
 }
+//End session handling///////////////////////
 ---
 <Layout title="Profile">
     <Main>
-      {registroCompletado ? (
+      {sessionInfoState.sessionState === 'Registered' ? (
         <Profile_section profilePhotoSrc={sessionInfo.profilePhotoSrc}>
           <h1 slot="header">Este es el encabezado</h1>
           <p>{ /*profileType*/ }</p>
