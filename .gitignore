@@ -12,6 +12,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# oenSSL key files
+certs/
+*.key
+*.cert
 
 # environment variables
 .env

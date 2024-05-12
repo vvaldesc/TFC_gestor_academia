@@ -26,3 +26,5 @@ export interface Client {
     image?:        string;
     active?:       boolean;
 }
+
+export type ClientSession = { OAuth: Session } & { client: Client } & { profilePhotoSrc: string };
