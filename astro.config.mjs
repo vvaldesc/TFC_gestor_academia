@@ -39,7 +39,6 @@ export default defineConfig({
         '@/services/*': path.resolve('./src/services/*'),
         '@/sections/*': path.resolve('./src/sections/*'),
         '@/consts/*': path.resolve('./src/consts/*'),
-        '@/assets/*': path.resolve('./assets/*')
       }
     }
   },
