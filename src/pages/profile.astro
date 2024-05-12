@@ -6,22 +6,17 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
 //Session handling//////////////////////////
-import type { Session } from "@auth/core/types";
 import type { ClientSession,SessionState,sessionInfoState } from "@/consts/types";
 
 import { sessionHandler,sessionStateCheck } from "@/services/server_side_logic";
 import { getSession } from "auth-astro/server";
 
-let sessionInfo: ClientSession = {} as ClientSession;
 let sessionInfoState: sessionInfoState = {} as sessionInfoState;
 
 try {
-  sessionInfo = await sessionHandler(await getSession(Astro.request) as Session);
+  const sessionInfo: ClientSession = await sessionHandler(await getSession(Astro.request));
   const sessionState: SessionState = await sessionStateCheck(sessionInfo);
-  sessionInfoState = {
-    sessionState,
-    sessionInfo
-  };
+  sessionInfoState = {sessionState,sessionInfo};
   console.log(sessionInfoState);
 } catch (error) { 
   console.error(error);
@@ -30,14 +25,14 @@ try {
 ---
 <Layout title="Profile">
     <Main>
-      {sessionInfoState.sessionState === 'Registered' ? (
-        <Profile_section profilePhotoSrc={sessionInfo.profilePhotoSrc}>
+      {sessionInfoState.sessionState === 2 ? (
+        <Profile_section profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}>
           <h1 slot="header">Este es el encabezado</h1>
           <p>{ /*profileType*/ }</p>
           <p>Este es el contenido principal</p>
-          <p slot="user">usuario: { sessionInfo.client?.username }</p>
-          <p slot="id">id: { sessionInfo.client?.id }</p>
-          <p slot="mail">mail: { sessionInfo.client?.email }</p>
+          <p slot="user">usuario: {sessionInfoState.sessionInfo.client?.username}</p>
+          <p slot="id">id: {sessionInfoState.sessionInfo.client?.id}</p>
+          <p slot="mail">mail: {sessionInfoState.sessionInfo.client?.email}</p>
         </Profile_section>
       ) : (
         <p>No hay imagen de perfil disponible.</p>

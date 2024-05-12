@@ -32,9 +32,9 @@ export type ClientSession = { OAuth: Session } & { client: Client } & {
 };
 
 export enum SessionState {
-  WithoutSession = "WithoutSession",
-  NeedsRegister = "NeedsRegister",
-  Registered = "Registered",
+  WithoutSession = 0,
+  NeedsRegister = 1,
+  Registered = 2,
 }
 
 export interface sessionInfoState {

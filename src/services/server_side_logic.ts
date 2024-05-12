@@ -1,17 +1,11 @@
-import type { Client } from "@/consts/types";
+//import type { Client } from "@/consts/types";
 import type { Session } from "@auth/core/types";
 import type { ClientSession } from "@/consts/types";
 import { SessionState } from "@/consts/types";
 
 import { fetchClientByEmail } from "@/services/server_side_fetch";
 
-export const isRegisteredClient = (Client: Client): boolean => {
-  return true;
-};
-
-//type ClientSession = { client: Client } & { OAuth: Session } & { profilePhotoSrc: string };
-
-export const sessionHandler = async (session: Session): Promise<ClientSession> => {
+export const sessionHandler = async (session: Session | null): Promise<ClientSession> => {
   // If google login doesn't return name or email
   if (!session || !session.user || !session.user.name || !session.user.email)
     throw new Error("Google login didn't return valid data.");
@@ -39,7 +33,7 @@ export async function sessionStateCheck(sessionInfo: ClientSession): Promise<Ses
       return SessionState.WithoutSession;
     }
 
-    if (sessionInfo.client == null) {
+    if (sessionInfo.client == null || !sessionInfo.client.id || !sessionInfo.client.email) {
       console.error("El cliente tiene sesión OAuth pero necesita registrarse");
       return SessionState.NeedsRegister;
     }
