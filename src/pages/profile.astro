@@ -9,17 +9,12 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
 import { getSession } from "auth-astro/server";
-
 const session = await getSession(Astro.request);
-
-console.log(session);
 
 const profileType = "cliente";
 
 const cliente: Client | undefined = await fetchClientById(1);
 const profilePhotoSrc: string | null | undefined = cliente?.image || session?.user?.image;
-
-console.log(cliente);
 ---
 
 <Layout title="Profile">
