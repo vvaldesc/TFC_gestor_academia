@@ -1,45 +1,38 @@
 ---
 title: "Profile";
 
-//import type { Client } from "@/consts/types";
-import type { Session } from "@auth/core/types";
-import type { ClientSession } from "@/consts/types";
-
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
-import { sessionHandler } from "@/services/server_side_logic";
+//Session handling//////////////////////////
+import type { ClientSession,SessionState,sessionInfoState } from "@/consts/types";
+
+import { sessionHandler,sessionStateCheck } from "@/services/server_side_logic";
 import { getSession } from "auth-astro/server";
 
-
-let registroCompletado: boolean = false;
-let session: Session | null = null;
-let sessionInfo: ClientSession = {} as ClientSession;
+let sessionInfoState: sessionInfoState = {} as sessionInfoState;
 
 try {
-  session = await getSession(Astro.request);
-  if (session) {
-    sessionInfo = await sessionHandler(session);
-    console.log(sessionInfo);
-    registroCompletado = sessionInfo.client != null;
-  } else {
-    throw new Error("No session found.");
-  }
-} catch (error) {
+  const sessionInfo: ClientSession = await sessionHandler(await getSession(Astro.request));
+  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+  sessionInfoState = {sessionState,sessionInfo};
+  console.log(sessionInfoState);
+} catch (error) { 
   console.error(error);
 }
+//End session handling///////////////////////
 ---
 <Layout title="Profile">
     <Main>
-      {registroCompletado ? (
-        <Profile_section profilePhotoSrc={sessionInfo.profilePhotoSrc}>
+      {sessionInfoState.sessionState === 2 ? (
+        <Profile_section profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}>
           <h1 slot="header">Este es el encabezado</h1>
           <p>{ /*profileType*/ }</p>
           <p>Este es el contenido principal</p>
-          <p slot="user">usuario: { sessionInfo.client?.username }</p>
-          <p slot="id">id: { sessionInfo.client?.id }</p>
-          <p slot="mail">mail: { sessionInfo.client?.email }</p>
+          <p slot="user">usuario: {sessionInfoState.sessionInfo.client?.username}</p>
+          <p slot="id">id: {sessionInfoState.sessionInfo.client?.id}</p>
+          <p slot="mail">mail: {sessionInfoState.sessionInfo.client?.email}</p>
         </Profile_section>
       ) : (
         <p>No hay imagen de perfil disponible.</p>
