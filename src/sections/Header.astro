@@ -1,8 +1,9 @@
 ---
 import Headernav from "@/components/Headernav.astro";
+import Google from "@auth/core/providers/google";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import { SignOut } from "auth-astro/components";
+import { SignOut, SignIn } from "auth-astro/components";
 
 interface Props {
   session: any | null;
@@ -33,7 +34,7 @@ const { session } = Astro.props;
           {<SignOut>Logout</SignOut>}
         </>
       ) : (
-        <button id="login">Login</button>
+        <SignIn provider={"google"} options={{ callbackUrl: "/profile" }}>Login</SignIn>
       )}
 
     </div>
@@ -45,17 +46,6 @@ const { session } = Astro.props;
     </a>
   </div>
 </header>
-
-<script>
-    // Sign in with Google, i used an client side import to modify the signin function
-    const { signIn } = await import("auth-astro/client")
-    const loginButton = document.querySelector("#login");
-    if (loginButton) {
-      loginButton.addEventListener("click", async () => {
-        signIn("google", { callbackUrl: "/profile" });
-      });
-    }
-</script>
 
 <style>
   header {
