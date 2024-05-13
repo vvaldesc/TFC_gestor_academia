@@ -2,7 +2,7 @@ import type { Client, Result, Teacher, Student } from "@/consts/types";
 
 export const fetchClientById = async (id: number): Promise<Client | undefined> => {
     try {
-        const response = await fetch(`http://localhost:4321/api/clients/id/${id}`);
+        const response = await fetch(`http://localhost:4321/api/clients/id/${id}`);// BD petition
         const data = await response.json();
         const result: Result = data.result as Result;
         const client: Client = await result.data[0];
@@ -14,7 +14,7 @@ export const fetchClientById = async (id: number): Promise<Client | undefined> =
 
 export const fetchClientByEmail = async (email: string): Promise<Client | Teacher | Student | undefined> => {
     try {
-        const response = await fetch(`http://localhost:4321/api/clients/email/${email}`);
+        const response = await fetch(`http://localhost:4321/api/clients/email/${email}`);// BD petition
         const data = await response.json();
         const result: Result = data.result as Result;
         if (data.count > 1) 

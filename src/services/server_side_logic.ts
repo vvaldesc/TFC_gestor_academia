@@ -44,7 +44,7 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
   result.OAuth = session as Session;
   console.log("Session data: ", session);
   // Fetch profile by email from web database
-  const {profile , table} = await fetchProfileByEmail(session?.user?.email as string);
+  const {profile , table} = await fetchProfileByEmail(session?.user?.email as string);// BD petition
   console.log("Client fetched by email: ", profile);
   // If client is registered
   if (profile) {
