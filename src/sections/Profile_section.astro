@@ -1,44 +1,49 @@
 ---
 import { Image } from "astro:assets";
 import { parseRole } from "@/controllers/logic";
+import { Icon } from "astro-icon/components";
+
+import Div_profile_rounded_image from "@/components/misc/Div_profile_rounded_image.astro";
 
 interface Props {
-    profilePhotoSrc: string | null | undefined;
-    role: string;
+  profilePhotoSrc: string | null | undefined;
+  role: string;
 }
 
-const {profilePhotoSrc} = Astro.props;
+const { profilePhotoSrc } = Astro.props;
 const role = parseRole(Astro.props.role);
-
 ---
+
 <!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
 <section class="main-section-bigProfileCard w-full mt-24 flex">
   <section class="w-1/2 border-l border-r border-gray-200 px-4">
     <div class="w-full">
       <h1 class="uppercase">PERFIL {role}</h1>
     </div>
-    <div class="section-div-profilePhoto">
-      {profilePhotoSrc ? (
-        <Image
-          src={profilePhotoSrc}
-          alt="Profile"
-          format="webp"
-          width={100}
-          height={100}
-          quality={"low"}
-          decoding={"async"}
-          loading={"lazy"}
-          densities={[0.2, 1, 2]}
-          class={"object-cover h-full w-full"}
-        />
-      ) : (
-        <p>No hay imagen de perfil disponible.</p>
-      )}
-    </div>
-  <slot name="header" />
-  <section>
-    <slot name="user" />
-  </section>
+    <Div_profile_rounded_image bordered={profilePhotoSrc === ""}>
+      {
+        profilePhotoSrc !== "" ? (
+          <Image
+            src={profilePhotoSrc as string}
+            alt="Profile"
+            format="webp"
+            width={100}
+            height={100}
+            quality={"low"}
+            decoding={"async"}
+            loading={"lazy"}
+            densities={[0.2, 1, 2]}
+            class={"object-cover h-full w-full"}
+          />
+        ) : (
+        <Icon name="mdi:account" size={22} class="size-full" />          
+        )
+      }
+    </Div_profile_rounded_image>
+    <slot name="header" />
+    <section>
+      <slot name="user" />
+    </section>
   </section>
   <section class="w-1/2 border-r border-gray-200 px-4">
     <section>

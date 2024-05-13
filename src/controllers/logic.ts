@@ -48,7 +48,7 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
   console.log("Client fetched by email: ", profile);
   // If client is registered
   if (profile) {
-    const profilePhotoSrc: string = profile.image || session?.user?.image || "/images/default_profile.png";
+    const profilePhotoSrc: string = result.profile.image || result.OAuth.user?.image || "";
     result.profile = profile;
     result.profilePhotoSrc = profilePhotoSrc;
     result.role = table;

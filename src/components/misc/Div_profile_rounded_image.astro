@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  bordered: boolean;
+}
+const {bordered} = Astro.props;
+---
+
+<div class={"section-div-profilePhoto" + (bordered ? " default" : "") + " relative"}>
+  { bordered 
+        ? (<a id="image_upload_href" href=""><Icon style={"left: 77%"} name="mdi:edit" size={1} class="size-6 absolute" /></a>)
+        : ( null )
+    }
+    
+    <slot />
+</div>
+<style>
+  .section-div-profilePhoto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .default {
+    background-color: rgb(223, 223, 223);
+  }
+</style>
