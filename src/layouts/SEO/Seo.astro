@@ -1,9 +1,14 @@
 ---
 import { SEO } from "astro-seo";
+interface Props {
+  // TypeScript interface for props
+  title: string;
+}
+const {title} = Astro.props;
 ---
 
 <SEO
-    title="Peluquería Imagen"
+    title={title}
     description="Academia de peluquería y estética. Aprende las últimas tendencias en cortes de pelo, peinados y tratamientos de belleza. Cursos y formación profesional para convertirte en un experto en el mundo de la belleza."
     openGraph={{
     basic: {

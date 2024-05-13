@@ -1,8 +1,27 @@
 ---
 title: "Página no encontrada"
 import Layout from "@/layouts/Layout.astro"
+
+import type {
+  SessionState,
+} from "@/consts/types";
+import type { Session } from "@auth/core/types";
+
+import {
+  validateOAuth
+} from "@/services/server_side_logic";
+
+import { getSession } from "auth-astro/server";
+
+const session: Session = await getSession(Astro.request) as Session;
+const sessionState: SessionState = validateOAuth(session) ? 1 : 0;
+
+const title: string = sessionState === 0 ? "Registrate en Imagen" : "Completa tu registro";
 ---
-<Layout title="401">
-    <h1>No autorizado para entrar en esta página</h1>
-    <p>Lo sentimos, la página que estás buscando no existe.</p>
+<Layout title={title}>
+    { 
+      sessionState === 1 
+      ? <p>Necesitas completar tu registro</p> 
+      : <p>Necesitas registrarte</p>
+    }
 </Layout>

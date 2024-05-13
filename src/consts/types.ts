@@ -29,9 +29,7 @@ export interface Client {
   active?: boolean;
 }
 
-export type ClientSession = { OAuth: Session } & { client: Client } & {
-  profilePhotoSrc: string;
-};
+export type ClientSession = { OAuth: Session } & { client: Client } & { profilePhotoSrc: string } & { role: string };
 
 export enum SessionState {
   WithoutSession = 0,
