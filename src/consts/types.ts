@@ -1,7 +1,9 @@
-export interface Session {
+import type { Session } from "@auth/core/types";
+
+/*export interface Session {
   user: User;
   expires: Date;
-}
+}*/
 
 export interface User {
   name: string;

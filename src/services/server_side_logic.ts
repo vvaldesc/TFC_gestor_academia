@@ -1,28 +1,33 @@
 //import type { Client } from "@/consts/types";
 import type { Session } from "@auth/core/types";
-import type { ClientSession } from "@/consts/types";
+import type { ClientSession, Client } from "@/consts/types";
 import { SessionState } from "@/consts/types";
 
 import { fetchClientByEmail } from "@/services/server_side_fetch";
 
 export const sessionHandler = async (session: Session | null): Promise<ClientSession> => {
+  let result: ClientSession = {
+    OAuth: {} as Session,
+    client: {} as Client,
+    profilePhotoSrc: "",
+  };
   // If google login doesn't return name or email
-  if (!session || !session.user || !session.user.name || !session.user.email)
-    throw new Error("Google login didn't return valid data.");
+  if (!session || !session.user || !session.user.name || !session.user.email) {
+    console.log("Google login didn't return valid data.");
+    return result;
+  }
+  result.OAuth = session;
+  // Fetch client by email from web database
   const client = await fetchClientByEmail(session?.user?.email);
   // If client is registered
   if (client) {
-    const profilePhotoSrc: string =
-      client.image || session.user.image || "/images/default_profile.png";
-    const result: ClientSession = {
-      //@ts-ignore
-      OAuth: session as Session,
-      client: client,
-      profilePhotoSrc: profilePhotoSrc,
-    };
+    const profilePhotoSrc: string = client.image || session.user.image || "/images/default_profile.png";
+    result.client = client;
+    result.profilePhotoSrc = profilePhotoSrc;
     return result;
   } else {
-    throw new Error("Client is not registered in web database.");
+    console.log("Client is not registered in web database.");
+    return result;
   }
 };
 

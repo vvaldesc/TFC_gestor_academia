@@ -18,6 +18,9 @@ try {
   const sessionState: SessionState = await sessionStateCheck(sessionInfo);
   sessionInfoState = {sessionState,sessionInfo};
   console.log(sessionInfoState);
+  if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) {
+    return Astro.redirect('/401');
+  }
 } catch (error) { 
   console.error(error);
 }
