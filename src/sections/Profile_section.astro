@@ -1,21 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import type { Session } from "@auth/core/types";
-import type { Client } from "@/consts/types";
-import { fetchClientById } from "@/services/server_side_fetch";
+import { parseRole } from "@/controllers/logic";
 
 interface Props {
     profilePhotoSrc: string | null | undefined;
+    role: string;
 }
 
 const {profilePhotoSrc} = Astro.props;
+const role = parseRole(Astro.props.role);
 
 ---
 <!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
 <section class="main-section-bigProfileCard w-full mt-24 flex">
   <section class="w-1/2 border-l border-r border-gray-200 px-4">
     <div class="w-full">
-      <h1>PERFIL CLIENTE</h1>
+      <h1 class="uppercase">PERFIL {role}</h1>
     </div>
     <div class="section-div-profilePhoto">
       {profilePhotoSrc ? (

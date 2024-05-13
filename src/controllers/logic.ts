@@ -1,9 +1,9 @@
 //import type { Client } from "@/consts/types";
 import type { Session } from "@auth/core/types";
-import type { ClientSession, Client, Teacher, Student, ProfileSession } from "@/consts/types";
-import { SessionState } from "@/consts/types";
+import type { Client, Teacher, Student, ProfileSession } from "@/models/types";
+import { SessionState } from "@/models/types";
 
-import { fetchProfileByEmail } from "@/services/server_side_fetch";
+import { fetchProfileByEmail } from "@/services/server/fetching/fetch";
 
 export function validateOAuth(session: Session | null): boolean {
   if (!session) {
@@ -73,5 +73,18 @@ export async function sessionStateCheck(sessionInfo: ProfileSession): Promise<Se
   } catch (error) {
     console.error(error);
     throw new Error("Error al verificar el estado de la sesión");
+  }
+}
+
+export const parseRole = (role: string): string => {
+  switch (role) {
+    case "Clients":
+      return "Cliente";
+    case "Students":
+      return "Estudiante";
+    case "Teachers":
+      return "Profesor";
+    default:
+      return "Cliente";
   }
 }

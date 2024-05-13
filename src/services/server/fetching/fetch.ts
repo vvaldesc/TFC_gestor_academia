@@ -1,4 +1,4 @@
-import type { Client, Result, Teacher, Student } from "@/consts/types";
+import type { Client, Result, Teacher, Student } from "@/models/types";
 
 export const fetchClientById = async (id: number): Promise<Client | undefined> => {
     try {

@@ -2,9 +2,9 @@
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
 //Session handling//////////////////////////// prettier-ignore
-import {validateOAuth} from "@/services/server_side_logic"; // prettier-ignore
+import {validateOAuth} from "@/controllers/logic"; // prettier-ignore
 import { getSession } from "auth-astro/server"; // prettier-ignore
-import type {SessionState} from "@/consts/types"; // prettier-ignore
+import type {SessionState} from "@/models/types"; // prettier-ignore
 import type { Session } from "@auth/core/types"; // prettier-ignore
 const session: Session = (await getSession(Astro.request)) as Session; // prettier-ignore
 const sessionState: SessionState = validateOAuth(session) ? 1 : 0; // prettier-ignore
