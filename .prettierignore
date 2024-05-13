@@ -1,0 +1,22 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# Ignore the build directory
+build/
+
+# Ignore the dist directory
+dist/
+
+# Ignore the coverage directory
+coverage/
+
+# Ignore the .idea directory
+.idea/
+
+# Ignore the .vscode directory
+.vscode/
+
+./src/pages/404.js
+./src/pages/profile.js

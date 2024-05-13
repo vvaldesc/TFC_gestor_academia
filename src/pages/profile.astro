@@ -5,48 +5,44 @@ import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
-//Session handling//////////////////////////
-import type {
-  ClientSession,
-  SessionState,
-  sessionInfoState,
-} from "@/consts/types";
-
-import {
-  sessionHandler,
-  sessionStateCheck,
-} from "@/services/server_side_logic";
-import { getSession } from "auth-astro/server";
-
-let sessionInfoState: sessionInfoState = {} as sessionInfoState;
-
+//Session handling//////////////////////////// prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/services/server_side_logic"; // prettier-ignore
+import {getSession} from "auth-astro/server"; // prettier-ignore
+import type {ProfileSession,SessionState,sessionInfoState} from "@/consts/types"; // prettier-ignore
+let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
+// prettier-ignore
 try {
-  const sessionInfo: ClientSession = await sessionHandler(await getSession(Astro.request));
+  const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
   const sessionState: SessionState = await sessionStateCheck(sessionInfo);
   sessionInfoState = { sessionState, sessionInfo };
   console.log(sessionInfoState);
-  if (
-    sessionInfoState.sessionState === 1 ||
-    sessionInfoState.sessionState === 0
-  ) {
+  if ( sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0 ) {
     return Astro.rewrite("/401");
   }
 } catch (error) {
   console.error(error);
 }
-//End session handling///////////////////////
+//End handling//////////////////////////
 
-const userName = sessionInfoState.sessionInfo.client?.username || sessionInfoState.sessionInfo.OAuth.user?.name || "a Imagen";
+const userName =
+  sessionInfoState.sessionInfo.profile?.username ||
+  sessionInfoState.sessionInfo.OAuth.user?.name ||
+  "a Imagen";
 ---
+
 <Layout title=`Bienvenido ${userName}`>
   <Main>
-    <Profile_section profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}>
+    <Profile_section
+      profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}
+    >
       <h1 slot="header">Este es el encabezado</h1>
       <p>{sessionInfoState.sessionInfo.role}</p>
       <p>Este es el contenido principal</p>
-      <p slot="user">usuario: {sessionInfoState.sessionInfo.client?.username}</p>
-      <p slot="id">id: {sessionInfoState.sessionInfo.client?.id}</p>
-      <p slot="mail">mail: {sessionInfoState.sessionInfo.client?.email}</p>
+      <p slot="user">
+        usuario: {sessionInfoState.sessionInfo.profile?.username}
+      </p>
+      <p slot="id">id: {sessionInfoState.sessionInfo.profile?.id}</p>
+      <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
     </Profile_section>
   </Main>
 </Layout>
