@@ -1,0 +1,27 @@
+---
+title: "Página no encontrada";
+import Layout from "@/layouts/Layout.astro";
+
+import {validateOAuth} from "@/controllers/logic";
+
+//Session handling//////////////////////////// prettier-ignore
+import {Register_section} from "@/sections/Register_section.astro"; // prettier-ignore
+import { getSession } from "auth-astro/server"; // prettier-ignore
+import type {SessionState} from "@/models/types"; // prettier-ignore
+import type { Session } from "@auth/core/types"; // prettier-ignore
+const session: Session = (await getSession(Astro.request)) as Session; // prettier-ignore
+const sessionState: SessionState = validateOAuth(session) ? 1 : 0; // prettier-ignore
+//End handling//////////////////////////
+
+const title: string =sessionState === 0 ? "Registrate en Imagen" : "Completa tu registro"; // prettier-ignore
+---
+
+<Layout title={title}>
+  {
+    sessionState === 1 ? (
+      <p>Necesitas completar tu registro</p>
+    ) : (
+      <p>Necesitas registrarte</p>
+    )
+  }
+</Layout>
