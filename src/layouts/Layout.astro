@@ -5,31 +5,37 @@ import Footer from "@/sections/Footer.astro";
 import Seo from "./SEO/Seo.astro";
 
 //Session handling//////////////////////////// prettier-ignore
-import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
+import {sessionHandler, sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
 import {getSession} from "auth-astro/server"; // prettier-ignore
-import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
+import type {ProfileSession, SessionState, sessionInfoState} from "@/models/types"; // prettier-ignore
 let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
-// prettier-ignore
-try {
-  const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
-  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
-  sessionInfoState = { sessionState, sessionInfo };
-  console.log("imprimir cookie");
-  Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState));
-  console.log(sessionInfoState);
-  if ( sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0 ) {
-    return Astro.rewrite("/401");
+
+if (!Astro.cookies.has("sessionInfoState")) {
+  // prettier-ignore
+  try {
+    const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
+    const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+    sessionInfoState = { sessionState, sessionInfo };
+    console.log("imprimir cookie");
+    Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState));
+    console.log(sessionInfoState);
+    if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) {
+      return Astro.rewrite("/401");
+    }
+  } catch (error) {
+    console.error(error);
   }
-} catch (error) {
-  console.error(error);
+  //End handling//////////////////////////
+} else {
+  //Session Reading////////////////
+  sessionInfoState = JSON.parse(Astro.cookies.get("sessionInfoState")?.value ?? "") as sessionInfoState;
+  //Session Reading////////////////
 }
 
-//End handling//////////////////////////
 
 interface Props {
   // TypeScript interface for props
   title: string;
-  slider?: boolean;
 }
 
 const { title } = Astro.props;

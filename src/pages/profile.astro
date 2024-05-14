@@ -8,15 +8,12 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 
 //Session Reading////////////////
 let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
-const sessionInfoStateValue = Astro.cookies.get("sessionInfoState")?.value;
-sessionInfoState = sessionInfoStateValue 
-  ? JSON.parse(sessionInfoStateValue) as sessionInfoState 
-  : {} as sessionInfoState;
-
-console.log("sessionCookie", sessionInfoState);
+const sessionInfoStateValue = Astro.cookies.has("sessionInfoState") ? null : Astro.cookies.get("sessionInfoState")?.value; // prettier-ignore
+sessionInfoState = sessionInfoStateValue ? JSON.parse(sessionInfoStateValue) as sessionInfoState : {} as sessionInfoState; // prettier-ignore
+//Session Reading////////////////
 
 const userName =
-  sessionInfoState.sessionInfo.profile?.username ||
+  sessionInfoState.sessionInfo.profile.username ||
   sessionInfoState.sessionInfo.OAuth.user?.name ||
   "a Imagen";
 ---
