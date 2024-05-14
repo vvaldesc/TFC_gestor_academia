@@ -23,3 +23,6 @@ certs/
 
 # macOS-specific files
 .DS_Store
+
+
+*.report.html
