@@ -3,11 +3,12 @@ import Headernav from "@/components/Headernav.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { SignOut, SignIn } from "auth-astro/components";
+import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 
 interface Props {
-  session: any | null;
+  sessionInfoState: sessionInfoState;
 }
-const { session } = Astro.props;
+const { sessionInfoState } = Astro.props;
 ---
 
 <header>
@@ -15,11 +16,11 @@ const { session } = Astro.props;
   <Headernav fields={['Inicio','profile']}/>
   <div class="flex">
     <div class="flex">
-      {session ? (
+      {sessionInfoState.sessionState != 0 ? (
         <>
-          <Image 
+          { <Image 
             class="header-image-googleThumb"
-            src={session?.user?.image}
+            src={sessionInfoState.sessionInfo.profilePhotoSrc}
             alt="Google Profile Picture"
             width={50}
             height={50}
@@ -28,8 +29,8 @@ const { session } = Astro.props;
             loading={"lazy"}
             densities={[0.2, 1, 2]}
             format="webp"
-          />
-          <p>Bienvenido {session?.user?.name}</p>
+          /> }
+          <p>Bienvenido {sessionInfoState.sessionInfo.profile.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
           {<SignOut>Logout</SignOut>}
         </>
       ) : (

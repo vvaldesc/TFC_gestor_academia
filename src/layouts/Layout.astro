@@ -2,18 +2,31 @@
 import { ViewTransitions } from "astro:transitions";
 import Seo from "./SEO/Seo.astro";
 
-import { getSession } from "auth-astro/server";
-const session = await getSession(Astro.request);
-
-interface Props {
-  // TypeScript interface for props
-  title: string;
-  slider?: boolean;
-}
-
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
 
+//Session handling//////////////////////////// prettier-ignore
+import {getSession} from "auth-astro/server"; // prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
+import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
+let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
+
+try {
+  const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
+  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+  sessionInfoState = { sessionState, sessionInfo };
+  console.log(sessionInfoState);
+  if (sessionInfoState.sessionState === 2) {Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState), { path: "/sess" })}
+  else {Astro.redirect("/401")}
+} catch (e) {
+  console.error(e);
+}
+//End handling//////////////////////////
+
+
+interface Props {
+  title: string;
+}
 const { title } = Astro.props;
 ---
 
@@ -30,7 +43,7 @@ const { title } = Astro.props;
   <body>
     <div id="App" class="relative h-screen">
       <!-- grid actúa como container -->
-      <Header session={session} />
+      <Header sessionInfoState={sessionInfoState} />
       <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
