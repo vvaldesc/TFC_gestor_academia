@@ -26,6 +26,7 @@
     "auth-astro": "4.1.1",
     "axios": "1.6.8",
     "eslint-plugin-react": "7.34.1",
+    "framer-motion": "^11.1.9",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "svelte": "4.2.16",
