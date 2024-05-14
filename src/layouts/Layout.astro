@@ -1,9 +1,30 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import Header from "@/sections/Header.astro";
+import Footer from "@/sections/Footer.astro";
 import Seo from "./SEO/Seo.astro";
 
-import { getSession } from "auth-astro/server";
-const session = await getSession(Astro.request);
+//Session handling//////////////////////////// prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
+import {getSession} from "auth-astro/server"; // prettier-ignore
+import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
+let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
+// prettier-ignore
+try {
+  const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
+  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+  sessionInfoState = { sessionState, sessionInfo };
+  console.log("imprimir cookie");
+  Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState));
+  console.log(sessionInfoState);
+  if ( sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0 ) {
+    return Astro.rewrite("/401");
+  }
+} catch (error) {
+  console.error(error);
+}
+
+//End handling//////////////////////////
 
 interface Props {
   // TypeScript interface for props
@@ -11,10 +32,8 @@ interface Props {
   slider?: boolean;
 }
 
-import Header from "@/sections/Header.astro";
-import Footer from "@/sections/Footer.astro";
-
 const { title } = Astro.props;
+Astro.cookies.set("title", title);
 ---
 
 <!doctype html>
@@ -30,7 +49,7 @@ const { title } = Astro.props;
   <body>
     <div id="App" class="relative h-screen">
       <!-- grid actúa como container -->
-      <Header session={session} />
+      <Header session={sessionInfoState.sessionInfo.OAuth} />
       <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
