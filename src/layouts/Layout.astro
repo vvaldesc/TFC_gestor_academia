@@ -5,12 +5,10 @@ import Seo from "./SEO/Seo.astro";
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
 
-
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-import { sessionFetch } from "@/services/server/logic/handlers/sessionhandler.astro";
-const sessionInfoState = await sessionFetch(Astro.request) as sessionInfoState;
-console.log(sessionInfoState);
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState;
 //SESSION HANDLER////////////////////////////////////////
 
 interface Props {
