@@ -25,7 +25,6 @@ export function validateOAuth(session: Session | null): boolean {
     console.log("No user email in session.");
     return false;
   }
-
   return true;
 }
 
@@ -36,6 +35,8 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
     role: "" as string,
     profilePhotoSrc: "/img/profile/main_thumbnail/photo_1.jpg" as string,
   };
+  console.log("Hola");
+
   // If google login doesn't return name or email
   if (!validateOAuth(session)) {
     console.log("Google login didn't return valid data.");
@@ -49,7 +50,6 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
   console.log("Client fetched by email: ", profile);
   // If client is registered
   if (profile) {
-    console.log("Hola");
     const profilePhotoSrc: string = result.profile.image || result.OAuth.user?.image || "/img/profile/main_thumbnail/photo_1.jpg";
     console.log("Profile photo source: ", profilePhotoSrc);
     result.profile = profile;

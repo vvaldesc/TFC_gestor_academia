@@ -1,0 +1,28 @@
+---
+//Session handling//////////////////////////// prettier-ignore
+import {getSession} from "auth-astro/server"; // prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/services/server/logic/controllers/logic"; // prettier-ignore
+import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
+
+export async function sessionFetch(request: any): Promise<sessionInfoState> {
+  let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
+  try {
+    const sessionInfo: ProfileSession = await sessionHandler(await getSession(request));
+    const sessionState: SessionState = await sessionStateCheck(sessionInfo);
+    sessionInfoState = { sessionState, sessionInfo };
+    console.log(sessionInfoState);
+    if (sessionInfoState.sessionState === 2 || sessionInfoState.sessionState === 1) {
+      Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState), { path: "/sess" })
+    }
+    else {
+      Astro.redirect("/register")
+      throw new Error("Session state is invalid. Execution stopped.");
+    }
+    return sessionInfoState as sessionInfoState;
+  } catch (e) {
+    console.error(e);
+  }
+  return sessionInfoState as sessionInfoState;
+}
+//End handling//////////////////////////
+---

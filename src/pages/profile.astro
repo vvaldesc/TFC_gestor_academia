@@ -6,7 +6,7 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 
 //Session handling//////////////////////////// prettier-ignore
-import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/services/server/logic/controllers/logic"; // prettier-ignore
 import {getSession} from "auth-astro/server"; // prettier-ignore
 import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
 let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
