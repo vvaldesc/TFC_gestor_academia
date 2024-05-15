@@ -17,7 +17,7 @@ try {
   sessionInfoState = { sessionState, sessionInfo };
   console.log(sessionInfoState);
   if (sessionInfoState.sessionState === 2) {Astro.cookies.set("sessionInfoState", JSON.stringify(sessionInfoState), { path: "/sess" })}
-  else {Astro.redirect("/401")}
+  else {Astro.redirect("/register")}
 } catch (e) {
   console.error(e);
 }

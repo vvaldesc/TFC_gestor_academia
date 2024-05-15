@@ -34,7 +34,7 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
     OAuth: {} as Session,
     profile: {} as Client | Student | Teacher,
     role: "" as string,
-    profilePhotoSrc: "" as string,
+    profilePhotoSrc: "/img/profile/main_thumbnail/photo_1.jpg" as string,
   };
   // If google login doesn't return name or email
   if (!validateOAuth(session)) {
@@ -42,13 +42,16 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
     return result;
   }
   result.OAuth = session as Session;
+  result.profilePhotoSrc = result.OAuth.user?.image || "/img/profile/main_thumbnail/photo_1.jpg";
   console.log("Session data: ", session);
   // Fetch profile by email from web database
   const {profile , table} = await fetchProfileByEmail(session?.user?.email as string);// BD petition
   console.log("Client fetched by email: ", profile);
   // If client is registered
   if (profile) {
-    const profilePhotoSrc: string = result.profile.image || result.OAuth.user?.image || "";
+    console.log("Hola");
+    const profilePhotoSrc: string = result.profile.image || result.OAuth.user?.image || "/img/profile/main_thumbnail/photo_1.jpg";
+    console.log("Profile photo source: ", profilePhotoSrc);
     result.profile = profile;
     result.profilePhotoSrc = profilePhotoSrc;
     result.role = table;
