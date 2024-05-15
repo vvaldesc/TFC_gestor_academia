@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import axios from 'axios';
+import type {Client} from "@/models/types"; // prettier-ignore
 
-export const default usePostClient = (url: string) => {
+const url = 'http://localhost:4321/clients';
+
+export const usePostClient = (client: Client) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -8,18 +12,12 @@ export const default usePostClient = (url: string) => {
   const postData = async (body: any) => {
     setIsLoading(true);
     try {
-      const response = await fetch(url, {
-        method: 'POST',
+      const response = await axios.post(url, body, {
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setData(data);
+      setData(response.data);
       setIsLoading(false);
     } catch (error) {
       setError(error);
@@ -29,3 +27,5 @@ export const default usePostClient = (url: string) => {
 
   return { data, isLoading, error, postData };
 };
+
+export default usePostClient;

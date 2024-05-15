@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import type {sessionInfoState,Client} from "@/models/types"; // prettier-ignore
 import {client_formFields} from "@/consts/forms_fields"; // prettier-ignore
+import {clientPostHandler} from "@/services/client/logic/handlers/clientPostHandler"; // prettier-ignore
 
 type RegisterFormProps = {
   sessionInfoState: sessionInfoState;
@@ -27,6 +28,8 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    clientPostHandler(client)
+    debugger;
     console.log(client);
   };
 
@@ -91,6 +94,12 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
           type="date"
           name="bornDate"
           placeholder="fecha_nacimiento"
+          onChange={handleChange}
+        />
+        <input
+          type="file"
+          name="image"
+          placeholder="foto_perfil"
           onChange={handleChange}
         />
         <input type="submit" value="Register" />
