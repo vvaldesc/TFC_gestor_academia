@@ -1,7 +1,7 @@
 ---
 //Session handling//////////////////////////// prettier-ignore
 import {getSession} from "auth-astro/server"; // prettier-ignore
-import {sessionHandler,sessionStateCheck} from "@/services/server/logic/controllers/logic"; // prettier-ignore
+import {sessionHandler,sessionStateCheck} from "@/services/server/logic/handlers/logic"; // prettier-ignore
 import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
 
 export async function sessionFetch(request: any): Promise<sessionInfoState> {
