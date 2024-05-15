@@ -27,6 +27,7 @@ export interface Client {
   confirmed?: boolean;
   image?: string;
   active?: boolean;
+  [key: string]: any;
 }
 
 export interface Student {
