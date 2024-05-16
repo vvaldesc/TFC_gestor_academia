@@ -25,7 +25,10 @@ export const usePostClient = (client: Client) => {
     }
   };
 
-  return { data, isLoading, error, postData };
+  return { sentData: client,
+     postClientLoading: isLoading ,
+     postClientError: error,
+    postData: postData };
 };
 
 export default usePostClient;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import type {sessionInfoState,Client} from "@/models/types"; // prettier-ignore
+import type {sessionInfoState,Client,useCheckProfilePhotoType,usePostClientType} from "@/models/types"; // prettier-ignore
 import {client_formFields} from "@/consts/forms_fields"; // prettier-ignore
-import {clientPostHandler} from "@/services/client/logic/handlers/clientPostHandler"; // prettier-ignore
+import useClientPostHandler from "@/services/client/customhooks/handlers/useClientPostHandler"; // prettier-ignore
+import {useCheckProfilePhoto} from "@/services/client/customhooks/useCheckProfilePhoto"; // prettier-ignore
 
 type RegisterFormProps = {
   sessionInfoState: sessionInfoState;
@@ -9,6 +10,16 @@ type RegisterFormProps = {
 
 const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
   const [client, setClient] = useState<Client>({} as Client);
+  const [submit, setSubmit] = useState(false);
+  const [clientPostHandlerResult, setClientPostHandlerResult] = useState<{
+    useCheckProfilePhotoType: useCheckProfilePhotoType;
+    usePostClientType: usePostClientType;
+  } | null>(null);
+  debugger;
+  useEffect(() => {
+    const result = useClientPostHandler(client);
+    setClientPostHandlerResult(result);
+  }, [submit]);
 
   useEffect(() => {
     setClient((prevState) => ({
@@ -28,9 +39,7 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    clientPostHandler(client)
-    debugger;
-    console.log(client);
+    setSubmit(true);
   };
 
   return (

@@ -99,3 +99,16 @@ export interface SqlProfileByEmail {
   rowsAffected:    number;
   lastInsertRowid: null;
 }
+
+export interface usePostClientType {
+  sentData: Client | null;
+  postClientLoading: boolean;
+  postClientError: any;
+  postData: any;
+}
+
+export interface useCheckProfilePhotoType {
+  validPhoto: boolean;
+  photoCheckLoading: boolean;
+  photoProfileError: any;
+}
