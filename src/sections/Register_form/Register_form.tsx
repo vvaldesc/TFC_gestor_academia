@@ -15,10 +15,20 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
     useCheckProfilePhotoType: useCheckProfilePhotoType;
     usePostClientType: usePostClientType;
   } | null>(null);
-  debugger;
+
+  // Intento trabajar con submit de condicional
+  debugger
+  const result = useClientPostHandler(client,submit);
+  
   useEffect(() => {
-    const result = useClientPostHandler(client);
+    if (result.useCheckProfilePhotoType.validPhoto == false || result.usePostClientType.postClientError != null) {
+      setSubmit(false);
+    }
+  }, [result]);
+
+  useEffect(() => {
     setClientPostHandlerResult(result);
+    console.log(result);
   }, [submit]);
 
   useEffect(() => {
@@ -111,7 +121,7 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
           placeholder="foto_perfil"
           onChange={handleChange}
         />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" onClick={() => {setSubmit(true)}}/>
       </section>
     </form>
   );

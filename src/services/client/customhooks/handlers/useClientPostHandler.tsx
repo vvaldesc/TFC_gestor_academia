@@ -4,19 +4,20 @@ import type {Client, useCheckProfilePhotoType, usePostClientType} from "@/models
 import { useEffect } from "react";
 
 
-export const useClientPostHandler = (client: Client) => {
+export const useClientPostHandler = (client: Client,submit: boolean) => {
   let usePostClientResult = {} as usePostClientType;
   let useCheckProfilePhotoResult = {} as useCheckProfilePhotoType;
-  debugger;
 
-  useCheckProfilePhotoResult = useCheckProfilePhoto(client.image as string);
+  debugger
+
+  useCheckProfilePhotoResult = useCheckProfilePhoto(client.image as string, submit as boolean);
 
   useEffect(() => {
     if (useCheckProfilePhotoResult.validPhoto) {
       console.log("Valid");
       //client.image = encodeImage(client.image as string);
       usePostClientResult =
-        useCheckProfilePhotoResult.validPhoto && usePostClient(client);
+        usePostClient(client, useCheckProfilePhotoResult.validPhoto as boolean);
     } else {
       console.log("Invalid");
     }
