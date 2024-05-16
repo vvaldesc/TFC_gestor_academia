@@ -18,18 +18,20 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
 
   // Intento trabajar con submit de condicional
   debugger
-  const result = useClientPostHandler(client,submit);
-  
+  const result = useClientPostHandler(client,submit)
   useEffect(() => {
-    if (result.useCheckProfilePhotoType.validPhoto == false || result.usePostClientType.postClientError != null) {
-      setSubmit(false);
+    if (submit) {
+      // Asumiendo que useClientPostHandler es un hook personalizado que depende de `client` y `submit`
+      setClientPostHandlerResult(result);
     }
-  }, [result]);
+  }, [submit, client]); // Dependencias: `submit` y `client`
+  console.log(clientPostHandlerResult);
 
   useEffect(() => {
-    setClientPostHandlerResult(result);
-    console.log(result);
-  }, [submit]);
+    if (submit && !result.usePostClientType.postClientLoading || !result.useCheckProfilePhotoType.photoCheckLoading) {
+      setSubmit(false);
+    }
+  }, [submit, result.usePostClientType.postClientLoading]);
 
   useEffect(() => {
     setClient((prevState) => ({
@@ -48,11 +50,12 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    debugger
     e.preventDefault();
     setSubmit(true);
   };
-
   return (
+    <>
     <form className="flex" onSubmit={handleSubmit}>
       <section className="w-1/2 border-l border-r border-gray-200 px-4">
         <input
@@ -121,9 +124,14 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
           placeholder="foto_perfil"
           onChange={handleChange}
         />
-        <input type="submit" value="Register" onClick={() => {setSubmit(true)}}/>
+        <input type="submit" value="Register"/>
       </section>
     </form>
+    {clientPostHandlerResult?.useCheckProfilePhotoType.photoCheckLoading && (<p>Foto cargando</p>)}
+    {clientPostHandlerResult?.useCheckProfilePhotoType.photoProfileError != null && (<p>Error</p>)}
+    {clientPostHandlerResult?.usePostClientType.postClientLoading && (<p>Creando cliente</p>)}
+    {clientPostHandlerResult?.usePostClientType.postClientError != null && (<p>Error con cliente</p>)}
+    </>
   );
 };
 

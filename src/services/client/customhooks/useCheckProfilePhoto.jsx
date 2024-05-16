@@ -1,41 +1,46 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_KEY, API_HOST } from '@/consts/config'; // Ajusta la ruta de importación según sea necesario
 
 export const useCheckProfilePhoto = (src, submit) => {
   const [validPhoto, setValid] = useState(false);
-  const [photoCheckLoading, setLoading] = useState(true);
+  const [photoCheckLoading, setLoading] = useState(false);
   const [photoProfileError, setError] = useState(null);
   const url = "https://faceanalyzer-ai.p.rapidapi.com/faceanalysis";
-
-  let response = null;
+  const {API_KEY2, API_HOST2} = {API_KEY, API_HOST}
 
   useEffect(() => {
     const options = {
       method: 'POST',
       url: url,
       headers: {
-        'X-RapidAPI-Key': import.meta.env.VITE_FACEANALYCER_API_KEY,
-        'X-RapidAPI-Host': import.meta.env.VITE_FACEANALYCER_API_HOST
+        'X-RapidAPI-Key': API_KEY2,
+        'X-RapidAPI-Host': API_HOST2
       },
       data: src
     };
 
     const fetchData = async () => {
+      if (!submit) return; // Asegúrate de que submit es true antes de hacer la solicitud
+
+      setLoading(true); // Reinicia el estado de carga cada vez que se intenta enviar
       try {
         const response = await axios.request(options);
-        console.log(response.data);
+        console.log(response);
         // Aquí debes verificar la respuesta para saber si la imagen es válida o no
-        // y luego llamar a setValid con el valor correspondiente
-        return response;
+        // Por ejemplo, si response.data indica que la foto es válida:
+        // setValid(true); // o false, dependiendo de la respuesta
       } catch (error) {
-        setError(error);
+        console.error("este es el error"+error);
+        setLoading(false);
+        setError(String(error)); // Almacena el error en el estado para mostrarlo en la interfaz
       } finally {
         setLoading(false);
       }
     };
 
-    if (url && src && submit) {response = fetchData();}
-  }, [url, src]);
+    fetchData(); // Llama a fetchData directamente sin asignar su resultado
+  }, [submit, src]); // Asegúrate de incluir submit en las dependencias
 
   return {
     validPhoto,
