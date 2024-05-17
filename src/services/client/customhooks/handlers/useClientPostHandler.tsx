@@ -1,7 +1,6 @@
 import useCheckProfilePhoto from "@/services/client/customhooks/useCheckProfilePhoto";
 import usePostClient from "@/services/client/customhooks/usePostClient";
 import type {Client, useCheckProfilePhotoType, usePostClientType} from "@/models/types"; // prettier-ignore
-import { useEffect } from "react";
 
 
 export const useClientPostHandler = (client: Client,submit: boolean) => {

@@ -11,7 +11,8 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
 
   const postData = async (body: any) => {
     setIsLoading(true);
-
+    console.log("carga foto deberia ser true"+isLoading);
+    
     async function fetch() {
       console.log('fetching');
       console.log("json"+JSON.stringify(body));
@@ -22,6 +23,7 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
       });
       setData(response.data);
       setIsLoading(false);
+      console.log("carga foto deberia ser false"+isLoading);
     }
 
     try {
@@ -41,7 +43,7 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
   return { sentData: client,
      postClientLoading: isLoading ,
      postClientError: error,
-    postData: postData };
+    postData: data };
 };
 
 export default usePostClient;
