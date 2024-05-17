@@ -1,5 +1,14 @@
 import { motion } from "framer-motion";
 
+const div_promo = () => {
+    return (
+        <div className="w-36 h-36 bg-black">
+            {/* Content of the div */}
+            <p>s</p>
+        </div>
+    );
+};
+
 export default function StaggerChildren() {
     return (
         <motion.section
@@ -22,9 +31,8 @@ export default function StaggerChildren() {
                     hidden: { scale: 0 },
                     show: { scale: 1 },
                 }}
-                className="w-36 h-36 bg-black"
-                >
-                <div className="w-36 h-36 bg-black"></div>
+            >
+                <div_promo className=""/>
             </motion.div>
 
             <motion.div 
@@ -34,7 +42,7 @@ export default function StaggerChildren() {
                 }}
                 className="w-36 h-36 bg-black"
                 >
-                <div className="w-36 h-36 bg-black"></div>
+                <div_promo className=""/>
             </motion.div>
 
             <motion.div 
@@ -44,7 +52,7 @@ export default function StaggerChildren() {
                 }}
                 className="w-36 h-36 bg-black"
                 >
-                <div className="w-36 h-36 bg-black"></div>
+                <div_promo className=""/>
             </motion.div>
 
         </motion.section>
