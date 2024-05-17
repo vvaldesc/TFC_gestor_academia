@@ -8,8 +8,6 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  let clientAux = {} as Client;
-  clientAux = client;
 
   const postData = async (body: any) => {
     setIsLoading(true);
@@ -36,7 +34,7 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
 
   useEffect(() => {
     if (validPhoto && submit) {
-      postData(clientAux);
+      postData(client);
     }
   }, [validPhoto, submit]);
 

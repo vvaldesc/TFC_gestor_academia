@@ -16,8 +16,9 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
     usePostClientType: usePostClientType;
   } | null>(null);
 
+
+
   // Intento trabajar con submit de condicional
-  debugger
   const result = useClientPostHandler(client,submit)
   useEffect(() => {
     if (submit) {
@@ -27,10 +28,14 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
   }, [submit, client]); // Dependencias: `submit` y `client`
   console.log(clientPostHandlerResult);
 
+  if (result.usePostClientType.postData) {
+    console.log("borrar cookie");
+    document.cookie = "sessionInfoState=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+
   useEffect(() => {
     if (submit && !result.usePostClientType.postClientLoading || !result.useCheckProfilePhotoType.photoCheckLoading) {
       setSubmit(false);
-      console.log(submit);
     }
   }, [submit, result.usePostClientType.postClientLoading]);
 
@@ -47,7 +52,7 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
       ...prevState,
       [name]: value,
     }));
-    console.log(client);
+    //console.log(client);
   };
 
   const handleSubmit = (e: React.FormEvent) => {

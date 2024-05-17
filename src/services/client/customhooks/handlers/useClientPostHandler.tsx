@@ -12,7 +12,7 @@ export const useClientPostHandler = (client: Client,submit: boolean) => {
   useCheckProfilePhotoResult = useCheckProfilePhoto(client.image as string, submit as boolean);
   debugger
   useCheckProfilePhotoResult.validPhoto = true;
-  usePostClient(client, useCheckProfilePhotoResult.validPhoto as boolean, submit as boolean);
+  usePostClientResult = usePostClient(client, useCheckProfilePhotoResult.validPhoto as boolean, submit as boolean);
 
   return {
     useCheckProfilePhotoType: useCheckProfilePhotoResult,
