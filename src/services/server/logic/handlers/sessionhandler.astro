@@ -19,7 +19,6 @@ export async function sessionFetch(request: any, cookies: any): Promise<sessionI
       });
     }
     else {
-      Astro.redirect("/register")
       throw new Error("Session state is invalid. Execution stopped.");
     }
     return sessionInfoState as sessionInfoState;

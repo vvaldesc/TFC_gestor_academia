@@ -27,6 +27,7 @@ export interface Client {
   confirmed?: boolean;
   image?: string;
   active?: boolean;
+  [key: string]: any;
 }
 
 export interface Student {
@@ -97,4 +98,17 @@ export interface SqlProfileByEmail {
   rows:            Array<Array<number | string>>;
   rowsAffected:    number;
   lastInsertRowid: null;
+}
+
+export interface usePostClientType {
+  sentData: Client | null;
+  postClientLoading: boolean;
+  postClientError: any;
+  postData: any;
+}
+
+export interface useCheckProfilePhotoType {
+  validPhoto: boolean;
+  photoCheckLoading: boolean;
+  photoProfileError: any;
 }

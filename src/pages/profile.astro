@@ -7,8 +7,9 @@ import Profile_section from "@/sections/Profile_section.astro";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
-const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState;
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
+if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 const userName =
