@@ -17,19 +17,24 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
   } | null>(null);
 
   // Intento trabajar con submit de condicional
-  debugger
   const result = useClientPostHandler(client,submit);
   
   useEffect(() => {
-    if (result.useCheckProfilePhotoType.validPhoto == false || result.usePostClientType.postClientError != null) {
+    if (
+      result.useCheckProfilePhotoType.validPhoto == false ||
+      result.usePostClientType.postClientError != null ||
+      result.usePostClientType.postClientLoading == false
+    ) {
       setSubmit(false);
+      console.log(submit);
     }
-  }, [result]);
+  }, [result, result.usePostClientType.postClientLoading]);
 
   useEffect(() => {
     setClientPostHandlerResult(result);
-    console.log(result);
   }, [submit]);
+  console.log("result");
+  console.log(result);
 
   useEffect(() => {
     setClient((prevState) => ({
