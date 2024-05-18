@@ -7,3 +7,22 @@
 .colored-bg {
   background-color: rgba(0, 0, 0, 0);
 }
+
+.section-div-promo {
+  z-index: -10;
+  position: relative;
+  background-color: black;
+  height: 400px;
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.sphere {
+  z-index: -5;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: red;
+}
