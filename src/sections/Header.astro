@@ -1,5 +1,6 @@
 ---
 import Headernav from "@/components/Headernav.astro";
+import Header_nav_astro_nav from "@/components/Header_nav_astro_nav.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { SignOut, SignIn } from "auth-astro/components";
@@ -18,7 +19,8 @@ const { sessionInfoState } = Astro.props;
 
 <header>
   <h3 class="header-text-logo">Imagen</h3>
-  <Headernav fields={['Inicio','profile']}/>
+  <Headernav fields={['Inicio','profile','manager','virtual_room','register','reports','shop']} />
+  <!-- <Header_nav_astro_nav/> -->
   <div class="flex">
     <div class="flex">
       {sessionInfoState.sessionState != 0 ? (

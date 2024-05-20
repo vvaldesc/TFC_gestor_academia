@@ -3,11 +3,14 @@ title: "Home";
 import Layout from "@/layouts/Layout.astro";
 import Slider from "@/sections/Slider.astro";
 import Section_plans from "@/sections/Section_plans.astro";
+import StaggerChildren from "@/sections/Stagger_childrens/Stagger_childrens";
 
 import Animated_main_div from "@/components/Animated_main_div.astro";
 import Main from "@/components/Main.astro";
 import Div_images from "@/components/Div_images.astro";
 import Button_suggestion from "@/components/buttons/Button_suggestion.astro";
+import Button_basic_framer from "@/components/buttons/Button_basic_framer/Button_basic_framer";
+import Cards_animated from "@/sections/Cards_animated/Cards_animated";
 
 import main_promo from "@/consts/main_promo.json";
 
@@ -28,6 +31,7 @@ const hrefImages: string[] = main_promo.promos.map(
     <Animated_main_div class="mt-40 grid-cols-2">
       <div class="w-1/2 text-left p-3">
         <h1 class="main-text-promoTitle pb-4">APÚNTATE A NUESTROS CURSOS</h1>
+        <Button_basic_framer client:visible/>
         <Button_suggestion texto="INFÓRMATE" href="/cursos" />
       </div>
       <div class="w-1/2">
@@ -35,7 +39,8 @@ const hrefImages: string[] = main_promo.promos.map(
       </div>
     </Animated_main_div>
     <Animated_main_div class="mt-40">
-      <Section_plans />
+      <StaggerChildren client:visible/>
+      <!-- <Section_plans /> -->
     </Animated_main_div>
     <Animated_main_div class="mt-40">
       <h1 class="main-text-promoTitle pb-4 text-center">
