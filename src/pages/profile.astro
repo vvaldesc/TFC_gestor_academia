@@ -4,6 +4,7 @@ title: "Profile";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
+import Container_card from "@/sections/Container_card.astro";
 
 //Session handling//////////////////////////// prettier-ignore
 import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
@@ -32,18 +33,20 @@ const userName =
 
 <Layout title=`Bienvenido ${userName}`>
   <Main>
-    <Profile_section
-      profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}
-      role={sessionInfoState.sessionInfo.role}
-    >
-      <h1 slot="header">Este es el encabezado</h1>
-      <p>{sessionInfoState.sessionInfo.role}</p>
-      <p>Este es el contenido principal</p>
-      <p slot="user">
-        usuario: {sessionInfoState.sessionInfo.profile?.username}
-      </p>
-      <p slot="id">id: {sessionInfoState.sessionInfo.profile?.id}</p>
-      <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
-    </Profile_section>
+    <Container_card>
+      <Profile_section
+        profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}
+        role={sessionInfoState.sessionInfo.role}
+      >
+        <h1 slot="header">Este es el encabezado</h1>
+        <p>{sessionInfoState.sessionInfo.role}</p>
+        <p>Este es el contenido principal</p>
+        <p slot="user">
+          usuario: {sessionInfoState.sessionInfo.profile?.username}
+        </p>
+        <p slot="id">id: {sessionInfoState.sessionInfo.profile?.id}</p>
+        <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
+      </Profile_section>
+    </Container_card>
   </Main>
 </Layout>

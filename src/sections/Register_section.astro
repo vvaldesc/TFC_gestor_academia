@@ -2,20 +2,20 @@
 import { Image } from "astro:assets";
 
 interface Props {
-    profilePhotoSrc: string | null | undefined;
+  profilePhotoSrc: string | null | undefined;
 }
 
-const {profilePhotoSrc} = Astro.props;
-
+const { profilePhotoSrc } = Astro.props;
 ---
+
 <!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
-<section class="main-section-bigProfileCard w-full mt-24 flex">
-  <section class="w-1/2 border-l border-r border-gray-200 px-4">
-    <div class="w-full">
-      <h1>Registro</h1>
-    </div>
-    <div class="section-div-profilePhoto">
-      {profilePhotoSrc ? (
+<section class="w-1/2 border-l border-r border-gray-200 px-4">
+  <div class="w-full">
+    <h1>Registro</h1>
+  </div>
+  <div class="section-div-profilePhoto">
+    {
+      profilePhotoSrc ? (
         <Image
           src={profilePhotoSrc}
           alt="Profile"
@@ -30,24 +30,24 @@ const {profilePhotoSrc} = Astro.props;
         />
       ) : (
         <p>No hay imagen de perfil disponible.</p>
-      )}
-    </div>
+      )
+    }
+  </div>
   <slot name="header" />
   <section>
     <slot name="user" />
   </section>
+</section>
+<section class="w-1/2 border-r border-gray-200 px-4">
+  <section>
+    <slot name="id" />
   </section>
-  <section class="w-1/2 border-r border-gray-200 px-4">
-    <section>
-      <slot name="id" />
-    </section>
-    <section>
-      <slot name="mail" />
-    </section>
-    <main>
-      <slot />
-    </main>
+  <section>
+    <slot name="mail" />
   </section>
+  <main>
+    <slot />
+  </main>
 </section>
 
 <style>
