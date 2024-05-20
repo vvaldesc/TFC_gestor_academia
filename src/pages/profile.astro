@@ -6,24 +6,12 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 import Container_card from "@/sections/Container_card.astro";
 
-//Session handling//////////////////////////// prettier-ignore
-import {sessionHandler,sessionStateCheck} from "@/controllers/logic"; // prettier-ignore
-import {getSession} from "auth-astro/server"; // prettier-ignore
-import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
-let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
-// prettier-ignore
-try {
-  const sessionInfo: ProfileSession = await sessionHandler(await getSession(Astro.request));
-  const sessionState: SessionState = await sessionStateCheck(sessionInfo);
-  sessionInfoState = { sessionState, sessionInfo };
-  console.log(sessionInfoState);
-  if ( sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0 ) {
-    return Astro.rewrite("/401");
-  }
-} catch (error) {
-  console.error(error);
-}
-//End handling//////////////////////////
+//SESSION HANDLER////////////////////////////////////////
+import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
+if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
+//SESSION HANDLER////////////////////////////////////////
 
 const userName =
   sessionInfoState.sessionInfo.profile?.username ||

@@ -2,18 +2,18 @@
 import { ViewTransitions } from "astro:transitions";
 import Seo from "./SEO/Seo.astro";
 
-import { getSession } from "auth-astro/server";
-const session = await getSession(Astro.request);
-
-interface Props {
-  // TypeScript interface for props
-  title: string;
-  slider?: boolean;
-}
-
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
 
+//SESSION HANDLER////////////////////////////////////////
+import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState;
+//SESSION HANDLER////////////////////////////////////////
+
+interface Props {
+  title: string;
+}
 const { title } = Astro.props;
 ---
 
@@ -30,7 +30,7 @@ const { title } = Astro.props;
   <body>
     <div id="App" class="relative h-screen">
       <!-- grid actúa como container -->
-      <Header session={session} />
+      <Header sessionInfoState={sessionInfoState} />
       <main class="[grid-area:main]" transition:animate="fade">
         <slot />
       </main>
