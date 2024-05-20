@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 
 import {validateOAuth} from "@/controllers/logic";
 import Container_card from "@/sections/Container_card.astro";
-import Material_calendar from "@/components/Material_calendar/Material_calendar";
+import Material_booking_form from "@/sections/Material_booking_form/Material_booking_form";
 
 //Session handling//////////////////////////// prettier-ignore
 import { getSession } from "auth-astro/server"; // prettier-ignore
@@ -19,7 +19,8 @@ const title: string =sessionState === 0 ? "Registrate en Imagen" : "Completa tu 
 
 <Layout title={title}>
     <Container_card>
-        <Material_calendar client:only="react"/>
-        <p>Reservas</p>
+        <div class="w-max">
+            <Material_booking_form client:load />
+        </div>
     </Container_card>
 </Layout>
