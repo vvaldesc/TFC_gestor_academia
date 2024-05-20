@@ -2,23 +2,19 @@
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
 
-import {validateOAuth} from "@/controllers/logic";
 import Container_card from "@/sections/Container_card.astro";
 import Material_table from "@/components/Material_table/Material_table";
 
-//Session handling//////////////////////////// prettier-ignore
-import { getSession } from "auth-astro/server"; // prettier-ignore
-import type {SessionState} from "@/models/types"; // prettier-ignore
-import type { Session } from "@auth/core/types"; // prettier-ignore
-const session: Session = (await getSession(Astro.request)) as Session; // prettier-ignore
-const sessionState: SessionState = validateOAuth(session) ? 1 : 0; // prettier-ignore
-//End handling//////////////////////////
-
-const title: string =sessionState === 0 ? "Registrate en Imagen" : "Completa tu registro"; // prettier-ignore
+//SESSION HANDLER////////////////////////////////////////
+import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
+if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
+//SESSION HANDLER////////////////////////////////////////
 ---
 
-<Layout title={title}>
+<Layout title={'manager'}>
     <Container_card>
-        <Material_table client:only="react"/>
+        <Material_table client:only="react" />
     </Container_card>
 </Layout>

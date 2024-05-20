@@ -1,22 +1,18 @@
 ---
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
+
+import Container_card from "@/sections/Container_card.astro";
+
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-import { sessionFetch } from "@/services/server/logic/handlers/sessionhandler.astro";
-const sessionInfoState = await sessionFetch(Astro.request) as sessionInfoState;
-console.log(sessionInfoState);
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
+if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
-
-const title: string =sessionInfoState.sessionState === 0 ? "Registrate en Imagen" : "Completa tu registro"; // prettier-ignore
 ---
 
-<Layout title={title}>
-  {
-    sessionInfoState.sessionState === 1 ? (
-      <p>Necesitas completar tu registro</p>
-    ) : (
-      <p>Necesitas registrarte</p>
-    )
-  }
+<Layout title={'manager'}>
+  <Container_card>
+  </Container_card>
 </Layout>

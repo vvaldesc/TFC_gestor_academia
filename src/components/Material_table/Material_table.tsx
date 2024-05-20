@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import type { GridRowsProp, GridColDef } from "@mui/x-data-grid";
 
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-} from "@mui/x-data-grid-generator";
-import Snackbar from "@mui/material/Snackbar";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -37,7 +31,7 @@ export default function Material_table() {
     setOpenConfirmDialog(true);
     return (
       <Dialog
-        open={open}
+        open={false}
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -82,7 +76,7 @@ export default function Material_table() {
       />
       {updatedRow && (
         <Dialog
-          open={open}
+          open={false}
           onClose={handleCloseDialog}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"

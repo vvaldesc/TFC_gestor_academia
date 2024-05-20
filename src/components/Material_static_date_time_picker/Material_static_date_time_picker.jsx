@@ -11,9 +11,6 @@ export default function Material_static_date_time_picker() {
     const handleAccept = (newValue) => {
         setValue(newValue);
         console.log(value);
-
-
-        
         setKey(prevKey => prevKey + 1); // Re-render the component
     }
 
@@ -28,17 +25,6 @@ export default function Material_static_date_time_picker() {
                 autoFocus={true}
                 openTo='day'
                 onAccept={() => handleAccept(newValue)}
-                slotProps={{
-                    root: {
-                        'aria-label': 'Static picker',
-                    },
-                    input: {
-                        'aria-label': 'Static picker',
-                    },
-                    inputInput: {
-                        'aria-label': 'Static picker',
-                    },
-                }}
             />
         </LocalizationProvider>
     );
