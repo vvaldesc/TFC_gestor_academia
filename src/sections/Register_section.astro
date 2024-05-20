@@ -12,23 +12,7 @@ const {sessionInfoState} = Astro.props;
 ---
 <!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
 <section class="main-section-bigProfileCard w-full mt-24 flex">
-  <Register_form sessionInfoState={sessionInfoState} client:load/>
-  <!-- <section class="w-1/2 border-l border-r border-gray-200 px-4">
-    <div class="w-full">
-      <h1>REGISTRO</h1>
-    </div>
-    <section>
-
-    </section>
-  </section>
-  <section class="w-1/2 border-r border-gray-200 px-4">
-    <section>
-
-    </section>
-    <main>
-      <slot />
-    </main>
-  </section> -->
+  <Register_form sessionInfoState={sessionInfoState} client:only="react"/>
 </section>
 
 <style>

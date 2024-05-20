@@ -15,7 +15,7 @@ export async function sessionFetch(request: any, cookies: any): Promise<sessionI
       console.log("creo cookie");
       cookies.set("sessionInfoState", JSON.stringify(sessionInfoState), {
         path: "/",
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 60 * 5,
       });
     }
     else {
