@@ -23,6 +23,7 @@
     "@mui/x-data-grid": "^7.5.0",
     "@mui/x-data-grid-generator": "^7.5.0",
     "@mui/x-date-pickers": "^7.5.0",
+    "@mui/x-tree-view": "^7.5.0",
     "@storyblok/astro": "4.0.5",
     "@types/react": "18.3.2",
     "@types/react-dom": "18.3.0",
