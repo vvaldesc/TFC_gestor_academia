@@ -1,0 +1,23 @@
+---
+title: "Página no encontrada";
+import Layout from "@/layouts/Layout.astro";
+
+import {validateOAuth} from "@/controllers/logic";
+import Container_card from "@/sections/Container_card.astro";
+
+//Session handling//////////////////////////// prettier-ignore
+import { getSession } from "auth-astro/server"; // prettier-ignore
+import type {SessionState} from "@/models/types"; // prettier-ignore
+import type { Session } from "@auth/core/types"; // prettier-ignore
+const session: Session = (await getSession(Astro.request)) as Session; // prettier-ignore
+const sessionState: SessionState = validateOAuth(session) ? 1 : 0; // prettier-ignore
+//End handling//////////////////////////
+
+const title: string =sessionState === 0 ? "Registrate en Imagen" : "Completa tu registro"; // prettier-ignore
+---
+
+<Layout title={title}>
+    <Container_card>
+        <p>Virtual room</p>
+    </Container_card>
+</Layout>
