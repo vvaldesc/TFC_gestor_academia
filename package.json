@@ -24,7 +24,7 @@
     "astro-meta-tags": "0.3.0",
     "astro-seo": "0.8.3",
     "auth-astro": "4.1.1",
-    "axios": "1.6.8",
+    "axios": "1.7.1",
     "dotenv": "^16.4.5",
     "eslint-plugin-react": "7.34.1",
     "react": "18.3.1",
