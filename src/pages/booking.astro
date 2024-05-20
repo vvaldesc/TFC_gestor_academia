@@ -19,7 +19,7 @@ const title: string =sessionState === 0 ? "Registrate en Imagen" : "Completa tu 
 
 <Layout title={title}>
     <Container_card>
-        <Material_calendar/>
+        <Material_calendar client:only="react"/>
         <p>Reservas</p>
     </Container_card>
 </Layout>
