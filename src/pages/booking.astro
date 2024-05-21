@@ -4,6 +4,8 @@ import Layout from "@/layouts/Layout.astro";
 
 import Container_card from "@/sections/Container_card.astro";
 import Material_booking_form from "@/sections/Material_booking_form/Material_booking_form";
+import Refresh from "@/services/client/logic/Refresh.svelte";
+// import Refreshw from "@/services/client/logic/Refresh.jsx";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -11,12 +13,31 @@ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
-
 ---
-<Layout title={'Reserva tu cita'}>
-    <Container_card>
-        <div class="w-max">
-            <Material_booking_form client:load />
-        </div>
-    </Container_card>
+
+<Layout title={"Reserva tu cita"}>
+  <Container_card>
+    <div class="w-max">
+      <Material_booking_form client:only="react" />
+    </div>
+  </Container_card>
+  <Refresh client:only="svelte" />
+  <!-- <Refreshw client:only="react" /> -->
 </Layout>
+
+<!-- <script type="text/javascript" is:inline>
+  window.onload = function () {
+    console.log("hola");
+    setTimeout(function () {
+      console.log("onload");
+      var url = new URL(window.location.href); // get the current url of page into variable
+      var reloaded = url.searchParams.get("reloaded"); // get the 'reloaded' parameter from the url
+      if (!reloaded) {
+        // 'reloaded' parameter does not exist
+        url.searchParams.set("reloaded", "true"); // add the 'reloaded' parameter to the url
+        console.log(url.href);
+        window.location = url.href; // "reload" the page
+      }
+    }, 4000);
+  };
+</script> -->
