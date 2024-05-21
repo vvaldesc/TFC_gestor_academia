@@ -12,6 +12,6 @@
         console.log(url.href);
         window.location = url.href; // "reload" the page
       }
-    }, 1000);
+    }, 60);
   });
 </script>

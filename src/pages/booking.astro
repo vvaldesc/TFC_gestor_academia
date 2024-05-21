@@ -13,13 +13,24 @@ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
+
+let MUI= false;
+const url = Astro.request.url;
+if (url.includes("reloaded=true")) {
+  // Code to execute if the URL contains the parameter "reloaded=true"
+  console.log("Contiene")
+  MUI= true;
+} else {
+  // Code to execute if the URL does not contain the parameter "reloaded=true"
+  console.log("No contiene")
+  MUI= false;
+}
 ---
 
 <Layout title={"Reserva tu cita"}>
   <Container_card>
     <div class="w-max">
-      <Material_booking_form client:only="react" />
-    </div>
+      {MUI && <Material_booking_form client:idle />}
   </Container_card>
   <Refresh client:only="svelte" />
   <!-- <Refreshw client:only="react" /> -->
