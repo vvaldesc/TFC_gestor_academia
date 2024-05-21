@@ -116,7 +116,6 @@ const Register_form: React.FC<RegisterFormProps> = ({ sessionInfoState }) => {
             type="text"
             name="username"
             placeholder="Usuario"
-            value={sessionInfoState.sessionInfo.OAuth.user?.name as string}
             onChange={handleChange}
           />
           <input
