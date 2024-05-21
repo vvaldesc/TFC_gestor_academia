@@ -24,7 +24,7 @@ export default function Material_static_date_time_picker() {
                 disablePast={true}
                 autoFocus={true}
                 openTo='day'
-                onAccept={() => handleAccept(newValue)}
+                onAccept={(newValue) => handleAccept(newValue)}
             />
         </LocalizationProvider>
     );
