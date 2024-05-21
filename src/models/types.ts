@@ -112,3 +112,15 @@ export interface useCheckProfilePhotoType {
   photoCheckLoading: boolean;
   photoProfileError: any;
 }
+
+export interface ServiceConsumption_type {
+  _id:         number;
+  service_id:  number;
+  employee_id: number;
+  client_id?:   number;
+  rating?:      number;
+  price?:       number;
+  delay?:       number;
+  created_at?:  Date;
+  updated_at?:  Date;
+}

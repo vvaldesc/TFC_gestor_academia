@@ -2,6 +2,8 @@
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
 
+import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
+
 import Container_card from "@/sections/Container_card.astro";
 import Material_booking_form from "@/sections/Material_booking_form/Material_booking_form";
 import Refresh from "@/services/client/logic/Refresh.svelte";
@@ -22,6 +24,8 @@ const MUI = checkRenderParameter(Astro.request.url);
   <Container_card>
     <div class="w-max">
       {MUI && <Material_booking_form client:idle />}
+      {MUI && <Reservations_table clientEmail={sessionInfoState.sessionInfo.profile.email} client:load />}
+    </div>
   </Container_card>
   <Refresh client:only="svelte" />
 </Layout>
