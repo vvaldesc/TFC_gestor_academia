@@ -19,6 +19,7 @@
     "@emotion/react": "11.11.4",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "11.11.5",
+    "@material/web": "^1.4.1",
     "@mui/material": "5.15.18",
     "@mui/styled-engine-sc": "6.0.0-alpha.18",
     "@mui/x-data-grid": "7.5.0",
@@ -28,6 +29,7 @@
     "@storyblok/astro": "4.0.5",
     "@types/react": "18.3.2",
     "@types/react-dom": "18.3.0",
+    "antd": "^5.17.3",
     "astro": "4.8.6",
     "astro-icon": "1.1.0",
     "astro-meta-tags": "0.3.0",
@@ -39,6 +41,7 @@
     "dotenv": "^16.4.5",
     "eslint-plugin-react": "7.34.1",
     "framer-motion": "^11.2.4",
+    "primereact": "^10.6.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-ui": "^1.0.0-beta.32",
@@ -53,6 +56,7 @@
     "cypress": "^13.9.0",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "0.13.0",
+    "sass": "^1.77.2",
     "vite-plugin-mkcert": "1.17.5"
   }
 }

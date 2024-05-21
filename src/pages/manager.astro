@@ -3,9 +3,8 @@ title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
 
 import Container_card from "@/sections/Container_card.astro";
-import Material_table from "@/components/Material_table/Material_table";
-import ExtractEmotionStyles from "@/components/Extract_html/ExtractEmotionStyles.astro";
-import Refresh from "@/services/client/logic/Refresh.svelte";
+import PrimeReact_table from "@/components/PrimeReact_table/PrimeReact_table";
+import AntDesign_table from "@/components/AntDesign_table/AntDesign_table";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -15,10 +14,9 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 //SESSION HANDLER////////////////////////////////////////
 ---
 
-<Layout title={'manager'}>
-    <Container_card>
-        <Material_table client:only="react" />
-        <!-- <ExtractEmotionStyles component={Material_table}/> -->
-    </Container_card>
-  <Refresh client:only="svelte" />
+<Layout title={"manager"}>
+  <Container_card>
+    <!-- <PrimeReact_table client:load /> -->
+    <AntDesign_table client:load />
+  </Container_card>
 </Layout>

@@ -5,7 +5,8 @@ import Layout from "@/layouts/Layout.astro";
 import Container_card from "@/sections/Container_card.astro";
 import Material_booking_form from "@/sections/Material_booking_form/Material_booking_form";
 import Refresh from "@/services/client/logic/Refresh.svelte";
-// import Refreshw from "@/services/client/logic/Refresh.jsx";
+
+import { checkRenderParameter } from "@/services/server/logic/logic";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -14,17 +15,7 @@ const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as 
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
-let MUI= false;
-const url = Astro.request.url;
-if (url.includes("reloaded=true")) {
-  // Code to execute if the URL contains the parameter "reloaded=true"
-  console.log("Contiene")
-  MUI= true;
-} else {
-  // Code to execute if the URL does not contain the parameter "reloaded=true"
-  console.log("No contiene")
-  MUI= false;
-}
+const MUI = checkRenderParameter(Astro.request.url);
 ---
 
 <Layout title={"Reserva tu cita"}>
@@ -33,22 +24,4 @@ if (url.includes("reloaded=true")) {
       {MUI && <Material_booking_form client:idle />}
   </Container_card>
   <Refresh client:only="svelte" />
-  <!-- <Refreshw client:only="react" /> -->
 </Layout>
-
-<!-- <script type="text/javascript" is:inline>
-  window.onload = function () {
-    console.log("hola");
-    setTimeout(function () {
-      console.log("onload");
-      var url = new URL(window.location.href); // get the current url of page into variable
-      var reloaded = url.searchParams.get("reloaded"); // get the 'reloaded' parameter from the url
-      if (!reloaded) {
-        // 'reloaded' parameter does not exist
-        url.searchParams.set("reloaded", "true"); // add the 'reloaded' parameter to the url
-        console.log(url.href);
-        window.location = url.href; // "reload" the page
-      }
-    }, 4000);
-  };
-</script> -->
