@@ -1,4 +1,8 @@
-<div class="container" >
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class=`container ${className}` {...rest} >
     <slot></slot>
 </div>
 

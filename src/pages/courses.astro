@@ -2,9 +2,8 @@
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
 
-import Container_card from "@/sections/Container_card.astro";
 import Material_mail_sending_form from "@/components/Material_mail_sending_form/Material_mail_sending_form";
-
+import Main from "@/components/Main.astro";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -15,9 +14,8 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 
 ---
 
-<Layout title={'Tienda'}>
-    <Container_card>
-        <p>s</p>
-        <Material_mail_sending_form client:only="react" />
-    </Container_card>
+<Layout title={"Tienda"}>
+  <Main class="pt-10 bg-slate-100">
+    <Material_mail_sending_form client:only="react" />
+  </Main>
 </Layout>
