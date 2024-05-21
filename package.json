@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "0.6.0",
+    "@astrojs/check": "0.7.0",
     "@astrojs/react": "3.3.4",
     "@astrojs/svelte": "5.4.0",
     "@astrojs/tailwind": "5.1.0",
@@ -31,11 +31,11 @@
     "astro-navbar": "^2.3.2",
     "astro-seo": "0.8.3",
     "auth-astro": "4.1.1",
-    "axios": "1.7.1",
+    "axios": "1.7.2",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
     "eslint-plugin-react": "7.34.1",
-    "framer-motion": "^11.2.4",
+    "framer-motion": "^11.2.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-ui": "^1.0.0-beta.32",
