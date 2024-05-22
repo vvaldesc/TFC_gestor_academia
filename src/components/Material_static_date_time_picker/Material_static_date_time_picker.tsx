@@ -5,31 +5,15 @@ import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { MINUTES_IN_A_PERIOD } from "@/consts/consts";
 
 import type { ServiceConsumption_type } from "@/models/types";
-
 import useGetServicePrediction from "@/services/client/customhooks/useGetServicePrediction";
 
-export default function Material_static_date_time_picker() {
-  const [value, setValue] = useState(null);
+export default function Material_static_date_time_picker({onValueChange}: { onValueChange: (value: any) => void }) {
   const [key, setKey] = useState(0);
-
-  // const test: ServiceConsumption_type = {
-  //   _id: 1,
-  //   service_id: 1,
-  //   employee_id: 1,
-  //   client_id: 1,
-  //   rating: 4,
-  //   price: 25,
-  //   delay: 5,
-  //   created_at: new Date("2024-05-13T08:51:10.727Z"),
-  //   updated_at: new Date("2024-05-13T08:51:10.727Z"),
-  // };
 
   // const { estimatedTime, loading, error } = useGetServicePrediction(value);
 
   const handleAccept = (newValue: any) => {
-    debugger;
-    setValue(newValue);
-    console.log(value);
+    onValueChange(newValue);
     setKey((prevKey) => prevKey + 1); // Re-render the component
   };
 
@@ -46,9 +30,6 @@ export default function Material_static_date_time_picker() {
           onAccept={(newValue) => handleAccept(newValue)}
         />
       </LocalizationProvider>
-      {/* <p>{estimatedTime}</p>
-      <p>{loading}</p>
-      <p>{error}</p> */}
     </>
   );
 }
