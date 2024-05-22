@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 
 import Container_card from "@/sections/Container_card.astro";
 import AntDesign_table from "@/components/AntDesign/tables/Profiles_table";
+import Main from "@/components/Main.astro";
 
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -14,8 +15,7 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 ---
 
 <Layout title={"manager"}>
-  <Container_card>
-    <!-- <PrimeReact_table client:load /> -->
+  <div class="mt-5 pt-5">
     <AntDesign_table client:load />
-  </Container_card>
+  </div>
 </Layout>
