@@ -23,7 +23,7 @@ const MUI = checkRenderParameter(Astro.request.url);
 <Layout title={"Reserva tu cita"}>
   <Container_card>
     <div class="w-max">
-      {MUI && <Material_booking_form clientEmail={sessionInfoState.sessionInfo.profile.email} client:idle />}
+      {MUI && <Material_booking_form client_id={sessionInfoState.sessionInfo.profile.id} client:idle />}
     </div>
   </Container_card>
   <Refresh client:only="svelte" />

@@ -15,7 +15,7 @@ export interface Client {
   id: number;
   name?: string;
   surname?: string;
-  email?: string;
+  email: string;
   phone_number?: string;
   address?: string;
   city?: string;
@@ -30,26 +30,44 @@ export interface Client {
   [key: string]: any;
 }
 
+export interface Employee {
+  id?:              number;
+  teacher_id?:      number | null;
+  student_id?:      number | null;
+  social_security?: string;
+  salary?:          number;
+  role?:            Role;
+  teacher?:         Student;
+  student?:         Student;
+  rating?:          number;
+}
+
+export enum Role {
+  Student = "student",
+  Teacher = "teacher",
+}
+
 export interface Student {
-  id:                   number;
-  matriculation_number: string;
-  DNI:                  string;
+  id?:                   number;
+  matriculation_number?: string;
+  DNI?:                  string;
   employed?:             boolean;
-  educational_level:    string;
+  educational_level?:    string;
   name?:                 string;
   surname?:              string;
-  email:                string;
-  phone_number:         string;
-  address:              string;
-  city:                 string;
-  bornDate:             Date;
-  created_at:           Date;
+  email?:                string;
+  phone_number?:         string;
+  address?:              string;
+  city?:                 string;
+  bornDate?:             Date;
+  created_at?:           Date;
   updated_at?:           Date;
-  username:             string;
-  password:             string;
-  confirmed:            boolean;
-  image:                string;
+  username?:             string;
+  password?:             string;
+  confirmed?:            boolean;
+  image?:                string;
   active?:               boolean;
+  is_admin?:             boolean;
 }
 
 export interface Teacher {
@@ -114,13 +132,14 @@ export interface useCheckProfilePhotoType {
 }
 
 export interface ServiceConsumption_type {
-  _id:         number;
+  _id?:         number;
   service_id:  number;
   employee_id: number;
-  client_id?:   number;
+  client_id:   number;
   rating?:      number;
-  price?:       number;
+  price:       number;
   delay?:       number;
-  created_at?:  Date;
+  created_at:  Date;
   updated_at?:  Date;
+  reserved_at:  Date;
 }

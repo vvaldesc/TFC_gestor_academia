@@ -4,6 +4,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { MINUTES_IN_A_PERIOD } from "@/consts/consts";
 
+
+
 import type { ServiceConsumption_type } from "@/models/types";
 import useGetServicePrediction from "@/services/client/customhooks/useGetServicePrediction";
 
@@ -27,7 +29,12 @@ export default function Material_static_date_time_picker({onValueChange}: { onVa
           disablePast={true}
           autoFocus={true}
           openTo="day"
+          onError={(error) => {
+              console.log("error", error)
+              setKey((prevKey) => prevKey + 1); // Re-render the component
+            }}
           onAccept={(newValue) => handleAccept(newValue)}
+          timezone="system"
         />
       </LocalizationProvider>
     </>
