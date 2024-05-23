@@ -17,17 +17,11 @@ export default function Material_booking_form(client_id_raw: any) {
   const [booking, setBooking] = useState({} as ServiceConsumption_type);
   // const { estimatedTime, loading, error } = useGetServicePrediction(value);
 
-  const { employees, loadingEmployees, errorEmployees }
-  : { employees: { result: Result }, loadingEmployees: boolean, errorEmployees: any }
-   = useGetEmployees();
+  const { employees, loadingEmployees, errorEmployees }: { employees: { result: Result }, loadingEmployees: boolean, errorEmployees: any } = useGetEmployees();
 
-  const { unavailableEmployees, loadingUnavailableEmployees, errorUnavailableEmployees }
-  : { employees: { result: Result }, loadingUnavailableEmployees: boolean, errorUnavailableEmployees: any }
-   = useGetUnavailableEmployees(selectedTime);
+  const { unavailableEmployees, loadingUnavailableEmployees, errorUnavailableEmployees }: { employees: { result: Result }, loadingUnavailableEmployees: boolean, errorUnavailableEmployees: any } = useGetUnavailableEmployees(selectedTime);
 
-  const { sentData, postClientLoading, postClientError, postData }
-  : { postData: { result: Result }, postClientLoading: boolean, postClientError: boolean, sentData: ServiceConsumption_type }
-   = usePostBooking(booking);
+  const { sentData, postClientLoading, postClientError, postData }: { postData: { result: Result }, postClientLoading: boolean, postClientError: boolean, sentData: ServiceConsumption_type } = usePostBooking(booking);
 
   // console.log({ employees, loadingEmployees, errorEmployees });
   // console.log({ unavailableEmployees, loadingUnavailableEmployees, errorUnavailableEmployees });
