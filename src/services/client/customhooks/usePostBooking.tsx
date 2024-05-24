@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import type { ServiceConsumption_type } from "@/models/types";
 
-const url = "http://localhost:4321/api/serviceConsumption/serviceConsumptions";
+const url = "http://localhost:4321/api/serviceConsumptions/serviceConsumptions";
 
 export const usePostBooking = (booking: ServiceConsumption_type) => {
   const [data, setData] = useState(null);
