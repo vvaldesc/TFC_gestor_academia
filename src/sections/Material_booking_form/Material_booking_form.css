@@ -1,0 +1,10 @@
+.fecha{
+    position: absolute;
+    top: 0;
+}
+
+.material-booking-form{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}

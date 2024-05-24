@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Material_static_date_time_picker from "@/components/Material_static_date_time_picker/Material_static_date_time_picker";
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
+import { Tag } from "antd";
 
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetUnavailableEmployees from "@/services/client/customhooks/useGetUnavailableEmployees";
 import usePostBooking from "@/services/client/customhooks/usePostBooking";
+import usePostMailer from "@/services/client/customhooks/usePostMailer";
 import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
 
 import type {
@@ -31,6 +33,8 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
 
   const { estimatedTime, loading, error }: any =
   usePostServicePrediction(extendedBooking);
+  // setDelay(estimatedTime);
+
 
   const {
     employees,
@@ -63,6 +67,9 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     postClientError: boolean;
     sentData: ServiceConsumption_type;
   } = usePostBooking(booking);
+
+  const { mailResponse, loadingMailing, errorMailing }: any =
+  usePostMailer(extendedBooking);
 
   const handleTimeChange = (time: Date) => {
     setSelectedTime(time);
@@ -97,7 +104,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       teacher_address: employee.teacher?.address,
       client_phone_number: sessionInfo.profile.phone_number,
       teacher_phone_number: employee.teacher?.phone_number,
-      client_email: employee.student?.email,
+      client_email: sessionInfo.profile.email,
       teacher_email: employee.teacher?.email,
       employee_salary: employee.salary,
     } : null;
@@ -109,14 +116,18 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   };
 
   return (
-    <>
+    <section className="material-booking-form">
       <Material_static_date_time_picker onValueChange={handleTimeChange} />
+      <div className="fecha" style={{ marginTop: "20px" }}>
+        <Tag color="geekblue">{selectedTime.toLocaleString()}</Tag>
+        { delay != 0 && <Tag color="green">{delay.toLocaleString()}</Tag> }
+      </div>
       <Reservations_table
         employees={employees}
         unavailableEmployees={unavailableEmployees}
         daytime={selectedTime}
         onValueChange={handleTableSelect}
       />
-    </>
+    </section>
   );
 }
