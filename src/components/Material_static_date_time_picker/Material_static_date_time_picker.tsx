@@ -43,7 +43,7 @@ export default function Material_static_date_time_picker({onValueChange}: { onVa
             }}
           onAccept={(newValue) => handleAccept(newValue)}
           timezone="UTC"
-          views={["day", "hour", "minute"]}
+          // views={["day", "hour", "minute"]}
         />
       </LocalizationProvider>
     </>
