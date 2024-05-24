@@ -9,16 +9,11 @@ import { DateTime } from 'luxon';
 
 
 import type { ServiceConsumption_type } from "@/models/types";
-import useGetServicePrediction from "@/services/client/customhooks/useGetServicePrediction";
+import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
 
 export default function Material_static_date_time_picker({onValueChange}: { onValueChange: (value: any) => void }) {
   const [key, setKey] = useState(0);
-  console.log((DateTime.now()).toString());
-  const dateTimeLuxon = DateTime.local();
   const minDateTimeLuxon = DateTime.local().minus({days: 1});
-
-
-  // const { estimatedTime, loading, error } = useGetServicePrediction(value);
 
   const handleAccept = (newValue: any) => {
     onValueChange(newValue);
@@ -32,7 +27,6 @@ export default function Material_static_date_time_picker({onValueChange}: { onVa
           key={key}
           orientation="landscape"
           minutesStep={Number(MINUTES_IN_A_PERIOD)}
-          // disablePast={true}
           minDateTime={minDateTimeLuxon}
           maxDateTime={minDateTimeLuxon.plus({days: 7})}
           autoFocus={true}
@@ -43,7 +37,6 @@ export default function Material_static_date_time_picker({onValueChange}: { onVa
             }}
           onAccept={(newValue) => handleAccept(newValue)}
           timezone="UTC"
-          // views={["day", "hour", "minute"]}
         />
       </LocalizationProvider>
     </>

@@ -11,13 +11,12 @@ const useGetUnavailableEmployees = (date) => {
     const fetchData = async () => {
       try {
         const body = {date};
-        console.log(body);
         const response = await axios.post(url, JSON.stringify(body), {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        console.log(response.data);
+        console.log({unav: response});
         const arr = response.data;
         setUnavailableEmployees(arr);
         setLoading(false);
