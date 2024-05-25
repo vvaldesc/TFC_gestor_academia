@@ -193,3 +193,85 @@ export interface ServicePredictionPost_type {
     student_email?:        null;
     employee_salary?:      number;
 }
+
+export interface WeatherParams {
+  lat: string;
+  lon: string;
+  units: string;
+  lang: string;
+}
+
+export interface WeatherParams_req {
+  url: string;
+  apiKey: string;
+  apiHost: string;
+  body: WeatherParams;
+}
+export interface Weather_res {
+  city_name?:    string;
+  country_code?: string;
+  data:         Weather_res_Datum[];
+  lat?:          number;
+  lon?:          number;
+  state_code?:   string;
+  timezone?:     string;
+}
+
+export interface Weather_res_Datum {
+  app_max_temp?:        number;
+  app_min_temp?:        number;
+  clouds?:              number;
+  clouds_hi?:           number;
+  clouds_low?:          number;
+  clouds_mid?:          number;
+  datetime?:            Date;
+  dewpt?:               number;
+  high_temp?:           number;
+  low_temp?:            number;
+  max_dhi?:             null;
+  max_temp?:            number;
+  min_temp?:            number;
+  moon_phase?:          number;
+  moon_phase_lunation?: number;
+  moonrise_ts?:         number;
+  moonset_ts?:          number;
+  ozone?:               number;
+  pop?:                 number;
+  precip?:              number;
+  pres?:                number;
+  rh?:                  number;
+  slp?:                 number;
+  snow?:                number;
+  snow_depth?:          number;
+  sunrise_ts?:          number;
+  sunset_ts?:           number;
+  temp?:                number;
+  ts?:                  number;
+  uv?:                  number;
+  valid_date?:          Date;
+  vis?:                 number;
+  weather:             Weather_res_category;
+  wind_cdir?:           string;
+  wind_cdir_full?:      string;
+  wind_dir?:            number;
+  wind_gust_spd?:       number;
+  wind_spd?:            number;
+}
+
+export interface Weather_res_category {
+  description?: Weather_res_category_Description;
+  icon?:        Weather_res_category_Icon;
+  code?:        number;
+}
+
+export enum Weather_res_category_Description {
+  ClearSky = "Clear Sky",
+  FewClouds = "Few clouds",
+  OvercastClouds = "Overcast clouds",
+}
+
+export enum Weather_res_category_Icon {
+  C01D = "c01d",
+  C02D = "c02d",
+  C04D = "c04d",
+}

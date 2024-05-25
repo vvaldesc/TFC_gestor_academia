@@ -8,6 +8,10 @@ import useGetUnavailableEmployees from "@/services/client/customhooks/useGetUnav
 import usePostBooking from "@/services/client/customhooks/usePostBooking";
 import usePostMailer from "@/services/client/customhooks/usePostMailer";
 import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
+import useGetForecast from "@/services/client/customhooks/useGetForecast";
+
+import classifyWeatherCode from "@/services/client/utils/weathercodeparser"
+import {calculateDaysFromToday} from "@/services/client/logic/utils"
 
 import type {
   ServiceConsumption_type,
@@ -18,6 +22,7 @@ import type {
   ServicePredictionPost_type,
   ProfileSession,
   ExtendedEmployee,
+  Weather_res
 } from "@/models/types";
 
 export default function Material_booking_form(props: {client_id: any, sessionInfo: ProfileSession}) {
@@ -27,14 +32,20 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const [delay, setDelay] = useState(0);
   const [submit, setSubmit] = useState(false);
   const [booking, setBooking] = useState({} as ServiceConsumption_type);
+  const [weather, setWeather] = useState("Sunny");
   const [extendedBooking, setExtendedBooking] = useState(
     {} as ServicePredictionPost_type
   );
 
+  const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res, loadingForecast: boolean, errorForecast: any } =
+  useGetForecast();
+
   const { estimatedTime, loading, error }: any =
   usePostServicePrediction(extendedBooking);
-  // setDelay(estimatedTime);
+  console.log({'estimatedTime': estimatedTime?.estimated_delay});
+  const estimatedTime_number = estimatedTime?.estimated_delay as number | undefined | null;
 
+  console.log({'weather': weather});
 
   const {
     employees,
@@ -72,8 +83,26 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   usePostMailer(extendedBooking);
 
   const handleTimeChange = (time: Date) => {
+    console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
+    const weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
+    forecast && setWeather(weather_res);
     setSelectedTime(time);
-  };
+    const extendedBooking: ServicePredictionPost_type = {
+      client_id: client_id,
+      service_id: 1,
+      created_at: new Date(),
+      reserved_at: time,
+      price: 7,
+      weather: weather_res,
+      client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
+      client_surname: sessionInfo.profile.surname,
+      client_address: sessionInfo.profile.address,
+      client_phone_number: sessionInfo.profile.phone_number,
+      client_email: sessionInfo.profile.email,
+    };
+
+    setExtendedBooking(extendedBooking);
+    };
 
   const handleTableSelect = (id: number) => {
     const employee: Employee = employees.result.data.find((employee: Employee) => employee.id === id);
@@ -120,7 +149,10 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       <Material_static_date_time_picker onValueChange={handleTimeChange} />
       <div className="fecha" style={{ marginTop: "20px" }}>
         <Tag color="geekblue">{selectedTime.toLocaleString()}</Tag>
-        { delay != 0 && <Tag color="green">{delay.toLocaleString()}</Tag> }
+        <Tag color="geekblue">{weather}</Tag>
+        {estimatedTime_number && <Tag color={estimatedTime_number < 5 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
+            {estimatedTime_number}
+        </Tag>}
       </div>
       <Reservations_table
         employees={employees}
