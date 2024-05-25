@@ -9,21 +9,6 @@ const useGetforecast = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     console.log({"useGetforecast": WeatherParams});
-    
-    const options = {
-      method: 'GET',
-      url: 'https://weatherbit-v1-mashape.p.rapidapi.com/forecast/daily',
-      params: {
-        lat: '39.9',
-        lon: '-5.53',
-        units: 'metric',
-        lang: 'en'
-      },
-      headers: {
-        'X-RapidAPI-Key': '48567d431cmsh583fa88451108d8p1363d5jsn75f4e6b8c599',
-        'X-RapidAPI-Host': 'weatherbit-v1-mashape.p.rapidapi.com'
-      }
-    };
 
     useEffect(() => {
         const fetchData = async () => {
