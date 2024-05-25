@@ -33,7 +33,6 @@
     "auth-astro": "4.1.1",
     "axios": "1.7.2",
     "dayjs": "^1.11.11",
-    "dotenv": "^16.4.5",
     "eslint-plugin-react": "7.34.1",
     "framer-motion": "^11.2.6",
     "luxon": "^3.4.4",

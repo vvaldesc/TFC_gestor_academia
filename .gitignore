@@ -20,6 +20,7 @@ certs/
 # environment variables
 .env
 .env.production
+**/environment.json
 
 # macOS-specific files
 .DS_Store

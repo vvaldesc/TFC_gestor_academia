@@ -29,7 +29,7 @@ const usePostServicePrediction = (booking: ServicePredictionPost_type) => {
 
     useEffect(() => {
       console.log("usePostServicePrediction", booking);
-        if (booking.reserved_at && booking.employee_salary) {
+        if (booking.reserved_at && booking.client_id && booking.service_id && booking.weather) {
           postData(booking);
         }
       }, [booking]);
