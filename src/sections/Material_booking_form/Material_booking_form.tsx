@@ -11,7 +11,7 @@ import usePostServicePrediction from "@/services/client/customhooks/usePostServi
 import useGetForecast from "@/services/client/customhooks/useGetForecast";
 
 import classifyWeatherCode from "@/services/client/utils/weathercodeparser"
-import {calculateDaysFromToday} from "@/services/client/logic/utils"
+import {calculateDaysFromToday} from "@/services/client/utils/utils"
 
 import type {
   ServiceConsumption_type,
@@ -79,12 +79,13 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     sentData: ServiceConsumption_type;
   } = usePostBooking(booking);
 
-  const { mailResponse, loadingMailing, errorMailing }: any =
-  usePostMailer(extendedBooking);
+  // const { mailResponse, loadingMailing, errorMailing }: any =
+  // usePostMailer(extendedBooking);
 
   const handleTimeChange = (time: Date) => {
     console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
-    const weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
+    let weather_res = "Sunny";
+    // weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
     forecast && setWeather(weather_res);
     setSelectedTime(time);
     const extendedBooking: ServicePredictionPost_type = {
@@ -93,7 +94,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       created_at: new Date(),
       reserved_at: time,
       price: 7,
-      weather: weather_res,
+      weather: weather_res || "Sunny",
       client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
       client_surname: sessionInfo.profile.surname,
       client_address: sessionInfo.profile.address,
@@ -110,7 +111,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
 
     const booking: ServiceConsumption_type = selectedEmployee ? {
       service_id: 1,
-      employee_id: selectedEmployee.id,
+      employee_id: employee.id,
       client_id: client_id,
       price: 7,
       created_at: new Date(),

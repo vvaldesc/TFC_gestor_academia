@@ -2,7 +2,8 @@ import React from "react";
 import { Space, Table, Tag, Button } from "antd";
 import type { TableProps } from "antd";
 import type { Result, Student, Teacher, Employee } from "@/models/types";
-import { Role } from "@/models/types";
+import { Role, Disciplines, Turns } from "@/models/types";
+import { checkTimeOfDay } from "@/services/client/utils/utils"
 
 interface Props {
   employees: any;
@@ -20,21 +21,48 @@ const Reservations_table: React.FC<Props> = ({
 
   const employeesArr: Employee[] = employees.result ? employees.result.data : [];
   const unavailableEmployeesArr: Employee[] = unavailableEmployees.result ? unavailableEmployees.result.data : [];
-  console.log(unavailableEmployeesArr);
+  console.log({'unavailableEmployeesArr': unavailableEmployeesArr});
+  console.log({'employeesArr': employeesArr});
 
   interface DataType {
     key: number;
     name: string;
-    tags: Role[] | any;
+    categories: (Role | Disciplines | Turns)[];
     rating: number;
     image: string;
   }
 
-  const data: DataType[] = (employeesArr ?? []).map((employee: Employee) => {
+  const data: DataType[] = (employeesArr ?? [])
+  .filter((employee: Employee) => {
+    console.log({'daytime': daytime});
+    if(daytime != undefined) return true;
+
+    const targetTurn: Turns = daytime && checkTimeOfDay(daytime) as Turns;
+    console.log({'checkTimeOfDay': checkTimeOfDay(daytime)});
+
+    if (employee.role === Role.Student && !employee.student?.turns?.includes(targetTurn)) {
+      return false;
+    }
+    if (employee.role === Role.Teacher && !employee.teacher?.turns?.includes(targetTurn)) {
+      return false;
+    }
+
+    return true;
+  })
+  .map((employee: Employee) => {
+    const categories: (Role | Disciplines | Turns)[] = employee.role === Role.Teacher ? [Role.Teacher] : [Role.Student];
+
+    employee.role === Role.Teacher && employee.teacher?.disciplines?.forEach((discipline) => categories.push(discipline));
+    employee.role === Role.Student && employee.student?.disciplines?.forEach((discipline) => categories.push(discipline));
+
+    employee.role === Role.Teacher && employee.teacher?.turns?.forEach((turn) => categories.push(turn));
+    employee.role === Role.Student && employee.student?.turns?.forEach((turn) => categories.push(turn));
+
+
     return {
       key: Number(employee.id),
       name: employee.student?.name || employee.teacher?.name || "Unknown",
-      tags: employee.role === Role.Teacher ? [Role.Teacher] : [Role.Student],
+      categories: categories,
       rating: Number(employee.rating),
       image: employee.student?.image || employee.teacher?.image || "https://gw.alipayobjects.com/zos/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
     };
@@ -53,30 +81,22 @@ const Reservations_table: React.FC<Props> = ({
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Rating",
-      dataIndex: "rating",
-      key: "rating",
-    },
-    {
       title: "Image",
       dataIndex: "image",
       key: "image",
     },
     {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
+      title: "Categoría",
+      key: "category",
+      dataIndex: "category",
+      render: (_, { categories }) => (
         <>
           {/* @ts-ignore*/}
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
+          {categories.map((category) => {
+            let color = category.length > 5 ? "geekblue" : "green";
             return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+              <Tag color={color} key={category}>
+                {category.toUpperCase()}
               </Tag>
             );
           })}
@@ -112,6 +132,8 @@ const Reservations_table: React.FC<Props> = ({
       ),
     },
   ];
+
+  console.log({'data': data});
 
   // Your code here
   return <Table

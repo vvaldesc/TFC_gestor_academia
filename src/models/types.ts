@@ -49,7 +49,7 @@ export interface Employee {
   social_security?: string;
   salary?:          number;
   role?:            Role;
-  teacher?:         Student;
+  teacher?:         Teacher;
   student?:         Student;
   rating?:          number;
 }
@@ -80,6 +80,8 @@ export interface Student {
   image?:                string;
   active?:               boolean;
   is_admin?:             boolean;
+  disciplines?:   Disciplines[];
+  turns?:   Turns[];
 }
 
 export interface Teacher {
@@ -99,6 +101,8 @@ export interface Teacher {
   confirmed:    boolean;
   image?:        string;
   active?:       boolean;
+  disciplines?:   Disciplines[];
+  turns?:   Turns[];
 }
 
 
@@ -109,6 +113,16 @@ export enum SessionState {
   WithoutSession = 0,
   NeedsRegister = 1,
   Registered = 2,
+}
+
+export enum Disciplines {
+  Hairdressing = "Peluquería",
+  Stetics = "Estética",
+}
+
+export enum Turns {
+  Morning = "Diurno",
+  Afternoon = "Nocturno",
 }
 
 export interface sessionInfoState {

@@ -11,7 +11,6 @@ export const usePostBooking = (booking: ServiceConsumption_type) => {
 
   const postData = async (body: ServiceConsumption_type) => {
     console.log("usePostBooking entra", body);
-    debugger;
     setIsLoading(true);
     try {
       const response = await axios.post(url, JSON.stringify(body), {
