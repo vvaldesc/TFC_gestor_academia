@@ -5,6 +5,7 @@ import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker";
 import { MINUTES_IN_A_PERIOD } from "@/consts/consts";
 
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+//@ts-ignore
 import { DateTime } from 'luxon';
 
 
@@ -38,6 +39,13 @@ export default function Material_static_date_time_picker({onValueChange}: { onVa
             }}
           onAccept={(newValue) => handleAccept(newValue)}
           timezone="UTC"
+          fixedWeekNumber={4}
+          views={['month', 'day', 'hours', 'minutes']}
+          slotProps={{
+            actionBar: {
+              actions: ['accept'],
+            },
+          }}
         />
       </LocalizationProvider>
     </>

@@ -123,6 +123,7 @@ export enum Disciplines {
 export enum Turns {
   Morning = "Diurno",
   Afternoon = "Nocturno",
+  NotLaborable = "NotLaborable",
 }
 
 export interface sessionInfoState {
@@ -166,8 +167,13 @@ export enum Weather {
 export interface ServiceConsumption_type {
   id:         number;
   service_id:  number;
+  service_name:  number;
   employee_id: number;
+  employee_name: string;
+  employee_mail: string;
   client_id:   number;
+  client_email:   string;
+  client_name:   string;
   rating?:      number;
   price:       number;
   delay?:       number;

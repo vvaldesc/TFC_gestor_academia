@@ -18,9 +18,13 @@ const Reservations_table: React.FC<Props> = ({
   daytime,
   onValueChange,
 }) => {
-
+  
   const employeesArr: Employee[] = employees.result ? employees.result.data : [];
   const unavailableEmployeesArr: Employee[] = unavailableEmployees.result ? unavailableEmployees.result.data : [];
+  const daytimeCategory = checkTimeOfDay(daytime);
+
+  console.log({'daytime': daytime});
+  console.log({'daytimeCategory': daytimeCategory});
   console.log({'unavailableEmployeesArr': unavailableEmployeesArr});
   console.log({'employeesArr': employeesArr});
 
@@ -34,11 +38,10 @@ const Reservations_table: React.FC<Props> = ({
 
   const data: DataType[] = (employeesArr ?? [])
   .filter((employee: Employee) => {
-    console.log({'daytime': daytime});
-    if(daytime != undefined) return true;
-
+    if(daytime === undefined || daytime === null || daytimeCategory === undefined) return true;
+    if(daytimeCategory === Turns.NotLaborable) return false;
+    
     const targetTurn: Turns = daytime && checkTimeOfDay(daytime) as Turns;
-    console.log({'checkTimeOfDay': checkTimeOfDay(daytime)});
 
     if (employee.role === Role.Student && !employee.student?.turns?.includes(targetTurn)) {
       return false;
