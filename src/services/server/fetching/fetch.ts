@@ -50,3 +50,15 @@ export const fetchProfileByEmail = async (email: string): Promise<{profile: Clie
     }
     return {profile: undefined, table: ""};
 };
+
+export const servicecheck = async (): Promise<Boolean> => {
+    try {
+        const response = await fetch(`http://localhost:4321/api/misc/ping/ping`);// BD petition
+        let data = await response.json();
+        const result: Result = data.result as Result;
+        return result.data === "ping" ? false : true;
+    } catch (error) {
+        console.error("Error fetching ping data:", error);
+        return false;
+    }
+};

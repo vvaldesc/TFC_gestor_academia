@@ -42,11 +42,11 @@ const { sessionInfoState } = Astro.props;
           {<Logout><p>HOLAA</p></Logout>}
         </>
       ) : (
-        <SignIn provider={"google"} options={{ callbackUrl: "/profile" }}>Login</SignIn>
+        <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Login</SignIn>
       )}
 
     </div>
-    <a href="/profile" >
+    <a href="/perfil" >
       <Icon name="mdi:account" size={22} class="mx-3" />
     </a>
     <a href="#">

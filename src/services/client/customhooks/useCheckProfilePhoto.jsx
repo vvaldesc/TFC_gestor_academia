@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_KEY, API_HOST } from '@/consts/config'; // Ajusta la ruta de importación según sea necesario
+//import { API_KEY, API_HOST } from '@/consts/config'; // Ajusta la ruta de importación según sea necesario
 
 export const useCheckProfilePhoto = (src, submit) => {
   const [validPhoto, setValid] = useState(false);
@@ -14,8 +14,8 @@ export const useCheckProfilePhoto = (src, submit) => {
       method: 'POST',
       url: url,
       headers: {
-        'X-RapidAPI-Key': API_KEY2,
-        'X-RapidAPI-Host': API_HOST2
+        'X-RapidAPI-Key': 'API_KEY2',
+        'X-RapidAPI-Host': 'API_HOST2'
       },
       data: src
     };
