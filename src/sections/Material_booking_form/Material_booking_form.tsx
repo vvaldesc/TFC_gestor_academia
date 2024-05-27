@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Material_static_date_time_picker from "@/components/Material_static_date_time_picker/Material_static_date_time_picker";
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
 import { Tag } from "antd";
@@ -9,9 +9,11 @@ import usePostBooking from "@/services/client/customhooks/usePostBooking";
 import usePostMailer from "@/services/client/customhooks/usePostMailer";
 import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
 import useGetForecast from "@/services/client/customhooks/useGetForecast";
+import { WEB_URL } from '@/consts/consts';
+
 
 import classifyWeatherCode from "@/services/client/utils/weathercodeparser"
-import {calculateDaysFromToday} from "@/services/client/logic/utils"
+import {calculateDaysFromToday} from "@/services/client/utils/utils"
 
 import type {
   ServiceConsumption_type,
@@ -33,9 +35,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const [submit, setSubmit] = useState(false);
   const [booking, setBooking] = useState({} as ServiceConsumption_type);
   const [weather, setWeather] = useState("Sunny");
-  const [extendedBooking, setExtendedBooking] = useState(
-    {} as ServicePredictionPost_type
-  );
+  const [extendedBooking, setExtendedBooking] = useState({} as ServicePredictionPost_type);
 
   const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res, loadingForecast: boolean, errorForecast: any } =
   useGetForecast();
@@ -46,7 +46,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const estimatedTime_number = estimatedTime?.estimated_delay as number | undefined | null;
 
   console.log({'weather': weather});
-
+  //@ts-ignore
   const {
     employees,
     loadingEmployees,
@@ -56,7 +56,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     loadingEmployees: boolean;
     errorEmployees: any;
   } = useGetEmployees();
-
+  //@ts-ignore
   const {
     unavailableEmployees,
     loadingUnavailableEmployees,
@@ -66,7 +66,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     loadingUnavailableEmployees: boolean;
     errorUnavailableEmployees: any;
   } = useGetUnavailableEmployees(selectedTime);
-
+  //@ts-ignore
   const {
     sentData,
     postClientLoading,
@@ -79,12 +79,16 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     sentData: ServiceConsumption_type;
   } = usePostBooking(booking);
 
-  const { mailResponse, loadingMailing, errorMailing }: any =
-  usePostMailer(extendedBooking);
+  console.log({'usePostBooking':  sentData,
+                                  postClientLoading,
+                                  postClientError,
+                                  postData,})
+  console.log({'web url': WEB_URL})
 
   const handleTimeChange = (time: Date) => {
     console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
-    const weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
+    let weather_res = "Sunny";
+    // weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
     forecast && setWeather(weather_res);
     setSelectedTime(time);
     const extendedBooking: ServicePredictionPost_type = {
@@ -93,7 +97,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       created_at: new Date(),
       reserved_at: time,
       price: 7,
-      weather: weather_res,
+      weather: weather_res || "Sunny",
       client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
       client_surname: sessionInfo.profile.surname,
       client_address: sessionInfo.profile.address,
@@ -110,11 +114,17 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
 
     const booking: ServiceConsumption_type = selectedEmployee ? {
       service_id: 1,
-      employee_id: selectedEmployee.id,
+      service_name: 'Corte de pelo',
+      employee_id: employee.id,
+      employee_mail: employee.teacher?.email || employee.student?.email,
+      employee_name: employee.teacher?.name || employee.student?.name,
       client_id: client_id,
+      client_email: sessionInfo.profile.email,
+      client_name: sessionInfo.profile.name || sessionInfo.OAuth?.user?.name,
       price: 7,
       created_at: new Date(),
       reserved_at: selectedTime,
+      weather: "Sunny", //cambiar en api
     } : null;
         
     const extendedBooking: ServicePredictionPost_type = selectedEmployee ? {
@@ -124,7 +134,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       created_at: new Date(),
       reserved_at: selectedTime,
       price: 7,
-      weather: "Sunny",
+      weather: "Sunny", //cambiar en api
       client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
       teacher_name: employee.teacher?.name,
       client_surname: sessionInfo.profile.surname,
@@ -142,6 +152,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     setSelectedEmployee(employee);
     setExtendedBooking(extendedBooking);
     setBooking(booking);
+    window.location = `https://localhost:4322/reservas`;
   };
 
   return (
