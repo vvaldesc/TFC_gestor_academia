@@ -54,9 +54,7 @@ export const fetchProfileByEmail = async (email: string): Promise<{profile: Clie
 export const servicecheck = async (): Promise<Boolean> => {
     try {
         const response = await fetch(`http://localhost:4321/api/misc/ping/ping`);// BD petition
-        let data = await response.json();
-        const result: Result = data.result as Result;
-        return result.data === "ping" ? false : true;
+        return response.ok ? true : false;
     } catch (error) {
         console.error("Error fetching ping data:", error);
         return false;

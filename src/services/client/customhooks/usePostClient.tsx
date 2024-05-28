@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import type {Client} from "@/models/types"; // prettier-ignore
+import type { Client } from "@/models/types"; // prettier-ignore
 
 const url = 'http://localhost:4321/api/clients/clients';
 
@@ -8,28 +8,22 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [ok, setOk] = useState(false as boolean);
 
-  const postData = async (body: any) => {
+  const postData = async (body: Client) => {
     setIsLoading(true);
-    console.log("carga foto deberia ser true"+isLoading);
-    
-    async function fetch() {
-      console.log('fetching');
-      console.log("json"+JSON.stringify(body));
+    try {
+      client.image = "";
       const response = await axios.post(url, JSON.stringify(body), {
         headers: {
           'Content-Type': 'application/json',
         },
       });
       setData(response.data);
-      setIsLoading(false);
-      console.log("carga foto deberia ser false"+isLoading);
-    }
-
-    try {
-      await fetch();
+      setOk(response.status === 201);
     } catch (error: any) { // Explicitly type error as any
-      setError(error);
+      setError(error.message || 'Unknown error occurred');
+    } finally {
       setIsLoading(false);
     }
   };
@@ -38,12 +32,15 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
     if (validPhoto && submit) {
       postData(client);
     }
-  }, [validPhoto, submit]);
+  }, [validPhoto, submit, client]); // Add client to dependencies
 
-  return { sentData: client,
-     postClientLoading: isLoading ,
-     postClientError: error,
-    postData: data };
+  return {
+    sentData: client,
+    postClientLoading: isLoading,
+    postClientError: error,
+    postData: data,
+    clientOk: ok,
+  };
 };
 
 export default usePostClient;
