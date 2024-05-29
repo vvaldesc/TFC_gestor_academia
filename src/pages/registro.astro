@@ -4,6 +4,7 @@ title: "Registro";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Container_card from "@/sections/Container_card.astro";
+import { SignIn } from "auth-astro/components";
 // import Register_section from "@/sections/Register_section.astro";
 import Register_section_react from "@/sections/Register_section_react/Register_section_react";
 
@@ -31,8 +32,8 @@ const title = sessionInfoState.sessionState === 1 ? `Complete su registro ${user
 <Layout title={title}>
     <Main>
       <Container_card>
-          <!-- <Register_section sessionInfoState={sessionInfoState}/> -->
-          <Register_section_react sessionInfoState={sessionInfoState} client:load/>
+          {sessionInfoState.sessionState == 1 && <Register_section_react sessionInfoState={sessionInfoState} client:load/>}
+          {sessionInfoState.sessionState == 0 && <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Iniciar sesión</SignIn>}
       </Container_card>
     </Main>
   </Layout>

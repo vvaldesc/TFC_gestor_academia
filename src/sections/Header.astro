@@ -3,13 +3,9 @@ import Headernav from "@/components/Headernav.astro";
 import Header_nav_astro_nav from "@/components/Header_nav_astro_nav.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import { SignOut, SignIn } from "auth-astro/components";
+import { SignIn } from "auth-astro/components";
 import Logout from "@/components/buttons/Logout.astro";
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-
-const signOutParams = {
-  callbackUrl: '/', // Cambia '/' por '/home' si prefieres redirigir a '/home'
-};
 
 interface Props {
   sessionInfoState: sessionInfoState;
@@ -38,11 +34,10 @@ const { sessionInfoState } = Astro.props;
             format="webp"
           /> }
           <p>Bienvenido {sessionInfoState.sessionInfo.profile.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
-          {/* {<SignOut params={signOutParams}>Logout</SignOut>} */}
-          {<Logout><p>HOLAA</p></Logout>}
+          {<Logout><p>Cerrar sesión</p></Logout>}
         </>
       ) : (
-        <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Login</SignIn>
+        <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Iniciar sesión</SignIn>
       )}
 
     </div>
