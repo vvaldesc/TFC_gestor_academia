@@ -4,6 +4,8 @@ import Register_form from "@/components/AntDesign/forms/Register_form";
 import useCheckProfilePhoto from "@/services/client/customhooks/useCheckProfilePhoto";
 import usePostClient from "@/services/client/customhooks/usePostClient";
 
+import {deleteCookieLoacalStorage} from "@/services/client/utils/utils.ts";
+
 interface Props {
   sessionInfoState: sessionInfoState;
 }
@@ -22,12 +24,8 @@ const Register_section_react: React.FC<Props> = ({ sessionInfoState }) => {
   const { sentData, postClientLoading, postClientError, postData, clientOk } =
     usePostClient(client, validPhoto, submit);
 
-  clientOk && console.log("Cliente creado:", postData);
-  clientOk &&
-    (() => {
-      document.cookie =
-        "sessionInfoState=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    });
+    clientOk && console.log("Client created:", sentData);
+    clientOk && deleteCookieLoacalStorage("sessionInfoState");
 
   useEffect(() => {
     if (validPhotoFetch && !photoCheckLoading && !photoProfileError) {
@@ -35,18 +33,6 @@ const Register_section_react: React.FC<Props> = ({ sessionInfoState }) => {
     }
   }, [validPhotoFetch, photoCheckLoading, photoProfileError]);
 
-  useEffect(() => {
-    console.log(
-      submit,
-      validPhoto,
-      !postClientLoading,
-      !photoCheckLoading,
-      submit && validPhoto && !postClientLoading && !photoCheckLoading
-    );
-    if (submit && validPhoto && !postClientLoading && !photoCheckLoading) {
-      setSubmit(false);
-    }
-  }, [submit, validPhoto, postClientLoading, photoCheckLoading]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
