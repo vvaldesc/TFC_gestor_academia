@@ -31,7 +31,7 @@ const title = sessionInfoState.sessionState === 1 ? `Complete su registro ${user
     <Main>
       <Container_card>
           <!-- <Register_section sessionInfoState={sessionInfoState}/> -->
-          <Register_section_react sessionInfoState={sessionInfoState}/>
+          <Register_section_react sessionInfoState={sessionInfoState} client:load/>
       </Container_card>
     </Main>
   </Layout>
