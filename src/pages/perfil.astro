@@ -17,8 +17,8 @@ console.log('soy el perfil');
 
 //SESSION HANDLER////////////////////////////////////////
  import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+ import {SessionState} from "@/models/types"; // prettier-ignore
  import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
- console.log('sessionHandling perfil...'); // prettier-ignore
  const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
   if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
@@ -53,5 +53,5 @@ const userName =
       </Profile_section>
     </Container_card>
   </Main>
-  <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>
+  {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>}
 </Layout>

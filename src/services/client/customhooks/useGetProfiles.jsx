@@ -20,7 +20,6 @@ const useGetProfiles = () => {
 
         fetchData();
     }, []);
-
     return { profiles, loading, error };
 };
 

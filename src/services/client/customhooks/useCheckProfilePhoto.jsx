@@ -6,6 +6,7 @@ export const useCheckProfilePhoto = (src, submit) => {
   const [validPhotoFetch, setValid] = useState(false);
   const [photoCheckLoading, setLoading] = useState(false);
   const [photoProfileError, setError] = useState(null);
+  const [sentPhoto, setSentPhoto] = useState(null);
   const url = "https://faceanalyzer-ai.p.rapidapi.com/faceanalysis";
 
   const fetchData = async () => {
@@ -33,6 +34,7 @@ export const useCheckProfilePhoto = (src, submit) => {
       //   setValid(true);
       //   setError("No se encontraron caras válidas en la imagen.");
       // }
+      // setSentPhoto("response")
       setValid(true);
     } catch (error) {
       console.error('Hubo un error al hacer la solicitud:', error);
@@ -50,6 +52,7 @@ export const useCheckProfilePhoto = (src, submit) => {
     validPhotoFetch,
     photoCheckLoading,
     photoProfileError,
+    sentPhoto,
   };
 };
 

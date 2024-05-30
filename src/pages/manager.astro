@@ -22,6 +22,6 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 
 <Layout title={"manager"}>
   <div class="mt-5 pt-5">
-    <Manager_section client:load />
+    <Manager_section sessionInfo={sessionInfoState} client:load/>
   </div>
 </Layout>
