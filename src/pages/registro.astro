@@ -19,6 +19,7 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 2) return Astro.redirect("/perfil"); // prettier-ignore
+if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 const userName =
