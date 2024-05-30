@@ -1,23 +1,34 @@
 ---
 title: "Pefil";
-
+import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 import Container_card from "@/sections/Container_card.astro";
 
+// Obtén el estado de la sesión desde los props pasados por el layout
+const { test } = Astro.props;
+
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
 if(!await servicecheck()) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
+console.log('soy el perfil');
 
 //SESSION HANDLER////////////////////////////////////////
-import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
-const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
-if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
+ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
+ console.log('sessionHandling perfil...'); // prettier-ignore
+ const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
+  if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
+
+console.log('sessionInfoState perfil...');
+console.log(sessionInfoState);
+
+
+console.log(test);
 const userName =
   sessionInfoState.sessionInfo.profile?.username ||
   sessionInfoState.sessionInfo.OAuth.user?.name ||
@@ -42,4 +53,5 @@ const userName =
       </Profile_section>
     </Container_card>
   </Main>
+  <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>
 </Layout>

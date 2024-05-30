@@ -32,6 +32,7 @@ const { sessionInfoState } = Astro.props;
             loading={"lazy"}
             densities={[0.2, 1, 2]}
             format="webp"
+            id="profileThumb_header"
           /> }
           <p>Bienvenido {sessionInfoState.sessionInfo.profile.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
           {<Logout><p>Cerrar sesión</p></Logout>}

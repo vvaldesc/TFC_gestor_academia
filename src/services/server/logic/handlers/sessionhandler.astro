@@ -4,37 +4,67 @@ import {getSession} from "auth-astro/server"; // prettier-ignore
 import {sessionHandler,sessionStateCheck} from "@/services/server/logic/handlers/logic"; // prettier-ignore
 import type {ProfileSession,SessionState,sessionInfoState} from "@/models/types"; // prettier-ignore
 
+
 export async function sessionFetch(request: any, cookies: any): Promise<sessionInfoState> {
   let sessionInfoState: sessionInfoState = {} as sessionInfoState; // prettier-ignore
   try {
     const sessionInfo: ProfileSession = await sessionHandler(await getSession(request));
     const sessionState: SessionState = await sessionStateCheck(sessionInfo);
     sessionInfoState = { sessionState, sessionInfo };
-    console.log(sessionInfoState);
     if (sessionInfoState.sessionState === 2 || sessionInfoState.sessionState === 1) {
-      console.log("creo cookie");
-      cookies.set("sessionInfoState", JSON.stringify(sessionInfoState), {
-        path: "/",
-        maxAge: 60 * 5,
-      });
-    }
-    else {
+      createCookie(cookies, sessionInfoState);
+      return sessionInfoState;
+    } else {
       throw new Error("Session state is invalid. Execution stopped.");
     }
-    return sessionInfoState as sessionInfoState;
   } catch (e) {
     console.error(e);
   }
-  return sessionInfoState as sessionInfoState;
+  return sessionInfoState;
 }
+
+export const createCookie = (cookies: any, sessionInfoState: sessionInfoState) => {
+  // Deep clone using JSON methods
+  const clonedSessionInfoState = JSON.parse(JSON.stringify(sessionInfoState));
+
+  // Verifica que la clonación fue exitosa
+  if (clonedSessionInfoState && clonedSessionInfoState.sessionInfo && clonedSessionInfoState.sessionInfo.profile) {
+    // Modifica la copia del objeto
+    clonedSessionInfoState.sessionInfo.profile.image = "";
+  }
+  console.log("creo cookie");
+  console.log('clonedSessionInfoState sin imagen');
+  console.log(clonedSessionInfoState);
+  
+  cookies.set("sessionInfoState", JSON.stringify(clonedSessionInfoState), {
+    path: "/",
+    maxAge: 60 * 5,
+  });
+};
 
 export async function sessionHandling(request: any, cookies: any): Promise<sessionInfoState> {
   console.log("hay cookie sesion? "+cookies.has("sessionInfoState"));
+  console.log("Hola desde sessionHandling");
+
   if (cookies.has("sessionInfoState")) {
     console.log(JSON.parse(cookies.get("sessionInfoState")?.value));
     return JSON.parse(cookies.get("sessionInfoState")?.value) as sessionInfoState;
   } else {
-    return await sessionFetch(request, cookies);
+  console.log("sessionInfoState");
+    const sessionInfoState = await sessionFetch(request, cookies);
+    return sessionInfoState;
+  }
+}
+
+export async function sessionHandlingLayout(request: any, cookies: any): Promise<sessionInfoState> {
+  console.log("hay cookie sesion? "+cookies.has("sessionInfoState"));
+  console.log("Hola desde sessionHandlingLayout");
+
+  if (cookies.has("sessionInfoState")) {
+    return JSON.parse(cookies.get("sessionInfoState")?.value) as sessionInfoState;
+  } else {
+    const sessionInfoStateLayout = await sessionFetch(request, cookies);
+    return sessionInfoStateLayout;
   }
 }
 //End handling//////////////////////////
