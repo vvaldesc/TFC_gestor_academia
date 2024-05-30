@@ -9,7 +9,8 @@ import Footer from "@/sections/Footer.astro";
 
 console.log('soy el LAYOUT');
 //SESSION HANDLER////////////////////////////////////////
-import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+import type { sessionInfoState} from "@/models/types"; // prettier-ignore
+import { SessionState } from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
@@ -166,6 +167,6 @@ const { title } = Astro.props;
         box-sizing: border-box;
       }
     </style>
-  <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:idle/>
+  {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:idle/>}
   </body>
 </html>

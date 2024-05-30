@@ -8,7 +8,7 @@ const url = 'http://localhost:4321/api/clients/clients';
 async function handleImageUpload(img): Promise<string | ArrayBuffer> {
   const imageFile = img;
   const options = {
-    maxSizeMB: 0.2, // (max file size in MB)
+    maxSizeMB: 0.1, // (max file size in MB)
     maxWidthOrHeight: 1920, // (max width or height in pixel)
     useWebWorker: true,
   };
@@ -29,7 +29,7 @@ async function handleImageUpload(img): Promise<string | ArrayBuffer> {
   }
 }
 
-export const usePostClient = (client: Client, validPhoto: boolean, submit: boolean) => {
+export const usePostClient = (client: Client, validPhoto: boolean, submit: boolean, sentPhoto: any | null) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -38,7 +38,9 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
   const postData = async (body: Client) => {
     setIsLoading(true);
     try {
-      client.image = await handleImageUpload(client.image) as string;
+      if (!/^https?:\/\/[^ ]+$/.test(client.image)) client.image = await handleImageUpload(client.image) as string;
+      console.log(client);
+      body = client;
       const response = await axios.post(url, JSON.stringify(body), {
         headers: {
           'Content-Type': 'application/json',
@@ -55,6 +57,8 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
 
   useEffect(() => {
     if (validPhoto && submit) {
+      postData(client);
+    } else if (sentPhoto === null && submit) {
       postData(client);
     }
   }, [validPhoto, submit, client]); // Add client to dependencies

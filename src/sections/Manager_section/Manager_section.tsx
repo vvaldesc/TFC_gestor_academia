@@ -1,8 +1,10 @@
 import AntDesign_table from "@/components/AntDesign/tables/Profiles_table";
+import useGetProfiles from '@/services/client/customhooks/useGetProfiles';
 
-export default function Material_booking_form(props: {client_id: any, sessionInfo: ProfileSession}) {
+export default function Material_booking_form(props: {sessionInfo: ProfileSession}) {
+  const { profiles, loading } = useGetProfiles();
 
   return (
-    <AntDesign_table/>
+    <AntDesign_table profiles={profiles} loading={loading} />
   );
 }

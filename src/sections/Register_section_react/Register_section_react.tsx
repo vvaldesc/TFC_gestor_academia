@@ -14,17 +14,26 @@ const Register_section_react: React.FC<Props> = ({ sessionInfoState }) => {
   const [client, setClient] = useState<Client>({
     email: sessionInfoState.sessionInfo.OAuth.user?.email,
     active: true,
-    image: sessionInfoState.sessionInfo.OAuth.user?.image,
+    image: sessionInfoState.sessionInfo.OAuth.user?.image
   } as Client);
   const [submit, setSubmit] = useState(false);
   const [validPhoto, setValidPhoto] = useState(false);
 
-  const { validPhotoFetch, photoCheckLoading, photoProfileError } =
+  console.log(client);
+
+  const { sentPhoto, validPhotoFetch, photoCheckLoading, photoProfileError } =
     useCheckProfilePhoto(client.image, submit);
   const { sentData, postClientLoading, postClientError, postData, clientOk } =
-    usePostClient(client, validPhoto, submit);
-
+    usePostClient(client, validPhoto, submit, sentPhoto);
+  
   clientOk && deleteCookieLoacalStorage("sessionInfoState");
+  console.log(client);
+
+  useEffect(() => {
+    if (clientOk || postClientError) {
+      setSubmit(false);
+    }
+  }, [clientOk, postClientError]);
 
   useEffect(() => {
     if (validPhotoFetch && !photoCheckLoading && !photoProfileError) {

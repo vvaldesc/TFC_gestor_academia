@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { TableProps } from 'antd';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
-import useGetProfiles from '@/services/client/customhooks/useGetProfiles';
 
 interface Item {
   key: string;
@@ -53,11 +52,10 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
   );
 };
 
-const App: React.FC = () => {
+const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
-  const { profiles, loading } = useGetProfiles();
 
   useEffect(() => {
     if (profiles?.result?.data.rows && profiles?.result?.data.columns) {
@@ -136,7 +134,7 @@ const App: React.FC = () => {
       editable: true,
       width: column === 'address' ? '40%' : column === 'age' ? '15%' : '25%',
       render: (_: any, record: Item) => {
-        return record[column];  // Devuelve el valor de la celda
+        return column !== 'image' ? record[column] : <img src={record[column]} />;
       },
     })),
     {
