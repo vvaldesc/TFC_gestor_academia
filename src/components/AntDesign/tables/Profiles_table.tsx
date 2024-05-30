@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import type { TableProps } from 'antd';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 
-interface Item {
+import postClient from '@/services/client/fetching/hooks/postClient';
+import type { Client, Result } from '@/models/types';
+
+interface ItemKey {
   key: string;
-  name: string;
-  age: number;
-  address: string;
 }
+
+interface Item extends Client, ItemKey {}
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
@@ -35,10 +37,10 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
       {editing ? (
         <Form.Item
           name={dataIndex}
-          style={{ margin: 0 }}
+          style={{margin: 0}}
           rules={[
             {
-              required: true,
+              required: false,
               message: `Please Input ${title}!`,
             },
           ]}
@@ -56,6 +58,9 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [deletingKey, setDeletingKey] = useState('');
+
+  console.log(profiles);
 
   useEffect(() => {
     if (profiles?.result?.data.rows && profiles?.result?.data.columns) {
@@ -72,9 +77,13 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
 
   const isEditing = (record: Item) => record.key === editingKey;
 
-  const edit = (record: Partial<Item> & { key: React.Key }) => {
-    form.setFieldsValue({ name: '', age: '', address: '', ...record });
+  const editRecord = (record: Partial<Item> & { key: React.Key }) => {
+    form.setFieldsValue({ ...record });
     setEditingKey(record.key);
+  };
+
+  const deleteRecord = (record: Partial<Item> & { key: React.Key }) => {
+    setDeletingKey(record.key);
   };
 
   const cancel = () => {
@@ -84,7 +93,6 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
   const save = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as Item;
-
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
@@ -94,6 +102,8 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
           ...row,
         });
         setData(newData);
+        row.id = item.id;
+        postClient(row as Client);
         setEditingKey('');
       } else {
         newData.push(row);
@@ -106,54 +116,158 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
   };
 
   const columns: TableProps<Item>['columns'] = [
-    ...[
-      "id",
-      "name",
-      "surname",
-      "email",
-      "phone_number",
-      "address",
-      "city",
-      "bornDate",
-      "created_at",
-      "updated_at",
-      "username",
-      "confirmed",
-      "image",
-      "active",
-      "matriculation_number",
-      "employed",
-      "DNI",
-      "educational_level",
-      "is_admin",
-      "tableName"
-    ].map((column) => ({
-      title: column,
-      dataIndex: column,
-      key: column,
+    {
+      title: "Identificador en su categoría",
+      dataIndex: "id",
+      key: "id",
+      editable: false,
+      width: '1%',
+      render: (_: any, record: Item) => record.id,
+    },
+    {
+      title: "Nombre",
+      dataIndex: "name",
+      key: "name",
       editable: true,
-      width: column === 'address' ? '40%' : column === 'age' ? '15%' : '25%',
-      render: (_: any, record: Item) => {
-        return column !== 'image' ? record[column] : <img src={record[column]} />;
-      },
-    })),
+      width: '5%',
+      render: (_: any, record: Item) => record.name,
+    },
+    {
+      title: "Apellidos",
+      dataIndex: "surname",
+      key: "surname",
+      editable: true,
+      width: '10%',
+      render: (_: any, record: Item) => record.surname,
+    },
+    {
+      title: "Foto de perfil",
+      dataIndex: "image",
+      key: "image",
+      editable: true,
+      width: '1%',
+      render: (_: any, record: Item) => <img src={record.image} alt="image" />,
+    },
+    {
+      title: "Alta",
+      dataIndex: "created_at",
+      key: "created_at",
+      editable: false,
+      width: '5%',
+      render: (_: any, record: Item) => new Date(record.created_at).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    },
+    {
+      title: "Ult. actualización",
+      dataIndex: "updated_at",
+      key: "updated_at",
+      editable: false,
+      width: '5%',
+      render: (_: any, record: Item) => new Date(record.updated_at).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    },
+    {
+      title: "Fecha nacimiento",
+      dataIndex: "bornDate",
+      key: "bornDate",
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => new Date(record.bornDate).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    },
+    {
+      title: "Activo",
+      dataIndex: "active",
+      key: "active",
+      editable: true,
+      width: '1%',
+      render: (_: any, record: Item) => record.active ? 'Si' : 'No',
+    },
+    {
+      title: "DNI",
+      dataIndex: "DNI",
+      key: "DNI",
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => record.DNI,
+    },
+    {
+      title: "Tlf. contacto",
+      dataIndex: "phone_number",
+      key: "phone_number",
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => record.phone_number,
+    },
+    {
+      title: "Tiene trabajo?",
+      dataIndex: "employed",
+      key: "employed",
+      editable: true,
+      width: '1%',
+      render: (_: any, record: Item) => record.employed ? 'Si' : 'No',
+    },
+    {
+      title: "Educación",
+      dataIndex: "educational_level",
+      key: "educational_level",
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => record.educational_level,
+    },
+    {
+      title: "Rol",
+      dataIndex: "tableName",
+      key: "tableName",
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => record.tableName,
+    },
+    {
+      title: "Admin",
+      dataIndex: "is_admin",
+      key: "is_admin",
+      editable: true,
+      width: '1%',
+      render: (_: any, record: Item) => record.is_admin,
+    },
     {
       title: 'operation',
       dataIndex: 'operation',
+      width: '5%',
       render: (_: any, record: Item) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
             <Typography.Link onClick={() => save(record.key)} style={{ marginRight: 8 }}>
-              Save
+              Guardar cambios
             </Typography.Link>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
+              <a>Cancelar</a>
             </Popconfirm>
           </span>
         ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+          <Typography.Link disabled={editingKey !== ''} onClick={() => editRecord(record)}>
             Edit
+          </Typography.Link>
+        );
+      },
+    },
+    {
+      title: 'operation',
+      dataIndex: 'operation',
+      width: '5%',
+      render: (_: any, record: Item) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link onClick={() => save(record.key)} style={{ marginRight: 8 }}>
+              Borrar
+            </Typography.Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <a>Cancelar</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={deletingKey !== ''} onClick={() => deleteRecord(record)}>
+            Borrar
           </Typography.Link>
         );
       },
@@ -168,7 +282,6 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
       ...col,
       onCell: (record: Item) => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),

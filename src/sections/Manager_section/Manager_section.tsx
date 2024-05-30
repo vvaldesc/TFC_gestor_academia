@@ -5,6 +5,10 @@ export default function Material_booking_form(props: {sessionInfo: ProfileSessio
   const { profiles, loading } = useGetProfiles();
 
   return (
+    <>
     <AntDesign_table profiles={profiles} loading={loading} />
+    {/* <AntDesign_table courses={courses} loading={loading} />
+    <AntDesign_table details={details} loading={loading} /> */}
+    </>
   );
 }
