@@ -21,6 +21,9 @@ export default defineConfig({
     '/home': '/'
   },
   vite: {
+    http: {
+      large_client_headers_buffers: 4096
+    },
     plugins: [basicSsl()],
     server: {
       https: true

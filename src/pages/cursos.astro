@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 
 import Material_mail_sending_form from "@/components/Material_mail_sending_form/Material_mail_sending_form";
 import Main from "@/components/Main.astro";
+import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
@@ -13,7 +14,7 @@ if(!await servicecheck()) return Astro.redirect("/not_connected");
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
-const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 

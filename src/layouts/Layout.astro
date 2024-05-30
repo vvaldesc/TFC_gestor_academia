@@ -1,15 +1,17 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import Seo from "./SEO/Seo.astro";
-
+import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
 import Header from "@/sections/Header.astro";
 import Footer from "@/sections/Footer.astro";
 
+
+console.log('soy el LAYOUT');
 //SESSION HANDLER////////////////////////////////////////
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
-import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
-const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies) as sessionInfoState;
+import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
+const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 interface Props {
@@ -21,7 +23,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="es">
   <head>
-    <Seo title={title}/>
+    <Seo title={title} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/icons/favicon/photo_1.png" />
@@ -30,11 +32,10 @@ const { title } = Astro.props;
   </head>
   <body>
     <div id="App" class="relative h-screen">
-      <!-- grid actúa como container -->
       <Header sessionInfoState={sessionInfoState} />
-      <main class="[grid-area:main]" transition:animate="fade">
-        <slot />
-      </main>
+          <main class="[grid-area:main]" transition:animate="fade">
+            <slot />
+          </main>
       <Footer class="[grid-area:footer]" />
     </div>
     <style>
@@ -165,5 +166,6 @@ const { title } = Astro.props;
         box-sizing: border-box;
       }
     </style>
+  <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:idle/>
   </body>
 </html>
