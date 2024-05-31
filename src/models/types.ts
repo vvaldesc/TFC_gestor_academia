@@ -165,22 +165,38 @@ export enum Weather {
   Snowy = 'Snowy',
 }
 export interface ServiceConsumption_type {
-  id:         number;
-  service_id:  number;
-  service_name:  number;
-  employee_id: number;
-  employee_name: string;
-  employee_mail: string;
-  client_id:   number;
-  client_email:   string;
-  client_name:   string;
-  rating?:      number;
-  price:       number;
-  delay?:       number;
-  created_at:  Date;
-  updated_at?:  Date;
-  reserved_at:  Date;
-  weather?:     Weather;
+  id?:                   number;
+  client_id?:            number;
+  teacher_id?:           null;
+  student_id?:           number;
+  employee_id?:          number;
+  delay?:                number;
+  service_id?:           number;
+  service_name?:           string;
+  service_price?:           string;
+  created_at?:           Date;
+  updated_at?:           null;
+  reserved_at?:          Date;
+  rating?:               null;
+  price?:                number;
+  weather?:              string;
+  client_name?:          string;
+  teacher_name?:         null;
+  student_name?:         string;
+  client_surname?:       string;
+  teacher_surname?:      null;
+  student_surname?:      string;
+  client_address?:       string;
+  teacher_address?:      null;
+  student_address?:      string;
+  client_phone_number?:  string;
+  teacher_phone_number?: null;
+  student_phone_number?: string;
+  client_email?:         string;
+  teacher_email?:        null;
+  student_email?:        string;
+  employee_salary?:      number;
+  state?:                string;
 }
 
 export interface ServicePredictionPost_type {
