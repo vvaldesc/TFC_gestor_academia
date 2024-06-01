@@ -7,7 +7,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl';
 import metaTags from "astro-meta-tags";
 import path from 'path'; // Añade esta línea
 import mkcert from 'vite-plugin-mkcert'
-
+import serviceWorker from "astrojs-service-worker";
 import auth from "auth-astro";
 
 import vercel from "@astrojs/vercel/serverless";
@@ -45,7 +45,7 @@ export default defineConfig({
       }
     }
   },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags(), auth()],
+  integrations: [tailwind(), svelte(), react(), icon(), metaTags(), auth(), serviceWorker()],
   output: "server",
   adapter: vercel()
 });

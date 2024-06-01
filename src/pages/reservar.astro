@@ -5,7 +5,7 @@ import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
 
-import Container_card from "@/sections/Container_card.astro";
+import Container_card_big from "@/components/Container_card_big.astro";
 import Material_booking_form from "@/sections/Material_booking_form/Material_booking_form";
 import Refresh from "@/services/client/logic/Refresh.svelte";
 
@@ -28,10 +28,10 @@ const MUI = checkRenderParameter(Astro.request.url);
 ---
 
 <Layout title={"Reserva tu cita"}>
-  {MUI && <Container_card>
-    <div class="w-max">
-      <Material_booking_form client_id={sessionInfoState.sessionInfo.profile.id} sessionInfo={sessionInfoState.sessionInfo} client:idle />
+  {MUI && <Container_card_big>
+    <div class="m-auto w-max">
+      <Material_booking_form client_id={sessionInfoState.sessionInfo.profile.id} sessionInfo={sessionInfoState.sessionInfo} client:load />
     </div>
-  </Container_card>}
+  </Container_card_big>}
   <Refresh client:only="svelte" />
 </Layout>

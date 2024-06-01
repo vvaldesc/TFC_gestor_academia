@@ -10,11 +10,10 @@ const url = 'http://127.0.0.1:5000/api/estimatedtime';
 const usePostServicePrediction = (booking: ServicePredictionPost_type) => {
     const [estimatedTime, setEstimatedTime] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errorServicePrediction, setError] = useState(null);
 
     const postData = async (booking) => {
       console.log("usePostServicePrediction entra", booking);
-      debugger;
         try {
             const body = booking;
             const response = await axios.post(url, body);
@@ -34,7 +33,7 @@ const usePostServicePrediction = (booking: ServicePredictionPost_type) => {
         }
       }, [booking]);
 
-    return { estimatedTime, loading, error };
+    return { estimatedTime, loading, errorServicePrediction };
 };
 
 export default usePostServicePrediction;

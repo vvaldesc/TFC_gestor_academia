@@ -5,6 +5,16 @@ import type { Session } from "@auth/core/types";
   expires: Date;
 }*/
 
+export interface Service {
+  id?:          number;
+  name?:        string;
+  price?:       number;
+  duration?:    number;
+  description?: string;
+  discipline?:  string;
+  image?:       string;
+}
+
 export interface User {
   name: string;
   email: string;

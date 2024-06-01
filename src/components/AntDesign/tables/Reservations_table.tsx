@@ -40,6 +40,8 @@ const Reservations_table: React.FC<Props> = ({
   .filter((employee: Employee) => {
     if(daytime === undefined || daytime === null || daytimeCategory === undefined) return true;
     if(daytimeCategory === Turns.NotLaborable) return false;
+
+    console.log({'daytime': daytime});
     
     const targetTurn: Turns = daytime && checkTimeOfDay(daytime) as Turns;
 
@@ -130,7 +132,7 @@ const Reservations_table: React.FC<Props> = ({
           onClick={() => handleSelect(record.key)}
           disabled={unavailableEmployeesArr.some((employee) => employee.id === record.key)}
         >
-          <a>Reserve {record.name}</a>
+          <a>Reserva {record.name}</a>
         </Button>
       ),
     },
