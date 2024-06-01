@@ -84,6 +84,13 @@ export interface Student {
   turns?:   Turns[];
 }
 
+export interface Subject {
+  acronym:              string;
+  teacher_id:           number;
+  course_id:            number;
+  subject_name:                 string;
+}
+
 export interface Teacher {
   id:           number;
   is_admin?:     boolean;
@@ -251,6 +258,24 @@ export interface Weather_res {
   lon?:          number;
   state_code?:   string;
   timezone?:     string;
+}
+
+export interface StudentSubjectEnrolments {
+  id?:              number;
+  student_id?:      number;
+  subject_acronym?:      string;
+  date?:      Date;
+}
+
+export interface Courses {
+  acronym?:              string;
+  name?:                 string;
+  turn?:                 string;
+  attendance_threshold?: number;
+  educational_level?:    string;
+  duration?:             number;
+  practical_hours?:      number;
+  discipline?:           string;
 }
 
 export interface Weather_res_Datum {

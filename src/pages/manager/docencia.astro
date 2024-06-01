@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
 import Container_card from "@/sections/Container_card.astro";
-import Manager_section from "@/sections/Manager_section/Manager_section";
+import Manager_section_details from "@/sections/Manager_section/Manager_section_details";
 import Main from "@/components/Main.astro";
 
 //SERVICE CHECK//////////////////////////////////////////
@@ -22,7 +22,8 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 ---
 
 <Layout title={"manager"}>
-  <div class="w-full h-full flex flex-col justify-items-center pt-11">
-    <Manager_section sessionInfo={sessionInfoState} client:load/>
+  <div transition:animate="slide" class="w-full h-full flex flex-col justify-items-center pt-11">
+    <Manager_section_details transition:animate={"slide"} sessionInfo={sessionInfoState} client:load />
+    <a href="./citas">citas</a>
   </div>
 </Layout>

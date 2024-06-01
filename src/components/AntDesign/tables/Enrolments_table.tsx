@@ -4,13 +4,16 @@ import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 
 import postClient from '@/services/client/fetching/hooks/postClient';
 import deleteClient from '@/services/client/fetching/hooks/deleteClient';
-import type { Client, Result, ServiceConsumption_type } from '@/models/types';
+import type { Client, Result, StudentSubjectEnrolments, Student, Subject, Teacher, Courses } from '@/models/types';
 
-interface ItemKey {
+interface Item {
   key: string;
+  StudentSubjectEnrolments: StudentSubjectEnrolments;
+  Students: Student;
+  Subjects: Subject;
+  Teachers: Teacher;
+  Courses: Courses;
 }
-
-interface Item extends ServiceConsumption_type, ItemKey {}
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
@@ -55,18 +58,20 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
   );
 };
 
-const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsResult, loadingDetails }) => {
+const App: React.FC<{enrolmentResult: any, loadingEnrolments: boolean}> = ({ enrolmentResult, loadingEnrolments }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [deletingKey, setDeletingKey] = useState('');
 
-  const details = detailsResult?.result?.data as ServiceConsumption_type[];
-  const result = detailsResult?.result as Result;
+  const enrolments = enrolmentResult?.result?.data as Item[];
+  const result = enrolmentResult?.result as Result;
+
+  console.log('Enrolments:', enrolments);
 
   useEffect(() => {
     if (result?.count > 0) {
-      const dataWithKeys = details.map((row, index) => {
+      const dataWithKeys = enrolments.map((row, index) => {
         let rowData = {};
         Object.entries(row).forEach(([key, value]) => {
           rowData[key] = value;
@@ -75,7 +80,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       });
       setData(dataWithKeys);
     }
-  }, [details]);
+  }, [enrolments]);
 
   const isEditing = (record: Item) => record.key === editingKey;
 
@@ -138,95 +143,68 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
 };
 
   const columns: TableProps<Item>['columns'] = [
+      {
+        title: "Matrícula",
+        dataIndex: "acronym",
+        key: "acronym",
+        editable: false,
+        width: '5%',
+        render: (_: any, record: Item) => record.StudentSubjectEnrolments.id,
+      },
+      {
+        title: "Curso",
+        dataIndex: "course_name",
+        key: "course_name",
+        editable: false,
+        width: '5%',
+        render: (_: any, record: Item) => record.Courses.name,
+      },
+      {
+        title: "Alumno",
+        dataIndex: "student_id",
+        key: "student_id",
+        editable: true,
+        width: '5%',
+        render: (_: any, record: Item) => record.Students.name + " " + record.Students.surname,
+      },
+      {
+        title: "Profesor",
+        dataIndex: "teacher_name",
+        key: "teacher_name",
+        editable: false,
+        width: '5%',
+        render: (_: any, record: Item) => record.Teachers.name,
+      },
+      {
+        title: "Alta",
+        dataIndex: "created_at",
+        key: "created_at",
+        editable: false,
+        width: '5%',
+        render: (_: any, record: Item) => record.StudentSubjectEnrolments.date,
+      },
     {
-      title: "Id factura",
-      dataIndex: "id",
-      key: "id",
-      editable: false,
-      width: '1%',
-      render: (_: any, record: Item) => record.id,
-    },
-    {
-      title: "Servicio",
-      dataIndex: "service_name",
-      key: "service_name",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.service_name,
-    },
-    {
-      title: "Empleado",
-      dataIndex: "employee_name",
-      key: "employee_name",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.teacher_id ? (record.teacher_name + " " + record.teacher_surname) : (record.student_name + " " + record.student_surname),
-    },
-    {
-      title: "Cliente",
-      dataIndex: "client_name",
-      key: "client_name",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.client_name + " " + record.client_surname,
-    },
-    {
-      title: "Calificación",
-      dataIndex: "rating",
-      key: "rating",
-      editable: true,
-      width: '1%',
-      render: (_: any, record: Item) => record.rating ? record.rating : '-',
-    },
-    {
-      title: "Precio",
-      dataIndex: "price",
-      key: "price",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.price,
-    },
-    {
-      title: "Retraso",
-      dataIndex: "delay",
-      key: "delay",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.state === 'Completed' ? record.delay : '-',
-    },
-    {
-      title: "Fecha alta",
-      dataIndex: "created_at",
-      key: "created_at",
-      editable: false,
-      width: '5%',
-      render: (_: any, record: Item) => new Date(record.created_at).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-    },
-    {
-      title: "Fecha reserva",
-      dataIndex: "reserved_at",
-      key: "reserved_at",
-      editable: true,
-      width: '5%',
-      defaultSortOrder: 'descend',
-      render: (_: any, record: Item) => new Date(record.reserved_at).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-    },
-    {
-      title: "Estado",
-      dataIndex: "state",
-      key: "state",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.state,
-    },
-    {
-      title: "Clima estimado",
-      dataIndex: "weather",
-      key: "weather",
-      editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.weather,
-    },
+        title: 'operation',
+        dataIndex: 'operation',
+        width: '5%',
+        render: (_: any, record: Item) => {
+          const editable = isEditing(record);
+          return editable ? (
+            <span>
+              <Typography.Link onClick={() => save(record.key)} style={{ marginRight: 8 }}>
+                Guardar cambios
+              </Typography.Link>
+              <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+                <a>Cancelar</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <Typography.Link disabled={editingKey !== ''} onClick={() => editRecord(record)}>
+              Edit
+            </Typography.Link>
+          );
+        },
+      },
     {
       title: 'operation',
       dataIndex: 'operation',

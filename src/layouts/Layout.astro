@@ -24,23 +24,23 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="es">
   <head>
+    <ViewTransitions/>
     <Seo title={title} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/icons/favicon/photo_1.png" />
     <meta name="generator" content={Astro.generator} />
-    <ViewTransitions />
   </head>
   <body>
     <div id="App" class="relative h-screen">
-      <Header sessionInfoState={sessionInfoState} />
+      <Header sessionInfoState={sessionInfoState} transition:persist/>
           <main class="[grid-area:main]" transition:animate="fade">
             <slot />
           </main>
       <Footer class="[grid-area:footer]" />
     </div>
+
     <style>
-      //No pongo header en el grid porque no quiero que este se vea afectado por él
     #App {
         display: grid;
         grid-template-areas:
@@ -50,7 +50,7 @@ const { title } = Astro.props;
         margin: 0 auto;
         padding: 0;
         width: 100%;
-        max-width: 1700px;
+        max-width: 2000px;
       }
     </style>
 
