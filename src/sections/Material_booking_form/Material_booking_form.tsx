@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Material_static_date_time_picker from "@/components/Material_static_date_time_picker/Material_static_date_time_picker";
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
-import { Tag } from "antd";
+import Service_cards from "@/sections/Service_cards_section/Service_cards";
+import { Tag, Button, Modal } from "antd";
 
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetUnavailableEmployees from "@/services/client/customhooks/useGetUnavailableEmployees";
 import usePostBooking from "@/services/client/customhooks/usePostBooking";
-import usePostMailer from "@/services/client/customhooks/usePostMailer";
 import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
 import useGetForecast from "@/services/client/customhooks/useGetForecast";
+import useGetServices from "@/services/client/customhooks/useGetServices";
+
+import Error_alert from "@/components/AntDesign/alert/Error_alert";
+
 import { WEB_URL } from '@/consts/consts';
 
+import "./Material_booking_form.css"
 
 import classifyWeatherCode from "@/services/client/utils/weathercodeparser"
 import {calculateDaysFromToday} from "@/services/client/utils/utils"
@@ -24,28 +29,36 @@ import type {
   ServicePredictionPost_type,
   ProfileSession,
   ExtendedEmployee,
-  Weather_res
+  Weather_res,
+  Service
 } from "@/models/types";
 
 export default function Material_booking_form(props: {client_id: any, sessionInfo: ProfileSession}) {
   const { client_id, sessionInfo } = props;
+
   const [selectedTime, setSelectedTime] = useState(new Date() as Date);
   const [selectedEmployee, setSelectedEmployee] = useState({} as Employee);
-  const [delay, setDelay] = useState(0);
+  const [selectedService, setSelectedService] = useState(null as number | null);
   const [submit, setSubmit] = useState(false);
   const [booking, setBooking] = useState({} as ServiceConsumption_type);
   const [weather, setWeather] = useState("Sunny");
   const [extendedBooking, setExtendedBooking] = useState({} as ServicePredictionPost_type);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res, loadingForecast: boolean, errorForecast: any } =
   useGetForecast();
 
-  const { estimatedTime, loading, error }: any =
+  const { services, loadingServices, errorServices }: { services: any, loadingServices: boolean, errorServices: any } =
+  useGetServices();
+
+  const { estimatedTime, loading, errorServicePrediction }: any =
   usePostServicePrediction(extendedBooking);
-  console.log({'estimatedTime': estimatedTime?.estimated_delay});
+
   const estimatedTime_number = estimatedTime?.estimated_delay as number | undefined | null;
 
-  console.log({'weather': weather});
+  const service_data = setSelectedService !== null ? services?.result?.data?.find((service: Service) => service.id === selectedService) : null;
+
   //@ts-ignore
   const {
     employees,
@@ -77,13 +90,11 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     postClientLoading: boolean;
     postClientError: boolean;
     sentData: ServiceConsumption_type;
-  } = usePostBooking(booking);
+  } = usePostBooking(booking, submit);
 
-  console.log({'usePostBooking':  sentData,
-                                  postClientLoading,
-                                  postClientError,
-                                  postData,})
-  console.log({'web url': WEB_URL})
+  if (postData && !postClientError && !postClientLoading && submit) {
+    window.location = `https://localhost:4322/perfil`;
+  }
 
   const handleTimeChange = (time: Date) => {
     console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
@@ -106,22 +117,22 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     };
 
     setExtendedBooking(extendedBooking);
-    };
+  };
 
   const handleTableSelect = (id: number) => {
     const employee: Employee = employees.result.data.find((employee: Employee) => employee.id === id);
     debugger
 
     const booking: ServiceConsumption_type = selectedEmployee ? {
-      service_id: 1,
-      service_name: 'Corte de pelo',
+      service_id: service_data.id,
+      service_name: service_data.name,
       employee_id: employee.id,
       employee_mail: employee.teacher?.email || employee.student?.email,
       employee_name: employee.teacher?.name || employee.student?.name,
       client_id: client_id,
       client_email: sessionInfo.profile.email,
       client_name: sessionInfo.profile.name || sessionInfo.OAuth?.user?.name,
-      price: 7,
+      price: service_data.price,
       created_at: new Date(),
       reserved_at: selectedTime,
       weather: "Sunny", //cambiar en api
@@ -130,10 +141,10 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     const extendedBooking: ServicePredictionPost_type = selectedEmployee ? {
       client_id: client_id,
       teacher_id: employee.id,
-      service_id: 1,
+      service_id: service_data.id,
       created_at: new Date(),
       reserved_at: selectedTime,
-      price: 7,
+      price: service_data.price,
       weather: "Sunny", //cambiar en api
       client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
       teacher_name: employee.teacher?.name,
@@ -149,15 +160,60 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     } : null;
 
     console.log(extendedBooking);
+    (selectedTime && selectedService) ? setIsModalOpen(true) : showError && setTimeout(() => setShowError(false), 3000);;
     setSelectedEmployee(employee);
     setExtendedBooking(extendedBooking);
     setBooking(booking);
-    window.location = `https://localhost:4322/reservas`;
+  };
+
+  const handleServiceSelect = (id: number) => {
+    setSelectedService(id);
+    console.log(id);
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setSubmit(true);
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <section className="material-booking-form">
-      <Material_static_date_time_picker onValueChange={handleTimeChange} />
+    <form className="material-booking-form" onSubmit={(e) => e.preventDefault()}>
+
+
+      <Button type="primary" onClick={showModal}>
+        Open Modal
+      </Button>
+      <Modal title="Confirm Booking" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <p>Service: {service_data?.name}</p>
+      <p>Employee: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
+      <p>Date and Time: {selectedTime.toLocaleString()}</p>
+      <p>Weather: {weather}</p>
+      <p>Estimated Delay: {estimatedTime_number}</p>
+    </Modal>
+
+
+
+      {showError && <Error_alert message={'Faltan campos por completar'} />}
+
+      <div className="fecha flex" style={{ marginTop: "20px" }}>
+        <Material_static_date_time_picker onValueChange={handleTimeChange} />
+        {services?.result?.data && (
+          <Service_cards
+            services={services?.result?.data}
+            handleServiceSelect={handleServiceSelect}
+            selectedService={selectedService}
+          />
+        )}
+      </div>
+
       <div className="fecha" style={{ marginTop: "20px" }}>
         <Tag color="geekblue">{selectedTime.toLocaleString()}</Tag>
         <Tag color="geekblue">{weather}</Tag>
@@ -165,12 +221,13 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
             {estimatedTime_number}
         </Tag>}
       </div>
+
       <Reservations_table
         employees={employees}
         unavailableEmployees={unavailableEmployees}
         daytime={selectedTime}
         onValueChange={handleTableSelect}
       />
-    </section>
+    </form>
   );
 }

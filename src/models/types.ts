@@ -5,6 +5,16 @@ import type { Session } from "@auth/core/types";
   expires: Date;
 }*/
 
+export interface Service {
+  id?:          number;
+  name?:        string;
+  price?:       number;
+  duration?:    number;
+  description?: string;
+  discipline?:  string;
+  image?:       string;
+}
+
 export interface User {
   name: string;
   email: string;
@@ -82,6 +92,13 @@ export interface Student {
   is_admin?:             boolean;
   disciplines?:   Disciplines[];
   turns?:   Turns[];
+}
+
+export interface Subject {
+  acronym:              string;
+  teacher_id:           number;
+  course_id:            number;
+  subject_name:                 string;
 }
 
 export interface Teacher {
@@ -165,22 +182,38 @@ export enum Weather {
   Snowy = 'Snowy',
 }
 export interface ServiceConsumption_type {
-  id:         number;
-  service_id:  number;
-  service_name:  number;
-  employee_id: number;
-  employee_name: string;
-  employee_mail: string;
-  client_id:   number;
-  client_email:   string;
-  client_name:   string;
-  rating?:      number;
-  price:       number;
-  delay?:       number;
-  created_at:  Date;
-  updated_at?:  Date;
-  reserved_at:  Date;
-  weather?:     Weather;
+  id?:                   number;
+  client_id?:            number;
+  teacher_id?:           null;
+  student_id?:           number;
+  employee_id?:          number;
+  delay?:                number;
+  service_id?:           number;
+  service_name?:           string;
+  service_price?:           string;
+  created_at?:           Date;
+  updated_at?:           null;
+  reserved_at?:          Date;
+  rating?:               null;
+  price?:                number;
+  weather?:              string;
+  client_name?:          string;
+  teacher_name?:         null;
+  student_name?:         string;
+  client_surname?:       string;
+  teacher_surname?:      null;
+  student_surname?:      string;
+  client_address?:       string;
+  teacher_address?:      null;
+  student_address?:      string;
+  client_phone_number?:  string;
+  teacher_phone_number?: null;
+  student_phone_number?: string;
+  client_email?:         string;
+  teacher_email?:        null;
+  student_email?:        string;
+  employee_salary?:      number;
+  state?:                string;
 }
 
 export interface ServicePredictionPost_type {
@@ -235,6 +268,24 @@ export interface Weather_res {
   lon?:          number;
   state_code?:   string;
   timezone?:     string;
+}
+
+export interface StudentSubjectEnrolments {
+  id?:              number;
+  student_id?:      number;
+  subject_acronym?:      string;
+  date?:      Date;
+}
+
+export interface Courses {
+  acronym?:              string;
+  name?:                 string;
+  turn?:                 string;
+  attendance_threshold?: number;
+  educational_level?:    string;
+  duration?:             number;
+  practical_hours?:      number;
+  discipline?:           string;
 }
 
 export interface Weather_res_Datum {
@@ -294,4 +345,38 @@ export enum Weather_res_category_Icon {
   C01D = "c01d",
   C02D = "c02d",
   C04D = "c04d",
+}
+
+
+interface Detail_report {
+  year:           number;
+  month:          number;
+  details_income: number;
+}
+
+interface Mensuality_report {
+  monthAndYear: string;
+  total_paid:   string;
+}
+
+interface Payroll_report {
+  month:      number;
+  total_paid: string;
+}
+
+interface Total_report {
+  month:      number;
+  totalBalance: number;
+}
+
+export interface Reports {
+  mensualities: Mensuality_report[];
+  payrolls:     Payroll_report[];
+  details:      Detail_report[];
+  total:      Total_report[];
+}
+
+export interface Weeklie {
+  day_of_week: string;
+  count:       number;
 }

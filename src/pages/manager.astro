@@ -3,7 +3,7 @@ title: "Manager";
 import Layout from "@/layouts/Layout.astro";
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
-import Container_card from "@/sections/Container_card.astro";
+import Container_card from "@/components/Container_card.astro";
 import Manager_section from "@/sections/Manager_section/Manager_section";
 import Main from "@/components/Main.astro";
 
@@ -17,11 +17,12 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
+// if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 ---
 
 <Layout title={"manager"}>
-  <div class="mt-5 pt-5">
+  <div class="w-full h-full flex flex-col justify-items-center pt-11">
     <Manager_section sessionInfo={sessionInfoState} client:load/>
   </div>
 </Layout>

@@ -3,7 +3,7 @@ title: "Registro";
 
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
-import Container_card from "@/sections/Container_card.astro";
+import Container_card from "@/components/Container_card.astro";
 import { SignIn } from "auth-astro/components";
 // import Register_section from "@/sections/Register_section.astro";
 import Register_section_react from "@/sections/Register_section_react/Register_section_react";
@@ -19,6 +19,7 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 2) return Astro.redirect("/perfil"); // prettier-ignore
+if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 const userName =

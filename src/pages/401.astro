@@ -1,7 +1,7 @@
 ---
 title: "Página no encontrada";
 import Layout from "@/layouts/Layout.astro";
-import Container_card from "@/sections/Container_card.astro";
+import Container_card from "@/components/Container_card.astro";
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
@@ -13,6 +13,7 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/register"); // prettier-ignore
+if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 ---
 

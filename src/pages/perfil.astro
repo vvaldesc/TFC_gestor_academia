@@ -4,7 +4,7 @@ import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
-import Container_card from "@/sections/Container_card.astro";
+import Container_card from "@/components/Container_card.astro";
 
 // Obtén el estado de la sesión desde los props pasados por el layout
 const { test } = Astro.props;
@@ -21,6 +21,7 @@ console.log('soy el perfil');
  import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
  const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
   if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
+if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 

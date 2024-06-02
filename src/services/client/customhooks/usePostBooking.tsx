@@ -4,7 +4,7 @@ import type { ServiceConsumption_type, Result } from "@/models/types";
 
 const url = "http://localhost:4321/api/serviceConsumptions/serviceConsumptions";
 
-export const usePostBooking = (booking: ServiceConsumption_type) => {
+export const usePostBooking = (booking: ServiceConsumption_type, submit: boolean) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ export const usePostBooking = (booking: ServiceConsumption_type) => {
 
   useEffect(() => {
     console.log("usePostBooking", booking);
-    if (booking.employee_id && booking.service_id) {
+    if (booking.employee_id && booking.service_id && submit) {
       postData(booking);
     }
   }, [booking]);
