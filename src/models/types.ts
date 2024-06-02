@@ -346,3 +346,37 @@ export enum Weather_res_category_Icon {
   C02D = "c02d",
   C04D = "c04d",
 }
+
+
+interface Detail_report {
+  year:           number;
+  month:          number;
+  details_income: number;
+}
+
+interface Mensuality_report {
+  monthAndYear: string;
+  total_paid:   string;
+}
+
+interface Payroll_report {
+  month:      number;
+  total_paid: string;
+}
+
+interface Total_report {
+  month:      number;
+  totalBalance: number;
+}
+
+export interface Reports {
+  mensualities: Mensuality_report[];
+  payrolls:     Payroll_report[];
+  details:      Detail_report[];
+  total:      Total_report[];
+}
+
+export interface Weeklie {
+  day_of_week: string;
+  count:       number;
+}

@@ -9,7 +9,7 @@ const useGetEnrolments = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:4321/api/stundentsubjectenrollments/stundentsubjectenrollments');
+                const response = await axios.get('http://localhost:4321/api/studentsubjectenrollments/studentsubjectenrollments');
                 setEnrolments(response.data);
                 console.log('Enrolments',response.data);
                 setLoadingEnrolments(false);

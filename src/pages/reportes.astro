@@ -3,7 +3,10 @@ title: "Reportes";
 
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
+import ReportsSection from "@/sections/Reports_section/Reports_section"
+
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
+
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
@@ -15,7 +18,7 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro"; // prettier-ignore
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
-if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
+// if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
 const userName =
@@ -26,5 +29,9 @@ const userName =
 
 <Layout title=`Bienvenido ${userName}`>
   <Main>
+    <h1>Reportes</h1>
+    <p>En esta sección podrás ver los reportes de los usuarios.</p>
+    <p>En construcción...</p>
+    <ReportsSection client:load/>
   </Main>
 </Layout>
