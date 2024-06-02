@@ -4,6 +4,11 @@ import Layout from "@/layouts/Layout.astro";
 import Container_card from "@/components/Container_card.astro";
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
+//SERVICE CHECK//////////////////////////////////////////
+import {servicecheck} from "@/services/server/fetching/fetch";
+if(await servicecheck()) return Astro.redirect("/");
+//SERVICE CHECK//////////////////////////////////////////
+
 ---
 <Layout title={'manager'}>
   <Container_card>
