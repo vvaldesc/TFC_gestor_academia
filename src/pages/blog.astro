@@ -1,0 +1,56 @@
+---
+title: "Home";
+import Layout from "@/layouts/Layout.astro";
+import Wp_renderer from "@/sections/Wp_renderer.astro";
+
+import Main from "@/components/Main.astro";
+
+//SERVICE CHECK//////////////////////////////////////////
+import {servicecheck} from "@/services/server/fetching/fetch";
+if(!await servicecheck()) return Astro.redirect("/not_connected");
+//SERVICE CHECK//////////////////////////////////////////
+
+//SESSION HANDLER////////////////////////////////////////
+ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+ import {SessionState} from "@/models/types"; // prettier-ignore
+ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
+ const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
+//SESSION HANDLER////////////////////////////////////////
+
+const response = await fetch(`${import.meta.env.VITE_WP_GQL}` , {
+            method: "POST",
+            headers: {
+                    "Content-Type": "application/json",
+                },
+            body: JSON.stringify({
+                query: `query BlogQuery {
+                            nodeByUri(uri: "/blog") {
+                                ... on Page {
+                                id
+                                blocks
+                                }
+                            }
+                            }`,
+    }),
+});
+
+
+const {data} = await response.json();
+const blocks = data.nodeByUri.blocks || [];
+
+console.log('blocks');
+console.log(data.nodeByUri.blocks);
+---
+
+<Layout title="Blog">
+  <Main class="py-16 my-12">
+    <section>
+      <h1>Welcome to Astro</h1>
+      <p>
+        This is a demo of a blog built with Astro and WordPress. It uses the
+        WordPress GraphQL API to fetch posts and pages.
+      </p>
+    </section>
+    <Wp_renderer blocks={blocks} />
+  </Main>
+</Layout>
