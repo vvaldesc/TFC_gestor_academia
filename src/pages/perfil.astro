@@ -24,11 +24,6 @@ console.log('soy el perfil');
 if (!sessionInfoState.sessionInfo.profile.active) return Astro.redirect("/403"); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
 
-
-console.log('sessionInfoState perfil...');
-console.log(sessionInfoState);
-
-
 console.log(test);
 const userName =
   sessionInfoState.sessionInfo.profile?.username ||

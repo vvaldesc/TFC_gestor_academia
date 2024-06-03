@@ -1,0 +1,12 @@
+---
+
+export interface Props {
+    blocks: any;
+}
+
+const blocks = Astro.props.blocks;
+
+
+import Wp_article_renderer from "@/components/Wp_article_renderer.astro";
+---
+<Wp_article_renderer text={"lll"} />

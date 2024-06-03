@@ -10,14 +10,13 @@ import useGetCourses from '@/services/client/customhooks/useGetCourses';
 import useGetTeachers from '@/services/client/customhooks/useGetTeachers';
 import useGetEnrolments from '@/services/client/customhooks/useGetEnrolments';
 
-export default function Material_booking_form(props: {sessionInfo: ProfileSession}) {
+export default function Manager_section(props: {sessionInfo: ProfileSession}) {
   const { profiles, loading } = useGetProfiles();
   const { details, loadingDetails } = useGetDetails();
   const { courses, loadingCourses } = useGetCourses();
   const { enrolments, loadingEnrolments } = useGetEnrolments();
   const { teachers, loadingTeachers } = useGetTeachers();
 
-  console.log(enrolments);
 
   return (
     <>
