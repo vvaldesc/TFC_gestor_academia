@@ -3,7 +3,7 @@ import { Button, Modal, Form, Input, Radio, DatePicker, Checkbox, Tabs } from 'a
 
 const { TabPane } = Tabs;
 
-const Docent_post_modal: React.FC = () => {
+const Profile_post_modal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -88,4 +88,4 @@ const Docent_post_modal: React.FC = () => {
   );
 };
 
-export default Docent_post_modal;
+export default Profile_post_modal

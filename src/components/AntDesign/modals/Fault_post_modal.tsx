@@ -1,32 +1,25 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, DatePicker, Checkbox, Select } from 'antd';
+import { Button, Modal, Form, Input, DatePicker, Checkbox, Select, Upload } from 'antd';
+import type { Student, Subject, StudentSubjectEnrolments } from '@/models/types';
 
 const { Option } = Select;
-
-interface Student {
-  id: number;
-  name: string;
-}
-
-interface Subject {
-  acronym: string;
-  name: string;
-}
-
-interface Enrolment {
-  student_id: number;
-  subject_acronym: string;
-}
 
 interface DocentPostModalProps {
   students: Student[];
   subjects: Subject[];
-  enrolments: Enrolment[];
+  enrolments: StudentSubjectEnrolments[];
 }
 
 const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, enrolments }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<number | null>(null);
+
+  console.log('students');
+  console.log(students);
+  console.log('subjects');
+  console.log(subjects);
+  console.log('enrolments');
+  console.log(enrolments);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -48,24 +41,27 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
     enrolments.some((enrolment) => enrolment.student_id === selectedStudent && enrolment.subject_acronym === subject.acronym)
   );
 
+  console.log('filteredSubjects');
+  console.log(filteredSubjects);
+
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Crear un registro de falta de estudiante
+        Crear una falta de asistencia
       </Button>
       <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form>
           <Form.Item label="ID del estudiante">
             <Select placeholder="Selecciona un estudiante" onChange={handleStudentChange}>
-              {students.map((student) => (
-                <Option value={student.id}>{student.name}</Option>
+              {students.map((student: Student) => (
+                <Option value={student.id}>{student.name + ' ' + student.surname}</Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item label="Acrónimo de la materia">
             <Select placeholder="Selecciona una materia">
               {filteredSubjects.map((subject) => (
-                <Option value={subject.acronym}>{subject.name}</Option>
+                <Option value={subject.acronym}>{subject.subject_name + ' - (' + subject.acronym + ')'}</Option>
               ))}
             </Select>
           </Form.Item>
@@ -76,7 +72,9 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
             <Checkbox />
           </Form.Item>
           <Form.Item label="Justificación">
-            <Input placeholder="Justificación" />
+            <Upload accept=".pdf">
+              <Button>Click para subir</Button>
+            </Upload>
           </Form.Item>
           <Form.Item label="Descripción">
             <Input placeholder="Descripción" />
