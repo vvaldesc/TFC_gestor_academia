@@ -2,24 +2,30 @@ import Courses_table from "@/components/AntDesign/tables/Courses_table";
 import Teachers_table from "@/components/AntDesign/tables/Teachers_table";
 // import Students_table from "@/components/AntDesign/tables/Students_table";
 import Enrolments_table from "@/components/AntDesign/tables/Enrolments_table";
+import StudentSubjectFaults_table from "@/components/AntDesign/tables/StudentSubjectFaults_table.";
+import Docent_post_modal from "@/components/AntDesign/modals/Docent_post_modal";
 
 import useGetCourses from '@/services/client/customhooks/useGetCourses';
 import useGetTeachers from '@/services/client/customhooks/useGetTeachers';
 import useGetEnrolments from '@/services/client/customhooks/useGetEnrolments';
+import useGetFaults from '@/services/client/customhooks/useGetFaults';
 // import useGetEnrolments from '@/services/client/customhooks/useGetEnrolments';
 
 export default function Manager_section_classes(props: {sessionInfo: ProfileSession}) {
     const { teachers, loadingTeachers } = useGetTeachers();
     const { enrolments, loadingEnrolments } = useGetEnrolments();
     const { courses, loadingCourses } = useGetCourses();
+    const { faults, loadingFaults } = useGetFaults();
 
     console.log(enrolments);
 
   return (
     <>
+      <Docent_post_modal />
       <Teachers_table coursesResult={teachers} loadingCourses={loadingTeachers} />
       <Courses_table coursesResult={courses} loadingCourses={loadingCourses} />
       <Enrolments_table enrolmentResult={enrolments} loadingEnrolments={loadingEnrolments} />
+      <StudentSubjectFaults_table coursesFauts={faults} loadingFaults={loadingFaults} />
     </>
   );
 }
