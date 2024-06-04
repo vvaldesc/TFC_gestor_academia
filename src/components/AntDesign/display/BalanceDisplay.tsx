@@ -15,15 +15,16 @@ interface Props {
 
 const BalanceDisplay: React.FC<Props> = ({ balance_reports }) => {
 
-  console.log('balance_reports');
   console.log(balance_reports);
 
   const monthNumber = new Date().getMonth() - 1;
   console.log(monthNumber);
 
+  const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
   return (
 <Row gutter={16}>
+<h2>{monthNames[monthNumber]}</h2>
   {balance_reports.mensualities[monthNumber] && 
     <Col span={12}>
       <Statistic title="Mensualidad alumnos" value={"+"+balance_reports.mensualities[monthNumber].total_paid} formatter={formatter} />

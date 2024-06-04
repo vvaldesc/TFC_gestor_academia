@@ -1,4 +1,6 @@
-import data from './environment.json'
+// import data from './environment.json'
+
+const data = {};
 
 const FACEANALYCER_KEY = data.VITE_FACEANALYCER_API_KEY;
 const FACEANALYCER_HOST = data.VITE_FACEANALYCER_API_HOST;
