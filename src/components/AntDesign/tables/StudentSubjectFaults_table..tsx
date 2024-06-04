@@ -175,7 +175,7 @@ const App: React.FC<{ coursesFauts: any; loadingFaults: boolean }> = ({
       key: "employee_salary",
       editable: true,
       width: "5%",
-      render: (_: any, record: Item) => record.Employees.salary,
+      render: (_: any, record: Item) => record.Employees?.salary || "0",
     },
     {
       title: "operation",

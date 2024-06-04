@@ -98,7 +98,7 @@ export interface Subject {
   acronym:              string;
   teacher_id:           number;
   course_id:            number;
-  subject_name:                 string;
+  name:                 string;
 }
 
 export interface Teacher {

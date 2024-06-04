@@ -1,3 +1,5 @@
+import type { ProfileSession } from "@/models/types";
+
 import Details_table from "@/components/AntDesign/tables/Details_table";
 import Detail_post_modal from "@/components/AntDesign/modals/Detail_post_modal";
 
