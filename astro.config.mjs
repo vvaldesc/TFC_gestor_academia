@@ -45,7 +45,12 @@ export default defineConfig({
       }
     }
   },
-  integrations: [tailwind(), svelte(), react(), icon(), metaTags(), auth(), serviceWorker()],
+  integrations: [tailwind(), svelte(), react(), icon({
+    include: {
+      mdi: ["*"], // (Default) Loads entire Material Design Icon set
+      bxs: ["*"], // Loads entire bxs set
+    },
+  }), metaTags(), auth(), serviceWorker()],
   output: "server",
   adapter: vercel()
 });

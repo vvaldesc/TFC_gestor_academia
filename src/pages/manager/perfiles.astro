@@ -1,9 +1,11 @@
 ---
 title: "Manager";
-import Layout from "@/layouts/Layout.astro";
-import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
-import Container_card from "@/components/Container_card.astro";
+import '@/styles/tables_section_mq.css';
+
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+
 import Manager_section_profiles from "@/sections/Manager_section/Manager_section_profiles";
 import Main from "@/components/Main.astro";
 
@@ -21,9 +23,13 @@ if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) 
 //SESSION HANDLER////////////////////////////////////////
 ---
 
-<Layout title={"manager"}>
-  <div transition:animate="slide" class="w-full h-full flex flex-col justify-items-center pt-11">
-    <Manager_section_profiles transition:animate={"slide"} sessionInfo={sessionInfoState} client:load />
-    <a href="./citas">citas</a>
-  </div>
+<Layout title={"Pefiles"}>
+  <Main class="main flex flex-col justify-items-center pt-16 m-auto">
+    <h1 class="main-text-promoTitle">Gestor de perfiles</h1>
+    <div transition:animate="slide" class="relative">
+      <a class="fixed left-8 top-1/2 z-10" href="./docencia" transition:animate="none"><Icon name="bxs:left-arrow" size={32} class="mx-3" /></a>
+      <div class="top-0 z-0 table-mq"><Manager_section_profiles transition:animate={"slide"} sessionInfo={sessionInfoState} client:load /></div>
+      <a class="fixed right-8 top-1/2 z-10" href="./citas" transition:animate="none"><Icon name="bxs:right-arrow" size={32} class="mx-3" /></a>
+    </div>
+  </Main >
 </Layout>

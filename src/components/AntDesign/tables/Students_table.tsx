@@ -4,7 +4,7 @@ import { Form, Input, InputNumber, Popconfirm, Table, Typography } from "antd";
 
 import postClient from "@/services/client/fetching/hooks/postClient";
 import deleteClient from "@/services/client/fetching/hooks/deleteClient";
-import type { Result, Teacher, Student, Employee } from "@/models/types";
+import type { Result, Student } from "@/models/types";
 import { Turns } from "@/models/types";
 
 interface Item extends Student {
@@ -54,21 +54,22 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
   );
 };
 
-const App: React.FC<{ sudentsResult: any; loadingStudents: boolean }> = ({
-    sudentsResult,
-    loadingStudents,
+const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
+  studentsResult,
+  loadingStudents,
 }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState("");
   const [deletingKey, setDeletingKey] = useState("");
 
-  const sudents = sudentsResult?.result?.data as Item[];
-  const result = sudentsResult?.result as Result;
+  const students = studentsResult as Item[];
+
+  console.log('studentsResult', students);
 
   useEffect(() => {
-    if (result?.count > 0) {
-      const dataWithKeys = sudents.map((row, index) => {
+    if (students) {
+      const dataWithKeys = students.map((row, index) => {
         let rowData = {};
         Object.entries(row).forEach(([key, value]) => {
           rowData[key] = value;
@@ -77,7 +78,7 @@ const App: React.FC<{ sudentsResult: any; loadingStudents: boolean }> = ({
       });
       setData(dataWithKeys);
     }
-  }, [sudents]);
+  }, [students]);
 
   const isEditing = (record: Item) => record.key === editingKey;
 
@@ -142,43 +143,147 @@ const App: React.FC<{ sudentsResult: any; loadingStudents: boolean }> = ({
   const columns: TableProps<Item>["columns"] = [
     {
       title: "Id",
-      dataIndex: "student_id",
-      key: "student_id",
+      dataIndex: "id",
+      key: "id",
       editable: false,
       width: "5%",
       render: (_: any, record: Item) => record.id,
     },
     {
-        title: "Nombre",
-        dataIndex: "student_name",
-        key: "student_name",
-        editable: true,
-        width: "5%",
-        render: (_: any, record: Item) => record.name + " " + record.surname,
-      },
+      title: "Número de matrícula",
+      dataIndex: "matriculation_number",
+      key: "matriculation_number",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.matriculation_number,
+    },
+    {
+      title: "DNI",
+      dataIndex: "DNI",
+      key: "DNI",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.DNI,
+    },
+    {
+      title: "Empleo",
+      dataIndex: "employed",
+      key: "employed",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.employed ? "Sí" : "No",
+    },
+    {
+      title: "Nivel educativo",
+      dataIndex: "educational_level",
+      key: "educational_level",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.educational_level,
+    },
+    {
+      title: "Nombre",
+      dataIndex: "name",
+      key: "name",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.name,
+    },
     {
       title: "Apellido",
-      dataIndex: "teacher_surname",
-      key: "teacher_surname",
+      dataIndex: "surname",
+      key: "surname",
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.surname,
     },
     {
-      title: "ID del profesor",
-      dataIndex: "teacher_id",
-      key: "teacher_id",
-      editable: false,
-      width: "5%",
-      render: (_: any, record: Item) => record.Teachers.id,
-    },
-    {
-      title: "Salario",
-      dataIndex: "employee_salary",
-      key: "employee_salary",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
       editable: true,
       width: "5%",
-      render: (_: any, record: Item) => record.Employees.salary,
+      render: (_: any, record: Item) => record.email,
+    },
+    {
+      title: "Número de teléfono",
+      dataIndex: "phone_number",
+      key: "phone_number",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.phone_number,
+    },
+    {
+      title: "Dirección",
+      dataIndex: "address",
+      key: "address",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.address,
+    },
+    {
+      title: "Ciudad",
+      dataIndex: "city",
+      key: "city",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.city,
+    },
+    {
+      title: "Fecha de nacimiento",
+      dataIndex: "bornDate",
+      key: "bornDate",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.bornDate,
+    },
+    {
+      title: "Fecha de creación",
+      dataIndex: "created_at",
+      key: "created_at",
+      editable: false,
+      width: "5%",
+      render: (_: any, record: Item) => record.created_at,
+    },
+    {
+      title: "Fecha de actualización",
+      dataIndex: "updated_at",
+      key: "updated_at",
+      editable: false,
+      width: "5%",
+      render: (_: any, record: Item) => record.updated_at,
+    },
+    {
+      title: "Nombre de usuario",
+      dataIndex: "username",
+      key: "username",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.username,
+    },
+    {
+      title: "Confirmado",
+      dataIndex: "confirmed",
+      key: "confirmed",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.confirmed ? "Sí" : "No",
+    },
+    {
+      title: "Imagen",
+      dataIndex: "image",
+      key: "image",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.image,
+    },
+    {
+      title: "Activo",
+      dataIndex: "active",
+      key: "active",
+      editable: true,
+      width: "5%",
+      render: (_: any, record: Item) => record.active ? "Sí" : "No",
     },
     {
       title: "operation",

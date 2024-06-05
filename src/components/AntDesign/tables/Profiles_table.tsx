@@ -324,6 +324,7 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
         rowClassName="editable-row"
         pagination={{
           onChange: cancel,
+          pageSize: 7,
         }}
       />
     </Form>

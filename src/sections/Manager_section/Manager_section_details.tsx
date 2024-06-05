@@ -1,4 +1,5 @@
-import type { ProfileSession } from "@/models/types";
+import type { sessionInfoState } from "@/models/types";
+import { ConfigProvider } from 'antd';
 
 import Details_table from "@/components/AntDesign/tables/Details_table";
 import Detail_post_modal from "@/components/AntDesign/modals/Detail_post_modal";
@@ -8,7 +9,7 @@ import useGetClients from '@/services/client/customhooks/useGetClients';
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetServices from "@/services/client/customhooks/useGetServices";
 
-export default function Manager_section_details(props: {sessionInfo: ProfileSession}) {
+export default function Manager_section_details(props: {sessionInfo: sessionInfoState}) {
   const { details, loadingDetails } = useGetDetails();
   const { clients, loadingClients } = useGetClients();
   const { employees, loading } = useGetEmployees();
@@ -29,8 +30,20 @@ export default function Manager_section_details(props: {sessionInfo: ProfileSess
 
   return (
     <>
-      <Detail_post_modal clients={clients_array} employees={employees_array} details={details_array} services={services_array} />
-      <Details_table detailsResult={details} loadingDetails={loadingDetails} />
+          <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#ff69d4',
+            borderRadius: 5,
+            colorBgElevated: '#fff1fa',
+            colorLinkHover: '#ff69d4',
+            colorLinkActive: '#ff69d4',
+          },
+        }}
+      >
+        <Details_table detailsResult={details} loadingDetails={loadingDetails} />
+        <Detail_post_modal clients={clients_array} employees={employees_array} details={details_array} services={services_array} />
+      </ConfigProvider>
     </>
   );
 }

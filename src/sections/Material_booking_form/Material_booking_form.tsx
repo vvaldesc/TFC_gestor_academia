@@ -187,10 +187,6 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   return (
     <form className="material-booking-form" onSubmit={(e) => e.preventDefault()}>
 
-
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
       <Modal title="Confirm Booking" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <p>Service: {service_data?.name}</p>
       <p>Employee: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>

@@ -27,6 +27,9 @@
       ],
       "@/public/*": [
         "./public/*"
+      ],      
+      "@/styles/*": [
+        "./src/styles/*"
       ]
     },
     "jsx": "react-jsx",

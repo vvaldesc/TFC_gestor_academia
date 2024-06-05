@@ -55,7 +55,8 @@
   "devDependencies": {
     "@ant-design/icons": "^5.3.7",
     "@faker-js/faker": "^8.4.1",
-    "@iconify-json/mdi": "1.1.66",
+    "@iconify-json/bxs": "^1.1.10",
+    "@iconify-json/mdi": "^1.1.66",
     "@vitejs/plugin-basic-ssl": "1.1.0",
     "cypress": "^13.10.0",
     "prettier": "3.2.5",

@@ -67,8 +67,6 @@ const App: React.FC<{enrolmentResult: any, loadingEnrolments: boolean}> = ({ enr
   const enrolments = enrolmentResult?.result?.data as Item[];
   const result = enrolmentResult?.result as Result;
 
-  console.log('Enrolments:', enrolments);
-
   useEffect(() => {
     if (result?.count > 0) {
       const dataWithKeys = enrolments.map((row, index) => {

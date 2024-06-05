@@ -1,13 +1,15 @@
-import type { ProfileSession } from "@/models/types";
+import type { sessionInfoState } from "@/models/types";
+import { ConfigProvider } from 'antd';
 
 import Courses_table from "@/components/AntDesign/tables/Courses_table";
 import Teachers_table from "@/components/AntDesign/tables/Teachers_table";
-// import Students_table from "@/components/AntDesign/tables/Students_table";
+import Students_table from "@/components/AntDesign/tables/Students_table";
 import Enrolments_table from "@/components/AntDesign/tables/Enrolments_table";
 import StudentSubjectFaults_table from "@/components/AntDesign/tables/StudentSubjectFaults_table.";
 import Docent_post_modal from "@/components/AntDesign/modals/Docent_post_modal";
 import Fault_post_modal from "@/components/AntDesign/modals/Fault_post_modal";
 import Subject_post_modal from "@/components/AntDesign/modals/Subject_post_modal";
+import Enrolments_post_modal from "@/components/AntDesign/modals/Enrolments_post_modal";
 import Course_post_modal from "@/components/AntDesign/modals/Course_post_modal";
 
 import useGetCourses from '@/services/client/customhooks/useGetCourses';
@@ -18,7 +20,7 @@ import useGetSubjects from '@/services/client/customhooks/useGetSubjects';
 import useGetStudents from '@/services/client/customhooks/useGetStudents';
 import useGetDisciplines from '@/services/client/customhooks/useGetDisciplines';
 
-export default function Manager_section_classes(props: {sessionInfo: ProfileSession}) {
+export default function Manager_section_classes(props: {sessionInfo: sessionInfoState}) {
     const { teachers, loadingTeachers } = useGetTeachers();
     const { enrolments, loadingEnrolments } = useGetEnrolments();
     const { courses, loadingCourses } = useGetCourses();
@@ -40,19 +42,39 @@ export default function Manager_section_classes(props: {sessionInfo: ProfileSess
     // @ts-ignore
     const disciplines_array = disciplines?.result?.data || [];
 
-    console.log('disciplines_array');
-    console.log(disciplines_array);
   return (
     <>
-      <Docent_post_modal />
-      <Subject_post_modal teachers={teachers_array} courses={courses_array} />
-      <Course_post_modal disciplines={disciplines_array} />
-      <Fault_post_modal enrolments={enrolments_array} subjects={subject_array} students={students_array} />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#ea7af4',
+            borderRadius: 5,
+            colorBgElevated: '#fff1fa',
+            colorLinkHover: '#ff69d4',
+            colorLinkActive: '#ff69d4',
+          },
+        }}
+      >
+        <p>Profesores</p>
+        <Docent_post_modal />
+        <Teachers_table teachersResult={teachers} loadingTeachers={loadingTeachers} />
 
-      <Teachers_table coursesResult={teachers} loadingCourses={loadingTeachers} />
-      <Courses_table coursesResult={courses} loadingCourses={loadingCourses} />
-      <Enrolments_table enrolmentResult={enrolments} loadingEnrolments={loadingEnrolments} />
-      <StudentSubjectFaults_table coursesFauts={faults} loadingFaults={loadingFaults} />
+        <p>Estudiantes</p>
+        <Students_table studentsResult={students_array} loadingStudents={loadingStudents} />
+
+        <p>Cursos</p>
+        <Course_post_modal disciplines={disciplines_array} />
+        <Courses_table coursesResult={courses} loadingCourses={loadingCourses} />
+
+        <p>Matrículas</p>
+        <Subject_post_modal teachers={teachers_array} courses={courses_array} />
+        <Enrolments_post_modal students={students_array} subjects={subject_array} />
+        <Enrolments_table enrolmentResult={enrolments} loadingEnrolments={loadingEnrolments} />
+
+        <p>Faltas</p>
+        <Fault_post_modal enrolments={enrolments_array} subjects={subject_array} students={students_array} />
+        <StudentSubjectFaults_table coursesFauts={faults} loadingFaults={loadingFaults} />
+      </ConfigProvider>
     </>
   );
 }

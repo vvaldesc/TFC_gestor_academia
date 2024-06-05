@@ -1,0 +1,76 @@
+  .scroll-container {
+    overflow-x: auto;
+    height: 100%;
+    width: 100%;
+    top: 0;
+  }
+
+  .main{
+    width: 100%;
+  }
+
+  .table-mq{
+    width: 100%;
+    margin: auto;
+    transform: scale(1);
+    position: static;
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+
+/* Para tablets en modo retrato y teléfonos inteligentes grandes */
+@media (min-width: 440px) {
+  .table-mq {
+    width: 400px;
+    transform: scale(0.5);
+    position: relative;
+    top: -240px
+  }
+}
+
+@media (min-width: 600px) {
+  .table-mq {
+    width: 800px;
+    transform: scale(0.5);
+    position: relative;
+    top: -240px
+  }
+}
+
+/* Para tablets en modo paisaje y escritorios pequeños */
+@media (min-width: 900px) {
+  .table-mq {
+    width: 700px;
+    transform: scale(1);
+    position: static;
+  }
+}
+
+/* Para escritorios pequeños */
+@media (min-width: 1200px) {
+  .table-mq {
+    width: 1000px;
+    transform: scale(1);
+    position: static;
+  }
+}
+
+/* Para escritorios grandes */
+@media (min-width: 1800px) {
+  .table-mq {
+    width: 1600px;
+    transform: scale(1);
+    position: static;
+    overflow: hidden;
+  }
+}
+
+/* Para escritorios muy grandes */
+@media (min-width: 2400px) {
+  .table-mq {
+    width: 2200px;
+    transform: scale(1);
+    position: static;
+    overflow: hidden;
+  }
+}

@@ -56,17 +56,17 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
   );
 };
 
-const App: React.FC<{ coursesResult: any; loadingCourses: boolean }> = ({
-  coursesResult,
-  loadingCourses,
+const App: React.FC<{ teachersResult: any; loadingTeachers: boolean }> = ({
+  teachersResult,
+  loadingTeachers,
 }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState("");
   const [deletingKey, setDeletingKey] = useState("");
 
-  const teachers = coursesResult?.result?.data as Item[];
-  const result = coursesResult?.result as Result;
+  const teachers = teachersResult?.result?.data as Item[];
+  const result = teachersResult?.result as Result;
 
   useEffect(() => {
     if (result?.count > 0) {

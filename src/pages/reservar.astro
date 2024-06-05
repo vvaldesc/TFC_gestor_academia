@@ -2,6 +2,7 @@
 title: "Reservar";
 import Layout from "@/layouts/Layout.astro";
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
+import '@/styles/tables_section_mq.css';
 
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
 
@@ -29,7 +30,7 @@ const MUI = checkRenderParameter(Astro.request.url);
 
 <Layout title={"Reserva tu cita"}>
   {MUI && <Container_card_big>
-    <div class="m-auto w-max">
+    <div class="m-auto w-max  table-mq">
       <Material_booking_form client_id={sessionInfoState.sessionInfo.profile.id} sessionInfo={sessionInfoState.sessionInfo} client:load />
     </div>
   </Container_card_big>}
