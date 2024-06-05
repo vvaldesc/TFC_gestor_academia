@@ -1,9 +1,14 @@
 ---
 title: "Página no encontrada"
 import Layout from "@/layouts/Layout.astro"
-
+import Main from "@/components/Main.astro";
+import Container_card from "@/components/Container_card.astro";
 ---
 <Layout title="404">
+    <Main>
+        <Container_card>
     <h1>Página no encontrada</h1>
     <p>Lo sentimos, la página que estás buscando no existe.</p>
+</Container_card>
+</Main>
 </Layout>
