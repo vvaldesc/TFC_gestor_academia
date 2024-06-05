@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { BadgeProps, CalendarProps } from 'antd';
 import { Badge, Calendar, Alert } from 'antd';
 import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import type { ServiceConsumption_type, Employee, Service } from '@/models/types';
 import { Role } from '@/models/types';
-import dayjs from 'dayjs';
 
 import './Calendar_personal.css'
 
-const getListData = (value: Dayjs, details: ServiceConsumption_type[]) => {
-  let listData = [];
-  for (let index = 0; index < details.length; index++) {
-    if (value.day() === new Date(details[index].reserved_at).getDay() 
-    && value.month() === new Date(details[index].reserved_at).getMonth() 
-    && value.year() === new Date(details[index].reserved_at).getFullYear()){
-      listData.push({ id: details[index].id, service_name: details[index].service_name, state: details[index].state });
-    }
-  }
-  return listData || [];
-};
+
+
 
 const getMonthData = (value: Dayjs) => {
   if (value.month() === 8) {
@@ -31,17 +22,29 @@ interface Props {
   profileId: number;
   details: ServiceConsumption_type[];
   services: Service[];
+  handleSelectedDay: (detailsDay: ServiceConsumption_type[]) => ( void );
 }
 
-const Calendar_personal: React.FC<Props> = ({ role, profileId, details, services }) => {
+const getListData = (value: Dayjs, details: ServiceConsumption_type[]) => {
+  return details.filter(detail => {
+    const reservedDate = dayjs(detail.reserved_at);
+    return value.day() === reservedDate.day() 
+      && value.month() === reservedDate.month() 
+      && value.year() === reservedDate.year();
+  });
+};
+
+const Calendar_personal: React.FC<Props> = ({ role, profileId, details, services, handleSelectedDay }) => {
   const [value, setValue] = useState(() => dayjs());
   const [selectedValue, setSelectedValue] = useState(() => dayjs());
-
-  console.log({ role, profileId, details, services });
+  const [detailsDay, setDetailsDay] = useState(null as ServiceConsumption_type[] | null);
 
   const onSelect = (newValue: Dayjs) => {
     setValue(newValue);
     setSelectedValue(newValue);
+    const detailsDay = getListData(newValue, details) || [];
+    setDetailsDay(detailsDay);
+    handleSelectedDay(detailsDay);
   };
 
   const onPanelChange = (newValue: Dayjs) => {
@@ -72,14 +75,6 @@ const Calendar_personal: React.FC<Props> = ({ role, profileId, details, services
       }
     };
   
-    const eventsForThisDay = details.filter(
-      (item) => {
-        return dayjs(item.reserved_at).startOf('day').isSame(value.startOf('day'))
-      }
-    );
-  
-    console.log({ eventsForThisDay });
-  
     return (
       <ul className="events">
         {getListData(value, details).map((item) => (
@@ -99,7 +94,8 @@ const Calendar_personal: React.FC<Props> = ({ role, profileId, details, services
   return (
     <>
       <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
-      <Calendar cellRender={cellRender}  value={value} onSelect={onSelect} onPanelChange={onPanelChange} />    </>
+      <Calendar cellRender={cellRender} value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
+          </>
   );
 };
 

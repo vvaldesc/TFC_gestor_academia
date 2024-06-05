@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar_personal from "@/components/AntDesign/calendar/Calendar_personal"
+import Detail_cards from "@/sections/Detail_cards/Detail_cards"
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import type { sessionInfoState, ServiceConsumption_type } from '@/models/types';
+import { Role } from '@/models/types';
 import useGetDetails from '@/services/client/customhooks/useGetDetails';
 import useGetClients from '@/services/client/customhooks/useGetClients';
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
@@ -13,6 +17,8 @@ interface PersonalSectionProps {
   }
 
 const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
+    const [selectedDetailsDay, setSelectedDetailsDay] = useState(null as ServiceConsumption_type[] | null);
+
     // Implement your component logic here
     const { details, loadingDetails } = useGetDetails();
     const { clients, loadingClients } = useGetClients();
@@ -36,6 +42,10 @@ const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
             break;
     }
 
+    const handleSelectedDay = (detailsDay: ServiceConsumption_type[]) => {
+        setSelectedDetailsDay(detailsDay);
+    }
+
     // @ts-ignore
     const clients_array = clients && clients.result && clients.result?.data ? clients.result.data : [];
     // @ts-ignore
@@ -45,7 +55,12 @@ const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
     
     return (
         <>
-            <Calendar_personal role={sessionInfoState.sessionInfoState.sessionInfo.role} profileId={1} details={details_array_filtered} services={services_array} />
+            <Calendar_personal 
+                role={sessionInfoState.sessionInfoState.sessionInfo.role as Role}
+                profileId={1} details={details_array_filtered} 
+                services={services_array} 
+                handleSelectedDay={handleSelectedDay} />
+            {selectedDetailsDay && <Detail_cards details={selectedDetailsDay} />}
         </>
     );
 };
