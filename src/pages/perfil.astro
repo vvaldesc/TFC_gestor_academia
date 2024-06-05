@@ -48,7 +48,7 @@ const userName =
         <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
       </Profile_section>
     </Container_card>
-    <Personal_section sessionInfo={sessionInfoState} client:load />
+    <Personal_section sessionInfoState={sessionInfoState} client:load />
   </Main>
   {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>}
 </Layout>
