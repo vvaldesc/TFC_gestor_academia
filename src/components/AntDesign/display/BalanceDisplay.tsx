@@ -23,29 +23,32 @@ const BalanceDisplay: React.FC<Props> = ({ balance_reports }) => {
   const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
   return (
-<Row gutter={16}>
-<h2>{monthNames[monthNumber]}</h2>
-  {balance_reports.mensualities[monthNumber] && 
-    <Col span={12}>
-      <Statistic title="Mensualidad alumnos" value={"+"+balance_reports.mensualities[monthNumber].total_paid} formatter={formatter} />
-    </Col>
-  }
-  {balance_reports.details[monthNumber] && 
-    <Col span={12}>
-      <Statistic title="Ganancias citas" value={"+"+balance_reports.details[monthNumber].details_income} precision={2} formatter={formatter} />
-    </Col>
-  }
-  {balance_reports.payrolls[monthNumber] && 
-    <Col span={12}>
-      <Statistic title="Nóminas" value={"-"+balance_reports.payrolls[monthNumber].total_paid} precision={2} formatter={formatter} />
-    </Col>
-  }
-  {balance_reports.total[monthNumber] && 
-    <Col span={12}>
-      <Statistic title="Balance total" value={"+"+balance_reports.total[monthNumber].totalBalance} precision={2} formatter={formatter} />
-    </Col>
-  }
-</Row>
+    <>
+      <h2>{monthNames[monthNumber]}</h2>
+
+      <Row gutter={16}>
+        {balance_reports.mensualities[monthNumber] && 
+          <Col span={12}>
+            <Statistic title="Mensualidad alumnos" value={"+"+balance_reports.mensualities[monthNumber].total_paid} formatter={formatter} />
+          </Col>
+        }
+        {balance_reports.details[monthNumber] && 
+          <Col span={12}>
+            <Statistic title="Ganancias citas" value={"+"+balance_reports.details[monthNumber].details_income} precision={2} formatter={formatter} />
+          </Col>
+        }
+        {balance_reports.payrolls[monthNumber] && 
+          <Col span={12}>
+            <Statistic title="Nóminas" value={"-"+balance_reports.payrolls[monthNumber].total_paid} precision={2} formatter={formatter} />
+          </Col>
+        }
+        {balance_reports.total[monthNumber] && 
+          <Col span={12}>
+            <Statistic title="Balance total" value={"+"+balance_reports.total[monthNumber].totalBalance} precision={2} formatter={formatter} />
+          </Col>
+        }
+      </Row>
+    </>
   );
 };
 

@@ -15,35 +15,34 @@ const role = parseRole(Astro.props.role);
 ---
 
 <!-- Aqui saldría un calendario si es un cliente, y saldrán todas las asignaturas -->
-<section class="w-1/2 border-l border-r border-gray-200 px-4">
-  <div class="w-full">
-    <h1 class="uppercase">PERFIL {role}</h1>
-  </div>
-  <Div_profile_rounded_image bordered={profilePhotoSrc === ""}>
-    {
-      profilePhotoSrc !== "" ? (
-        <Image
-          src={profilePhotoSrc as string}
-          alt="Profile"
-          format="webp"
-          width={100}
-          height={100}
-          quality={"low"}
-          decoding={"async"}
-          loading={"lazy"}
-          densities={[0.2, 1, 2]}
-          class={"object-cover h-full w-full"}
-          id="profileThumb_registro"
-        />
-      ) : (
-        <Icon name="mdi:account" size={22} class="size-full" />
-      )
-    }
-  </Div_profile_rounded_image>
-  <slot name="header" />
-  <section>
-    <slot name="user" />
-  </section>
+<section class="w-1/2 border-l border-r border-gray-200 px-4 main-section-bigProfileCard">
+    <div class="w-full pb-4">
+      <h1 class="uppercase">PERFIL {role}</h1>
+    </div>
+    <Div_profile_rounded_image bordered={profilePhotoSrc === ""}>
+      {
+        profilePhotoSrc !== "" ? (
+          <Image
+            src={profilePhotoSrc as string}
+            alt="Profile"
+            format="webp"
+            width={100}
+            height={100}
+            quality={"low"}
+            decoding={"async"}
+            loading={"lazy"}
+            densities={[0.2, 1, 2]}
+            class={"object-cover h-full w-full section-div-profilePhoto"}
+            id="profileThumb_registro"
+          />
+        ) : (
+          <Icon name="mdi:account" size={22} class="size-full" />
+        )
+      }
+    </Div_profile_rounded_image>
+    <section class="pt-4">
+      <slot name="user" />
+    </section>
 </section>
 <section class="w-1/2 border-r border-gray-200 px-4">
   <section>
@@ -62,7 +61,8 @@ const role = parseRole(Astro.props.role);
     width: 100px;
     height: 100px;
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: 50%; /* Hacer la imagen de perfil redonda */
+    border: 2px solid #e2e8f0; /* Añadir un borde a la imagen de perfil */
   }
   .main-section-bigProfileCard {
     border: 1px solid #e2e8f0;
@@ -70,5 +70,17 @@ const role = parseRole(Astro.props.role);
     padding: 2rem;
     max-width: 800px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1rem; /* Añadir margen alrededor de la tarjeta */
+    background-color: #f5f5f5; /* Cambiar el color de fondo de la tarjeta */
+    transition: all 0.3s ease; /* Añadir transiciones a todos los cambios de estado */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  h1 {
+    font-size: 1.5rem; /* Aumentar el tamaño de la fuente del título */
+    color: #333; /* Cambiar el color del título */
   }
 </style>

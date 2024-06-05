@@ -1,4 +1,5 @@
 import type { Client, Result, Teacher, Student } from "@/models/types";
+import axios from 'axios';
 
 export const fetchClientById = async (id: number): Promise<Client | undefined> => {
     try {
@@ -62,10 +63,10 @@ export const fetchProfileByEmail = async (email: string): Promise<{profileResut:
     return {profileResut: profileResut, table: ""};
 };
 
-export const servicecheck = async (): Promise<Boolean> => {
+export const servicecheck = async (address: any): Promise<Boolean> => {
     try {
-        const response = await fetch(`http://localhost:4321/api/misc/ping/ping`);// BD petition
-        return response.ok ? true : false;
+        const response = await axios.post(`http://localhost:4321/api/clientserverconnections/clientserverconnections`,JSON.stringify({ ip: address }));// BD petition
+        return response.status === 200 ? true : false;
     } catch (error) {
         console.error("Error fetching ping data:", error);
         return false;

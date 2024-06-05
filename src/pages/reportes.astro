@@ -5,9 +5,6 @@ import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import ReportsSection from "@/sections/Reports_section/Reports_section"
 
-import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
-
-
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
 if(!await servicecheck()) return Astro.redirect("/not_connected");
@@ -28,7 +25,7 @@ const userName =
 ---
 
 <Layout title=`Bienvenido ${userName}`>
-  <Main>
+  <Main class="w-full h-full flex flex-col justify-items-center pt-16">
     <h1>Reportes</h1>
     <p>En esta sección podrás ver los reportes de los usuarios.</p>
     <p>En construcción...</p>

@@ -12,7 +12,7 @@ const { test } = Astro.props;
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
-if(!await servicecheck()) return Astro.redirect("/not_connected");
+if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
 
 //SESSION HANDLER////////////////////////////////////////
@@ -38,11 +38,10 @@ const userName =
         profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}
         role={sessionInfoState.sessionInfo.role}
       >
-        <h1 slot="header">Este es el encabezado</h1>
         <p>{sessionInfoState.sessionInfo.role}</p>
         <p>Este es el contenido principal</p>
         <p slot="user">
-          usuario: {sessionInfoState.sessionInfo.profile?.username}
+          {sessionInfoState.sessionInfo.profile?.username}
         </p>
         <p slot="id">id: {sessionInfoState.sessionInfo.profile?.id}</p>
         <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>

@@ -7,11 +7,7 @@ import type {Reports} from "@/models/types";
 import useGetBalances from "@/services/client/customhooks/useGetBalances";
 import useGetWeeklieReport from "@/services/client/customhooks/useGetWeeklieReport";
 
-interface ReportsSectionProps {
-    // Define any props you need for the component here
-}
-
-const ReportsSection: React.FC<ReportsSectionProps> = () => {
+const ReportsSection: React.FC = () => {
     // Implement your component logic here
     const { balances, loadingBalances, errorBalances } = useGetBalances();
     const { weeklieReports, loadingWeeklieReport, errorWeeklieReport } = useGetWeeklieReport();
