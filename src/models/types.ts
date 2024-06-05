@@ -124,7 +124,7 @@ export interface Teacher {
 
 
 export type ClientSession = { OAuth: Session } & { client: Client } & { profilePhotoSrc: string } & { role: string };
-export type ProfileSession = { OAuth: Session } & { profile: Client | Student | Teacher } & { profilePhotoSrc: string } & { role: string };
+export type ProfileSession = { OAuth: Session } & { profile: Client | Student | Teacher | undefined } & { profilePhotoSrc: string } & { role: string };
 
 export enum SessionState {
   WithoutSession = 0,

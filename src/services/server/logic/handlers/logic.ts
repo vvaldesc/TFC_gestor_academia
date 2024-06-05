@@ -3,7 +3,12 @@ import type { Session } from "@auth/core/types";
 import type { Client, Teacher, Student, ProfileSession } from "@/models/types";
 import { SessionState } from "@/models/types";
 
-import { fetchProfileByEmail } from "@/services/server/fetching/fetch";
+import {
+  fetchProfileByEmail,
+  fetchClientById,
+  fetchStudentById,
+  fetchTeacherById,
+} from "@/services/server/fetching/fetch";
 
 export function validateOAuth(session: Session | null): boolean {
   if (!session) {
@@ -28,7 +33,9 @@ export function validateOAuth(session: Session | null): boolean {
   return true;
 }
 
-export const sessionHandler = async (session: Session | null): Promise<ProfileSession> => {
+export const sessionHandler = async (
+  session: Session | null
+): Promise<ProfileSession> => {
   let result: ProfileSession = {
     OAuth: {} as Session,
     profile: {} as Client | Student | Teacher,
@@ -45,12 +52,32 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
   result.profilePhotoSrc = result.OAuth.user?.image as string;
 
   // Fetch profile by email from web database
-  const {profile , table} = await fetchProfileByEmail(session?.user?.email as string);// BD petition
-
+  console.log("Fetching profile by email...");
+  console.log("Session email: ", session?.user?.email);
+  const { profileResut, table } = await fetchProfileByEmail(
+    session?.user?.email as string
+  ); // BD petition
+  console.log("Profile fetched: ", profileResut);
   // If client is registered
-  if (profile) {
+  if (profileResut) {
+    let profile: Client | Student | Teacher | undefined = undefined;
+    console.log(profileResut.result.data.tableName)
+    switch (profileResut.result.data.tableName) {
+      case "Clients":
+        profile = await fetchClientById(profileResut.result.data.id);
+        break;
+      case "Teachers":
+        profile = await fetchTeacherById(profileResut.result.data.id);
+        break;
+      case "Students":
+        profile = await fetchStudentById(profileResut.result.data.id);
+        break;
+      default:
+        break;
+    }
+
     result.profile = profile;
-    result.role = table;
+    result.role = profileResut.result.data.tableName;
     return result;
   } else {
     console.log("Profile is not registered in web database.");
@@ -58,13 +85,23 @@ export const sessionHandler = async (session: Session | null): Promise<ProfileSe
   }
 };
 
-export async function sessionStateCheck(sessionInfo: ProfileSession): Promise<SessionState> {
+export async function sessionStateCheck(
+  sessionInfo: ProfileSession
+): Promise<SessionState> {
   try {
-    if (!sessionInfo.OAuth || !sessionInfo.OAuth.user?.name || !sessionInfo.OAuth.user.email) {
+    if (
+      !sessionInfo.OAuth ||
+      !sessionInfo.OAuth.user?.name ||
+      !sessionInfo.OAuth.user.email
+    ) {
       console.error("No hay sesión activa OAuth.");
       return SessionState.WithoutSession;
     }
-    if (sessionInfo.profile == null || !sessionInfo.profile.id || !sessionInfo.profile.email) {
+    if (
+      sessionInfo.profile == null ||
+      !sessionInfo.profile.id ||
+      !sessionInfo.profile.email
+    ) {
       console.error("El cliente tiene sesión OAuth pero necesita registrarse");
       return SessionState.NeedsRegister;
     }
@@ -86,4 +123,4 @@ export const parseRole = (role: string): string => {
     default:
       return "Cliente";
   }
-}
+};

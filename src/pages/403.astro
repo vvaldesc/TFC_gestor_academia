@@ -1,9 +1,14 @@
 ---
 title: "No tienes permiso para acceder a esta página"
 import Layout from "@/layouts/Layout.astro"
-
+import Main from "@/components/Main.astro";
+import Container_card from "@/components/Container_card.astro";
 ---
 <Layout title="403">
+    <Main>
+        <Container_card>
     <h1>Página no encontrada</h1>
     <p>Lo sentimos, la página que estás buscando no existe.</p>
+</Container_card>
+</Main>
 </Layout>

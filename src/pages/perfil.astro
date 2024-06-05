@@ -4,6 +4,7 @@ import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
+import Personal_section from "@/sections/Personal_section/Personal_section";
 import Container_card from "@/components/Container_card.astro";
 
 // Obtén el estado de la sesión desde los props pasados por el layout
@@ -13,7 +14,6 @@ const { test } = Astro.props;
 import {servicecheck} from "@/services/server/fetching/fetch";
 if(!await servicecheck()) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
-console.log('soy el perfil');
 
 //SESSION HANDLER////////////////////////////////////////
  import type {sessionInfoState} from "@/models/types"; // prettier-ignore
@@ -48,6 +48,7 @@ const userName =
         <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
       </Profile_section>
     </Container_card>
+    <Personal_section sessionInfoState={sessionInfoState} client:load />
   </Main>
   {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>}
 </Layout>
