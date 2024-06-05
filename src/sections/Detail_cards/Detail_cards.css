@@ -3,9 +3,10 @@
     overflow-x: auto;
     white-space: nowrap;
     display: flex;
-    padding: 10px;
     flex-wrap: wrap;
+    wrap-flow: nowrap;
     box-sizing: border-box;
+    justify-content: space-between;
 }
 
 @media (max-width: 768px) {

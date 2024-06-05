@@ -8,9 +8,6 @@ import { Role } from '@/models/types';
 
 import './Calendar_personal.css'
 
-
-
-
 const getMonthData = (value: Dayjs) => {
   if (value.month() === 8) {
     return 1394;
@@ -93,9 +90,9 @@ const Calendar_personal: React.FC<Props> = ({ role, profileId, details, services
   };
   return (
     <>
-      <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
-      <Calendar cellRender={cellRender} value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-          </>
+      <Alert className='w-fit m-auto' message={`Fecha seleccionada: ${selectedValue?.format('YYYY-MM-DD')}`} />
+      <Calendar className='mt-8' fullscreen={true} mode='month' cellRender={cellRender} value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
+    </>
   );
 };
 

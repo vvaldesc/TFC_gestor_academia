@@ -36,14 +36,14 @@ const App: React.FC<DetailCardsProps> = ({ detail }) => {
 
 
   return (
-  <Space direction="vertical" size={16}>
+  <Space className="m-2" direction="vertical" size={16}>
 
   {!loading && !error && (
     <Card
       size="small"
       title={detail.service_name}
       extra={<a href="#">More</a>}
-      style={{ width: 300 }}
+      style={detail.state === "Cancelled" ? { width: 300, backgroundColor: '#FC9E9E' } : (detail.state === "Pending" ? { width: 300, backgroundColor: '#FFE98B' } : { width: 300, backgroundColor: '#D3D3D2' })}
     >
 
 {loading && <Alert message="Cargando..." type="info" />}
@@ -59,21 +59,22 @@ const App: React.FC<DetailCardsProps> = ({ detail }) => {
       </p>
       <p>Estado: {detail.state}</p>
       <p>Precio del servicio: {detail.service_price}</p>
-      <p>Correo electrónico del cliente: {detail.client_email}</p>
+      <p>Precio: {detail.price}</p>
+      <p>Reserva:</p>
   </div>
 
 
 
-      <span>
+      {detail.state === "Pending" && <span>
         <Popconfirm
           title="¿Seguro que quieres cancelar?"
-          onConfirm={() => handleConfirm(detail)}
+          onConfirm={() => handleConfirm()}
         >
           <Button type="primary" danger>
             Cancelar
           </Button>
         </Popconfirm>
-      </span>
+      </span>}
     </Card>)}
   </Space>
 )};

@@ -2,6 +2,8 @@ import React from 'react';
 import Detail from "@/components/AntDesign/cards/Detail"
 import type { ServiceConsumption_type } from '@/models/types';
 
+import './Detail_cards.css'
+
 interface DetailCardsProps {
     // Define the props for your component here
     details: ServiceConsumption_type[];
