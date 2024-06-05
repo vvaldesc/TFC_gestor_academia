@@ -21,7 +21,21 @@ const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
 
     // @ts-ignore
     const details_array: ServiceConsumption_type[] = details && details.result && details.result?.data ? details.result.data : [];
-    const details_array_filtered = details_array.filter((detail) => detail.employee_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
+    let details_array_filtered: ServiceConsumption_type[] = [];
+    switch (sessionInfoState.sessionInfoState.sessionInfo.role) {
+        case 'Teachers':
+            details_array_filtered = details_array.filter((detail) => detail.employee_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
+            break;
+            case 'Clients':
+            details_array_filtered = details_array.filter((detail) => detail.client_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
+            break;
+            case 'Students':
+             details_array_filtered = details_array.filter((detail) => detail.student_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
+            break;
+        default:
+            break;
+    }
+
     // @ts-ignore
     const clients_array = clients && clients.result && clients.result?.data ? clients.result.data : [];
     // @ts-ignore
