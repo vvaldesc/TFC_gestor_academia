@@ -6,6 +6,7 @@ import Main from "@/components/Main.astro";
 import Profile_section from "@/sections/Profile_section.astro";
 import Personal_section from "@/sections/Personal_section/Personal_section";
 import Container_card from "@/components/Container_card.astro";
+import Profile_edit_modal from "@/components/AntDesign/modals/Profile_edit_modal";
 
 // Obtén el estado de la sesión desde los props pasados por el layout
 const { test } = Astro.props;
@@ -34,7 +35,7 @@ const userName =
 <Layout title=`Bienvenido ${userName}`>
   <Main class="w-full h-full flex flex-col justify-items-center pt-16">
     <Container_card>
-      <Profile_section
+        <Profile_section
         profilePhotoSrc={sessionInfoState.sessionInfo.profilePhotoSrc}
         role={sessionInfoState.sessionInfo.role}
       >
@@ -47,6 +48,7 @@ const userName =
         <p slot="mail">mail: {sessionInfoState.sessionInfo.profile?.email}</p>
       </Profile_section>
     </Container_card>
+    <Profile_edit_modal sessionInfoState={sessionInfoState} client:load />
     <div class="pt-8"><Personal_section sessionInfoState={sessionInfoState} client:load /></div>
   </Main>
   {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:load/>}

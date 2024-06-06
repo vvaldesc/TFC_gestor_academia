@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form, Input, DatePicker, Checkbox, Select, Upload } from 'antd';
-import type { sessionInfoState } from '@/models/types';
-
-import postFault from '@/services/client/fetching/hooks/postFault'
+import React, { useState } from "react";
+import { Alert, Button, Modal, Form, Input, DatePicker, Checkbox, Select } from "antd";
+import type { sessionInfoState, Teacher, Client, Student } from "@/models/types";
+import { FaPencilAlt } from 'react-icons/fa';
+import putClient from "@/services/client/fetching/hooks/putClient";
+import putTeacher from "@/services/client/fetching/hooks/putTeacher";
+import putStudent from "@/services/client/fetching/hooks/putStudent";
+import imageBase64 from "@/services/client/logic/imageBase64";
+import dayjs from 'dayjs';
+import {deleteCookieLoacalStorage} from "@/services/client/utils/utils_typed";
+import Refresh from "@/services/client/logic/Refresh";
 
 const { Option } = Select;
 
+import "@/styles/styles.css";
+
 interface DocentPostModalProps {
-  sessionInfoState: sessionInfoState[];
+  sessionInfoState: sessionInfoState;
 }
 
-const Profile_edit_modal: React.FC<DocentPostModalProps> = ({ sessionInfoState }) => {
+const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
+  sessionInfoState,
+}) => {
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [error, setError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState<number | null>(null);
   const [form] = Form.useForm();
+  const [file, setFile] = useState<File>();
+  const [profilePhotoSrc, setProfilePhotoSrc] 
+  = useState(typeof window !== "undefined" ? window.localStorage.getItem("profilePhotoSrc") : sessionInfoState.sessionInfo.profilePhotoSrc || "" as string);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -27,69 +41,134 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({ sessionInfoState }
     setIsModalOpen(false);
   };
 
-  const handleStudentChange = (value: number) => {
-    setSelectedStudent(value);
-  };
+  function updateProfile(values: any, res: string | ArrayBuffer | null, sessionInfoState: sessionInfoState, setError: React.Dispatch<React.SetStateAction<boolean>>, setLoadingUpload: React.Dispatch<React.SetStateAction<boolean>>) {
+    res && (values.image = res);
+    console.log(values);
+    //  postFaceCheck(values.image);
+    switch (sessionInfoState.sessionInfo.role) {
+      //post actua como put también en mi api
+      case "Teachers":
+        putTeacher(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
+          .catch((err) => { setError(true); });
+        break;
+      case "Students":
+        putStudent(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); })
+          .catch((err) => { setError(true); });
+        break;
+      case "Clients":
+        putClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); })
+          .catch((err) => { setError(true); });
+        break;
+      default:
+        setError(true);
+        break;
+    }
+    setLoadingUpload(false);
+  }
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const onFinish = async (values: any) => {
+    setError(false);
+    setLoadingUpload(true);
+    values = form.getFieldsValue();
+    console.log("Received values of form: ", values);
+    values.image = file;
+    values.id = sessionInfoState.sessionInfo.profile?.id;
     handleOk();
-    postFault(values);
+    const res = await imageBase64(values.image)
+    .then((res) => {
+      updateProfile(values, res, sessionInfoState, setError, setLoadingUpload);
+      })
+    .catch((err) => {
+      setError(true);
+    });
   };
-
   return (
     <>
+      {loadingUpload && <Alert className="text-center" message="Cargando edición de perfil..." type="info" showIcon />}
+      {error && <Alert className="text-center" message="Hubo un error editando el perfil" type="error" showIcon />}
       <Button type="primary" onClick={showModal}>
-        Crear una falta de asistencia
+        Editar mi usuario
       </Button>
-      <Modal footer={null} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Form form={form} onFinish={onFinish}>
-        <Form onFinish={handleSubmit}>
-            <Form.Item label="Nombre" name="name">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Apellido" name="surname">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Email" name="email">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Número de teléfono" name="phone_number">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Dirección" name="address">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Ciudad" name="city">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Fecha de nacimiento" name="bornDate">
-                <DatePicker />
-            </Form.Item>
-            <Form.Item label="Nombre de usuario" name="username">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Confirmado" name="confirmed">
-                <Checkbox />
-            </Form.Item>
-            <Form.Item label="Imagen" name="image">
-                <Input />
-            </Form.Item>
-            <Form.Item label="Activo" name="active">
-                <Checkbox />
-            </Form.Item>
-            <Form.Item>
-                <Button type="primary" htmlType="submit">
-                Enviar
-                </Button>
-                <Button type="default" htmlType="button" onClick={handleCancel}>
-                Cancelar
-                </Button>
-            </Form.Item>
-            </Form>
+      <Modal
+        footer={null}
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form className="relative" form={form} onFinish={onFinish}>
+        <Form.Item name="image">
+            <input
+              type="file"
+              id="fileUpload"
+              style={{ display: 'none' }}
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                setFile(file);
+                const url = URL.createObjectURL(file);
+                setProfilePhotoSrc(url);
+                console.log(url);
+                // Aquí puedes manejar la subida del archivo
+              }}
+            />
+            <img
+              id="profileThumb_edit"
+              className="section-div-profilePhoto m-auto my-4 object-cover"
+              src={profilePhotoSrc as string}
+              alt=""
+            />
+            <div
+              className="flex items-center justify-center bg-white border-2 h-12 w-12 border-gray-300 rounded-full hover:bg-gray-200 cursor-pointer absolute top-24 right-72"
+              onClick={() => document.getElementById('fileUpload').click()}
+            >
+              <FaPencilAlt size={20} />
+            </div>
+          </Form.Item>
+          <Form.Item className="pt-10" label="Nombre" name="name">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.name} />
+          </Form.Item>
+          <Form.Item label="Apellido" name="surname">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.surname} />
+          </Form.Item>
+          <Form.Item label="Email" name="email">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.email} />
+          </Form.Item>
+          <Form.Item label="Número de teléfono" name="phone_number">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.phone_number} />
+          </Form.Item>
+          <Form.Item label="Dirección" name="address">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.address} />
+          </Form.Item>
+          <Form.Item label="Ciudad" name="city">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.city} />
+          </Form.Item>
+          <Form.Item label="Fecha de nacimiento" name="bornDate">
+            <DatePicker defaultValue={dayjs(sessionInfoState.sessionInfo.profile?.bornDate)} />
+          </Form.Item>
+          <Form.Item label="Nombre de usuario" name="username">
+            <Input defaultValue={sessionInfoState.sessionInfo.profile?.username} />
+          </Form.Item>
+          <Form.Item label="Confirmado" name="confirmed">
+            <Checkbox defaultChecked={sessionInfoState.sessionInfo.profile?.confirmed} />
+          </Form.Item>
+          <Form.Item label="Activo" name="active">
+            <Checkbox defaultChecked={sessionInfoState.sessionInfo.profile?.active} />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Enviar
+            </Button>
+            <Button type="default" htmlType="button" onClick={handleCancel}>
+              Cancelar
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   );
 };
 
 export default Profile_edit_modal;
+
+

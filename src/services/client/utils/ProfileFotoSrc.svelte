@@ -5,6 +5,7 @@
 
   function updateImgSrcset(src:string) {
     const images = document.querySelectorAll('img[id^="profileThumb"]');
+    console.log("images:", images);  
 
     images.forEach((img) => {
       const currentSrcset = img.getAttribute("srcset");

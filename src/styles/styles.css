@@ -1,0 +1,7 @@
+.section-div-profilePhoto {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%; /* Hacer la imagen de perfil redonda */
+    border: 2px solid #e2e8f0; /* Añadir un borde a la imagen de perfil */
+  }
