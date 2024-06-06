@@ -9,6 +9,7 @@ import imageBase64 from "@/services/client/logic/imageBase64";
 import dayjs from 'dayjs';
 import {deleteCookieLoacalStorage} from "@/services/client/utils/utils_typed";
 import Refresh from "@/services/client/logic/Refresh";
+import postCheckProfilePhoto from "@/services/client/fetching/hooks/postCheckProfilePhoto.tsx";
 
 const { Option } = Select;
 
@@ -41,22 +42,20 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
     setIsModalOpen(false);
   };
 
-  function updateProfile(values: any, res: string | ArrayBuffer | null, sessionInfoState: sessionInfoState, setError: React.Dispatch<React.SetStateAction<boolean>>, setLoadingUpload: React.Dispatch<React.SetStateAction<boolean>>) {
-    res && (values.image = res);
-    console.log(values);
+  function updateProfile(values: any, sessionInfoState: sessionInfoState, setError: React.Dispatch<React.SetStateAction<boolean>>, setLoadingUpload: React.Dispatch<React.SetStateAction<boolean>>) {
     //  postFaceCheck(values.image);
     switch (sessionInfoState.sessionInfo.role) {
       //post actua como put también en mi api
       case "Teachers":
-        putTeacher(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
+        putTeacher(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); setLoadingUpload(false); deleteCookieLoacalStorage(); window.location.reload();})
           .catch((err) => { setError(true); });
         break;
       case "Students":
-        putStudent(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
+        putStudent(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); setLoadingUpload(false); deleteCookieLoacalStorage(); window.location.reload();})
           .catch((err) => { setError(true); });
         break;
       case "Clients":
-        putClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
+        putClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); setLoadingUpload(false); deleteCookieLoacalStorage(); window.location.reload();})
           .catch((err) => { setError(true); });
         break;
       default:
@@ -71,17 +70,20 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
     setLoadingUpload(true);
     values = form.getFieldsValue();
     console.log("Received values of form: ", values);
-    values.image = file;
+    file && (values.image = file);
     values.id = sessionInfoState.sessionInfo.profile?.id;
     handleOk();
-    const res = await imageBase64(values.image)
-    .then((res) => {
-      updateProfile(values, res, sessionInfoState, setError, setLoadingUpload);
-      })
-    .catch((err) => {
+    values.image = await imageBase64(values.image) as string;
+    const validPhoto = values.image && await postCheckProfilePhoto(file);
+    if(validPhoto){
+      updateProfile(values, sessionInfoState, setError, setLoadingUpload);
+    } else if(!values.image){
+      updateProfile(values, sessionInfoState, setError, setLoadingUpload);
+    } else {
       setError(true);
-    });
+    }
   };
+
   return (
     <>
       {loadingUpload && <Alert className="text-center" message="Cargando edición de perfil..." type="info" showIcon />}
