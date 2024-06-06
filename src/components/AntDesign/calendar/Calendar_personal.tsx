@@ -25,7 +25,7 @@ interface Props {
 const getListData = (value: Dayjs, details: ServiceConsumption_type[]) => {
   return details.filter(detail => {
     const reservedDate = dayjs(detail.reserved_at);
-    return value.day() === reservedDate.day() 
+    return value.date() === reservedDate.date() 
       && value.month() === reservedDate.month() 
       && value.year() === reservedDate.year();
   });
