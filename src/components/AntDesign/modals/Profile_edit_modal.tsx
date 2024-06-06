@@ -52,11 +52,11 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
           .catch((err) => { setError(true); });
         break;
       case "Students":
-        putStudent(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); })
+        putStudent(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
           .catch((err) => { setError(true); });
         break;
       case "Clients":
-        putClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); })
+        putClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); deleteCookieLoacalStorage(); window.location.reload();})
           .catch((err) => { setError(true); });
         break;
       default:
