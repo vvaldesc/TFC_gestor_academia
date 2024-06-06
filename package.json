@@ -7,7 +7,10 @@
     "start": "astro dev --port 4322",
     "build": "astro check && astro build",
     "preview": "astro preview --port 4322",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "run-p dev test",
+    "cy": "npx cypress run",
+    "cy:open": "npx cypress open"
   },
   "dependencies": {
     "@astrojs/check": "0.7.0",
@@ -59,7 +62,8 @@
     "@iconify-json/bxs": "^1.1.10",
     "@iconify-json/mdi": "^1.1.66",
     "@vitejs/plugin-basic-ssl": "1.1.0",
-    "cypress": "^13.10.0",
+    "cypress": "^13.11.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "0.13.0",
     "sass": "^1.77.2",

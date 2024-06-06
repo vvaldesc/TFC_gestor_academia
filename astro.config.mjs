@@ -7,7 +7,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl';
 import metaTags from "astro-meta-tags";
 import path from 'path'; // Añade esta línea
 import mkcert from 'vite-plugin-mkcert'
-import serviceWorker from "astrojs-service-worker";
+// import serviceWorker from "astrojs-service-worker";
 import auth from "auth-astro";
 
 import vercel from "@astrojs/vercel/serverless";
@@ -50,7 +50,9 @@ export default defineConfig({
       mdi: ["*"], // (Default) Loads entire Material Design Icon set
       bxs: ["*"], // Loads entire bxs set
     },
-  }), metaTags(), auth(), serviceWorker()],
+  }), metaTags(), auth()
+  // , serviceWorker()
+],
   output: "server",
   adapter: vercel()
 });
