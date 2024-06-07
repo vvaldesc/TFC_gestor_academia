@@ -34,7 +34,7 @@ const { sessionInfoState } = Astro.props;
             format="webp"
             id="profileThumb_header"
           /> }
-          <p>Bienvenido {sessionInfoState.sessionInfo.profile.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
+          <p>Bienvenido {sessionInfoState.sessionInfo.profile?.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
           {<Logout><p>Cerrar sesión</p></Logout>}
         </>
       ) : (

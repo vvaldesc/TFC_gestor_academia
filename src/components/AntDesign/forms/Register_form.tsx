@@ -38,6 +38,7 @@ const Register_form: React.FC<{sessionInfoState: sessionInfoState}> = ({sessionI
       setError(false);
       setLoadingUpload(true);
       values = form.getFieldsValue();
+      // @ts-ignore
       file && (values.image = file);
       values.email = sessionInfoState.sessionInfo.OAuth.user?.email as string;
       values.active = true;

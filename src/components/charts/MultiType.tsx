@@ -64,10 +64,10 @@ export function MultiType({ balance_reports }: Props) {
                 type: "bar" as const,
                 label: "Nóminas",
                 backgroundColor: "rgb(255, 0, 0)",
-                data: balance_reports.payrolls.map((payroll) => (payroll.total_paid) * -1),
+                data: balance_reports.payrolls.map((payroll) => (Number(payroll.total_paid)) * -1),
             },
         ],
     };
 
-    return <Chart type='bar' data={data} height={500} width={800} />;
+    return <Chart type='bar' data={data as any} height={500} width={800} />;
 }

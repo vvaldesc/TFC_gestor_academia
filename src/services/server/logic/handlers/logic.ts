@@ -54,7 +54,7 @@ export const sessionHandler = async (
   // Fetch profile by email from web database
   console.log("Fetching profile by email...");
   console.log("Session email: ", session?.user?.email);
-  const { profileResut, table } = await fetchProfileByEmail(
+  const { profileResut } = await fetchProfileByEmail(
     session?.user?.email as string
   ); // BD petition
   console.log("Profile fetched: ", profileResut);

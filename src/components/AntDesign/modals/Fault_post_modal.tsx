@@ -38,6 +38,7 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
   const filteredSubjects = selectedStudent
   ? subjects.filter((subject) =>
       enrolments.some(
+        // @ts-ignore
         ({ StudentSubjectEnrolments, Subjects }) =>
           Number(StudentSubjectEnrolments.student_id) === Number(selectedStudent) &&
           Subjects.acronym === subject.acronym

@@ -1,6 +1,6 @@
 import imageCompression from 'browser-image-compression';
 
-export default async function imageBase64(img): Promise<string | ArrayBuffer> {
+export default async function imageBase64(img: any): Promise<string | ArrayBuffer> {
     if (img === '') {
         return img;
     }
@@ -28,5 +28,6 @@ export default async function imageBase64(img): Promise<string | ArrayBuffer> {
       });
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
 }

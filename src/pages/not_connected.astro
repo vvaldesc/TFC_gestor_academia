@@ -6,7 +6,7 @@ import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
-if(await servicecheck()) return Astro.redirect("/");
+if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
 
 ---

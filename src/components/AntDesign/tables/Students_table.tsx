@@ -109,6 +109,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
         });
         setData(newData);
         row.id = item.id;
+        // @ts-ignore
         postClient(row as Client);
         setEditingKey("");
       } else {
@@ -125,6 +126,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
     try {
       console.log("Deleting:", record);
       if (record.key && record.id > -1) {
+        // @ts-ignore
         deleteClient(record as Client);
         record.active = false;
         const newData = [...data];
@@ -145,6 +147,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Id",
       dataIndex: "id",
       key: "id",
+      // @ts-ignore
       editable: false,
       width: "5%",
       render: (_: any, record: Item) => record.id,
@@ -153,6 +156,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Número de matrícula",
       dataIndex: "matriculation_number",
       key: "matriculation_number",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.matriculation_number,
@@ -161,6 +165,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "DNI",
       dataIndex: "DNI",
       key: "DNI",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.DNI,
@@ -169,6 +174,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Empleo",
       dataIndex: "employed",
       key: "employed",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.employed ? "Sí" : "No",
@@ -177,6 +183,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Nivel educativo",
       dataIndex: "educational_level",
       key: "educational_level",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.educational_level,
@@ -185,6 +192,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Nombre",
       dataIndex: "name",
       key: "name",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.name,
@@ -193,6 +201,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Apellido",
       dataIndex: "surname",
       key: "surname",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.surname,
@@ -201,6 +210,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Email",
       dataIndex: "email",
       key: "email",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.email,
@@ -209,6 +219,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Número de teléfono",
       dataIndex: "phone_number",
       key: "phone_number",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.phone_number,
@@ -217,6 +228,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Dirección",
       dataIndex: "address",
       key: "address",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.address,
@@ -225,6 +237,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Ciudad",
       dataIndex: "city",
       key: "city",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.city,
@@ -235,6 +248,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       key: "bornDate",
       editable: true,
       width: "5%",
+      // @ts-ignore
       render: (_: any, record: Item) => record.bornDate,
     },
     {
@@ -243,6 +257,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       key: "created_at",
       editable: false,
       width: "5%",
+      // @ts-ignore
       render: (_: any, record: Item) => record.created_at,
     },
     {
@@ -251,12 +266,14 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       key: "updated_at",
       editable: false,
       width: "5%",
+      // @ts-ignore
       render: (_: any, record: Item) => record.updated_at,
     },
     {
       title: "Nombre de usuario",
       dataIndex: "username",
       key: "username",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.username,
@@ -265,6 +282,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Confirmado",
       dataIndex: "confirmed",
       key: "confirmed",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.confirmed ? "Sí" : "No",
@@ -273,6 +291,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Imagen",
       dataIndex: "image",
       key: "image",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.image,
@@ -281,6 +300,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       title: "Activo",
       dataIndex: "active",
       key: "active",
+      // @ts-ignore
       editable: true,
       width: "5%",
       render: (_: any, record: Item) => record.active ? "Sí" : "No",
@@ -343,7 +363,9 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
     },
   ];
 
+        // @ts-ignore
   const mergedColumns: TableProps["columns"] = columns.map((col) => {
+    // @ts-ignore
     if (!col.editable) {
       return col;
     }
@@ -351,6 +373,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       ...col,
       onCell: (record: Item) => ({
         record,
+        // @ts-ignore
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),

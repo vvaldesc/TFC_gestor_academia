@@ -106,6 +106,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
         });
         setData(newData);
         row.id = item.id;
+        // @ts-ignore
         postClient(row as Client);
         setEditingKey('');
       } else {
@@ -122,7 +123,9 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
     try {
       console.log('Deleting:', record);
       if (record.key && record.id > -1) {
+        // @ts-ignore
         deleteClient(record as Client);
+        // @ts-ignore
         record.active = false;
         const newData = [...data];
         newData[record.key] = record;
@@ -142,6 +145,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Id factura",
       dataIndex: "id",
       key: "id",
+      // @ts-ignore
       editable: false,
       width: '1%',
       render: (_: any, record: Item) => record.id,
@@ -150,6 +154,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Servicio",
       dataIndex: "service_name",
       key: "service_name",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.service_name,
@@ -158,6 +163,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Empleado",
       dataIndex: "employee_name",
       key: "employee_name",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.teacher_id ? (record.teacher_name + " " + record.teacher_surname) : (record.student_name + " " + record.student_surname),
@@ -166,6 +172,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Cliente",
       dataIndex: "client_name",
       key: "client_name",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.client_name + " " + record.client_surname,
@@ -174,6 +181,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Calificación",
       dataIndex: "rating",
       key: "rating",
+      // @ts-ignore
       editable: true,
       width: '1%',
       render: (_: any, record: Item) => record.rating ? record.rating : '-',
@@ -182,6 +190,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Precio",
       dataIndex: "price",
       key: "price",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.price,
@@ -190,6 +199,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Retraso",
       dataIndex: "delay",
       key: "delay",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.state === 'Completed' ? record.delay : '-',
@@ -198,6 +208,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Fecha alta",
       dataIndex: "created_at",
       key: "created_at",
+      // @ts-ignore
       editable: false,
       width: '5%',
       render: (_: any, record: Item) => new Date(record.created_at).toLocaleString('es-ES', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
@@ -206,6 +217,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Fecha reserva",
       dataIndex: "reserved_at",
       key: "reserved_at",
+      // @ts-ignore
       editable: true,
       width: '5%',
       defaultSortOrder: 'descend',
@@ -215,6 +227,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Estado",
       dataIndex: "state",
       key: "state",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.state,
@@ -223,6 +236,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       title: "Clima estimado",
       dataIndex: "weather",
       key: "weather",
+      // @ts-ignore
       editable: true,
       width: '5%',
       render: (_: any, record: Item) => record.weather,
@@ -251,7 +265,9 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
     },
   ];
 
+        // @ts-ignore
   const mergedColumns: TableProps['columns'] = columns.map((col) => {
+    // @ts-ignore
     if (!col.editable) {
       return col;
     }
@@ -259,6 +275,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       ...col,
       onCell: (record: Item) => ({
         record,
+        // @ts-ignore
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),

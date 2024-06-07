@@ -167,6 +167,6 @@ const { title } = Astro.props;
 
 
     </style>
-  {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile.image as string} client:idle/>}
-  </body>
+  {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile?.image as string} client:load/>}
+</body>
 </html>

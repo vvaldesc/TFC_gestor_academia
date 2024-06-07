@@ -5,7 +5,7 @@ import imageCompression from 'browser-image-compression';
 
 const url = 'http://localhost:4321/api/clients/clients';
 
-async function handleImageUpload(img): Promise<string | ArrayBuffer> {
+async function handleImageUpload(img: any): Promise<string | ArrayBuffer | undefined> {
   const imageFile = img;
   const options = {
     maxSizeMB: 0.1, // (max file size in MB)
@@ -20,12 +20,13 @@ async function handleImageUpload(img): Promise<string | ArrayBuffer> {
     return new Promise((resolve, reject) => {
       reader.onloadend = function() {
         const base64data = reader.result;
-        resolve(base64data);
+        resolve(base64data as string);
       };
       reader.onerror = reject;
     });
   } catch (error) {
     console.log(error);
+    return undefined;
   }
 }
 
@@ -38,7 +39,7 @@ export const usePostClient = (client: Client, validPhoto: boolean, submit: boole
   const postData = async (body: Client) => {
     setIsLoading(true);
     try {
-      if (!/^https?:\/\/[^ ]+$/.test(client.image)) client.image = await handleImageUpload(client.image) as string;
+      if (!/^https?:\/\/[^ ]+$/.test(client.image as string)) client.image = await handleImageUpload(client.image) as string;
       console.log(client);
       body = client;
       const response = await axios.post(url, JSON.stringify(body), {

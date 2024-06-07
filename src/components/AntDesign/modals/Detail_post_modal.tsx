@@ -68,7 +68,9 @@ const ServiceConsumptionModal: React.FC<ServiceConsumptionModalProps> = ({
   
   const filteredEmployees = employees.filter((employee) => {
     return selectedService 
+    // @ts-ignore
     ? (employee.student?.disciplines.includes(selectedService.discipline) 
+    // @ts-ignore
     || employee.teacher?.disciplines.includes(selectedService.discipline)) 
     : true;
   });

@@ -7,7 +7,7 @@ import ReportsSection from "@/sections/Reports_section/Reports_section"
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
-if(!await servicecheck()) return Astro.redirect("/not_connected");
+if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
 
 //SESSION HANDLER////////////////////////////////////////

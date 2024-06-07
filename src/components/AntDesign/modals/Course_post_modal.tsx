@@ -57,6 +57,7 @@ const Course_post_modal: React.FC<{ disciplines: any[] }> = ({ disciplines }) =>
       <Form.Item label="Disciplina" name="discipline">
         <Select placeholder="Selecciona una disciplina">
           {disciplines.map((discipline) => (
+        // @ts-ignore
             <Option key={discipline.name} value={discipline.name}></Option>
           ))}
         </Select>

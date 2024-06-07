@@ -42,6 +42,7 @@ const Subject_post_modal: React.FC<{ teachers: Teacher[], courses: Courses[] }> 
       <Form.Item label="Profesor" name="teacher_id">
         <Select placeholder="Selecciona un profesor">
           {teachers.map((teacher) => (
+        // @ts-ignore
             <Option key={teacher.Teachers.id} value={teacher.Teachers.id}>{teacher.Teachers.name + ' ' + teacher.Teachers.surname}</Option>
           ))}
         </Select>

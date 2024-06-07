@@ -17,7 +17,7 @@ import main_promo from "@/consts/main_promo.json";
 
 //SERVICE CHECK//////////////////////////////////////////
 import {servicecheck} from "@/services/server/fetching/fetch";
-if(!await servicecheck()) return Astro.redirect("/not_connected");
+if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connected");
 //SERVICE CHECK//////////////////////////////////////////
 
 //SESSION HANDLER////////////////////////////////////////
@@ -36,7 +36,7 @@ const hrefImages: string[] = main_promo.promos.map(
   <Slider />
   <Main>
     <Animated_main_div class="mt-40 grid-cols-2">
-      {sessionInfoState.sessionState !== 0 && <h1 class="main-text-promoTitle pb-4">HOLA {sessionInfoState.sessionInfo.profile.name || sessionInfoState.sessionInfo.OAuth.user?.name}</h1>}
+      {sessionInfoState.sessionState !== 0 && <h1 class="main-text-promoTitle pb-4">HOLA {sessionInfoState.sessionInfo.profile?.name || sessionInfoState.sessionInfo.OAuth.user?.name}</h1>}
     </Animated_main_div>
     <Animated_main_div class="mt-40 grid-cols-2">
       <div class="w-1/2 text-left p-3">

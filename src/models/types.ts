@@ -187,6 +187,7 @@ export interface ServiceConsumption_type {
   teacher_id?:           null;
   student_id?:           number;
   employee_id?:          number;
+  employee_name?:          string;
   delay?:                number;
   service_id?:           number;
   service_name?:           string;
@@ -212,6 +213,7 @@ export interface ServiceConsumption_type {
   client_email?:         string;
   teacher_email?:        null;
   student_email?:        string;
+  employee_email?:        string;
   employee_salary?:      number;
   state?:                string;
 }

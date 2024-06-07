@@ -12,8 +12,8 @@ const ReportsSection: React.FC = () => {
     const { balances, loadingBalances, errorBalances } = useGetBalances();
     const { weeklieReports, loadingWeeklieReport, errorWeeklieReport } = useGetWeeklieReport();
 
-    const balance_reports = balances?.result?.data as Reports;
-    const weeklieReports_reports = weeklieReports?.result?.data as any;
+    const balance_reports = (balances as any)?.result?.data as Reports;
+    const weeklieReports_reports = (weeklieReports as any)?.result?.data as any;
 
     return (
         <div>

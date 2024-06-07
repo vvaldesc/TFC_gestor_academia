@@ -46,7 +46,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res, loadingForecast: boolean, errorForecast: any } =
+  const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res | null, loadingForecast: boolean, errorForecast: any } = 
   useGetForecast();
 
   const { services, loadingServices, errorServices }: { services: any, loadingServices: boolean, errorServices: any } =
@@ -75,7 +75,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     loadingUnavailableEmployees,
     errorUnavailableEmployees,
   }: {
-    employees: { result: Result };
+    unavailableEmployees: { result: Result };
     loadingUnavailableEmployees: boolean;
     errorUnavailableEmployees: any;
   } = useGetUnavailableEmployees(selectedTime);
@@ -93,8 +93,8 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   } = usePostBooking(booking, submit);
 
   if (postData && !postClientError && !postClientLoading && submit) {
-    window.location = `https://localhost:4322/perfil`;
-  }
+    window.location.href = `https://localhost:4322/perfil`;
+}
 
   const handleTimeChange = (time: Date) => {
     console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
@@ -109,11 +109,11 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       reserved_at: time,
       price: 7,
       weather: weather_res || "Sunny",
-      client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
-      client_surname: sessionInfo.profile.surname,
-      client_address: sessionInfo.profile.address,
-      client_phone_number: sessionInfo.profile.phone_number,
-      client_email: sessionInfo.profile.email,
+      client_name: sessionInfo.profile?.name || sessionInfo.OAuth.user?.name as string | undefined,
+      client_surname: sessionInfo.profile?.surname,
+      client_address: sessionInfo.profile?.address,
+      client_phone_number: sessionInfo.profile?.phone_number,
+      client_email: sessionInfo.profile?.email,
     };
 
     setExtendedBooking(extendedBooking);
@@ -123,22 +123,22 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     const employee: Employee = employees.result.data.find((employee: Employee) => employee.id === id);
     debugger
 
-    const booking: ServiceConsumption_type = selectedEmployee ? {
+    const booking: ServiceConsumption_type | null = selectedEmployee ? {
       service_id: service_data.id,
       service_name: service_data.name,
       employee_id: employee.id,
-      employee_mail: employee.teacher?.email || employee.student?.email,
+      employee_email: employee.teacher?.email || employee.student?.email,
       employee_name: employee.teacher?.name || employee.student?.name,
       client_id: client_id,
-      client_email: sessionInfo.profile.email,
-      client_name: sessionInfo.profile.name || sessionInfo.OAuth?.user?.name,
+      client_email: sessionInfo.profile?.email,
+      client_name: sessionInfo.profile?.name ?? sessionInfo.OAuth?.user?.name ?? "",
       price: service_data.price,
       created_at: new Date(),
       reserved_at: selectedTime,
       weather: "Sunny", //cambiar en api
     } : null;
         
-    const extendedBooking: ServicePredictionPost_type = selectedEmployee ? {
+    const extendedBooking: ServicePredictionPost_type | null = selectedEmployee ? {
       client_id: client_id,
       teacher_id: employee.id,
       service_id: service_data.id,
@@ -146,24 +146,24 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       reserved_at: selectedTime,
       price: service_data.price,
       weather: "Sunny", //cambiar en api
-      client_name: sessionInfo.profile.name || sessionInfo.OAuth.user.name,
-      teacher_name: employee.teacher?.name,
-      client_surname: sessionInfo.profile.surname,
-      teacher_surname: employee.teacher?.surname,
-      client_address: sessionInfo.profile.address,
-      teacher_address: employee.teacher?.address,
-      client_phone_number: sessionInfo.profile.phone_number,
-      teacher_phone_number: employee.teacher?.phone_number,
-      client_email: sessionInfo.profile.email,
-      teacher_email: employee.teacher?.email,
-      employee_salary: employee.salary,
+      client_name: sessionInfo.profile?.name || sessionInfo.OAuth.user?.name as string,
+      teacher_name: employee.teacher?.name as string,
+      client_surname: sessionInfo.profile?.surname as string,
+      teacher_surname: employee.teacher?.surname as string,
+      client_address: sessionInfo.profile?.address as string,
+      teacher_address: employee.teacher?.address  as string,
+      client_phone_number: sessionInfo.profile?.phone_number as string,
+      teacher_phone_number: employee.teacher?.phone_number as string,
+      client_email: sessionInfo.profile?.email as string,
+      teacher_email: employee.teacher?.email as string,
+      employee_salary: employee.salary as number,
     } : null;
 
     console.log(extendedBooking);
     (selectedTime && selectedService) ? setIsModalOpen(true) : showError && setTimeout(() => setShowError(false), 3000);;
     setSelectedEmployee(employee);
-    setExtendedBooking(extendedBooking);
-    setBooking(booking);
+    setExtendedBooking(extendedBooking as ServicePredictionPost_type);
+    setBooking(booking as ServiceConsumption_type);
   };
 
   const handleServiceSelect = (id: number) => {
