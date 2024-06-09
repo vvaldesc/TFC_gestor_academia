@@ -4,7 +4,7 @@ import { Button, Modal, Form, Input, Select } from 'antd';
 import type { Subject, Student } from '@/models/types';
 
 
-import postCourse from '@/services/client/fetching/hooks/postCourse'
+import postEnrolment from '@/services/client/fetching/hooks/postEnrolment'
 const { Option } = Select;
 
 const Enrolments_post_modal: React.FC<{ students: Student[], subjects: Subject[] }> = ({ students, subjects }) => {
@@ -26,13 +26,13 @@ const Enrolments_post_modal: React.FC<{ students: Student[], subjects: Subject[]
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     handleOk();
-    postCourse(values);
+    postEnrolment(values);
   };
 
   return (
 <>
   <Button type="primary" onClick={showModal}>
-    Crear un curso
+    Crear una matrícula
   </Button>
   <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>  
     <Form form={form} onFinish={onFinish}>

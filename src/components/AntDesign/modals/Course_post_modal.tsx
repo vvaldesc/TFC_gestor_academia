@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import { Button, Modal, Form, Input, Select, Alert } from 'antd';
 
 import postCourse from '@/services/client/fetching/hooks/postCourse'
 const { Option } = Select;
@@ -7,6 +7,7 @@ const { Option } = Select;
 const Course_post_modal: React.FC<{ disciplines: any[] }> = ({ disciplines }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const [error, setError] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -20,14 +21,23 @@ const Course_post_modal: React.FC<{ disciplines: any[] }> = ({ disciplines }) =>
     setIsModalOpen(false);
   };
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    handleOk();
-    postCourse(values);
+  const onFinish = async (values: any) => {
+
+    try {
+      console.log('Received values of form: ', values);
+      handleOk();
+      const response = await postCourse(values);
+      if (response.status !== 201) {
+        console.error('Error creando registro curso');
+      }
+    } catch (error) {
+      setError(true);
+    }
   };
 
   return (
 <>
+  {error && <Alert message={'Hubo un error al crear el curso'} type="error" />}
   <Button type="primary" onClick={showModal}>
     Crear un curso
   </Button>
