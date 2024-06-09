@@ -8,13 +8,16 @@ import { SignIn } from "auth-astro/components";
 import Logout from "@/components/buttons/Logout.astro";
 import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 
+const url = Astro.url.pathname;
+
+
 interface Props {
   sessionInfoState: sessionInfoState;
 }
 const { sessionInfoState } = Astro.props;
 ---
 
-<header>
+<header transition:animate={url.includes("manager") ? "slide" : "initial"}>
   <h3 class="header-text-logo">Imagen</h3>
   <Headernav fields={['Inicio','perfil','manager/perfiles','moodle','registro','reportes','tienda/todos','cursos','reservar','sala_virtual','blog']} />
   <!-- <Header_nav_astro_nav/> -->
