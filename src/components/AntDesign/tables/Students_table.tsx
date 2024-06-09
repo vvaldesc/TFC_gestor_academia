@@ -63,22 +63,23 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
   const [editingKey, setEditingKey] = useState("");
   const [deletingKey, setDeletingKey] = useState("");
 
-  const students = studentsResult as Item[];
-
+  const students = studentsResult.result?.data as Item[] || [] as Item[];
   console.log('studentsResult', students);
-
+  
   useEffect(() => {
-    if (students) {
-      const dataWithKeys = students.map((row, index) => {
+    console.log('studentsResult en useEffect', studentsResult);
+    if (Array.isArray(studentsResult)) {
+      const dataWithKeys = studentsResult.map((row, index) => {
         let rowData = {};
         Object.entries(row).forEach(([key, value]) => {
           rowData[key] = value;
         });
         return { key: index.toString(), ...rowData };
       });
+      console.log('dataWithKeys', dataWithKeys);
       setData(dataWithKeys);
     }
-  }, [students]);
+  }, [studentsResult]);
 
   const isEditing = (record: Item) => record.key === editingKey;
 
@@ -380,6 +381,7 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       }),
     };
   });
+
 
   return (
     <Form form={form} component={false}>

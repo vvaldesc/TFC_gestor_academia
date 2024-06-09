@@ -28,7 +28,7 @@ const Subject_post_modal: React.FC<{ teachers: Teacher[], courses: Courses[] }> 
     handleOk();
     postSubject(values);
   };
-
+  console.log(teachers);
   return (
 <>
   <Button type="primary" onClick={showModal}>
@@ -40,12 +40,12 @@ const Subject_post_modal: React.FC<{ teachers: Teacher[], courses: Courses[] }> 
         <Input placeholder="Acrónimo" />
       </Form.Item>
       <Form.Item label="Profesor" name="teacher_id">
-        <Select placeholder="Selecciona un profesor">
-          {teachers.map((teacher) => (
-        // @ts-ignore
-            <Option key={teacher.Teachers.id} value={teacher.Teachers.id}>{teacher.Teachers.name + ' ' + teacher.Teachers.surname}</Option>
-          ))}
-        </Select>
+      <Select placeholder="Selecciona un profesor">
+        {Array.isArray(teachers) ? teachers.map((teacher) => (
+          // @ts-ignore
+          <Option key={teacher.Teachers.id} value={teacher.Teachers.id}>{teacher.Teachers.name + ' ' + teacher.Teachers.surname}</Option>
+        )) : null}
+      </Select>
       </Form.Item>
       <Form.Item label="Curso" name="course_id">
         <Select placeholder="Selecciona un curso">

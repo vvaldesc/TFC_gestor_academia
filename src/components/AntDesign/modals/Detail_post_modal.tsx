@@ -55,6 +55,8 @@ const ServiceConsumptionModal: React.FC<ServiceConsumptionModalProps> = ({
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     handleOk();
+    const body = values;
+    body.mode = 'Silent';
     postDetail(values);
   };
   

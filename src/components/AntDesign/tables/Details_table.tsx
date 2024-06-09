@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { TableProps } from 'antd';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
 
-import postClient from '@/services/client/fetching/hooks/postClient';
+import putDetail from '@/services/client/fetching/hooks/putDetail';
 import deleteClient from '@/services/client/fetching/hooks/deleteClient';
 import type { Client, Result, ServiceConsumption_type } from '@/models/types';
 
@@ -106,8 +106,11 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
         });
         setData(newData);
         row.id = item.id;
+        console.log('Saving:', row);
         // @ts-ignore
-        postClient(row as Client);
+        row.mode = 'Silent';
+        // @ts-ignore
+        putDetail(row as ServiceConsumption_type);
         setEditingKey('');
       } else {
         newData.push(row);
@@ -124,9 +127,11 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       console.log('Deleting:', record);
       if (record.key && record.id > -1) {
         // @ts-ignore
-        deleteClient(record as Client);
+        record.state = 'Cancelled';
+        const body = { ...record };
+        body.state = 'Cancelled';
+        putDetail(body as ServiceConsumption_type);
         // @ts-ignore
-        record.active = false;
         const newData = [...data];
         newData[record.key] = record;
         console.log('record keyed', newData[record.key]);
@@ -192,7 +197,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       key: "price",
       // @ts-ignore
       editable: true,
-      width: '5%',
+      width: '1%',
       render: (_: any, record: Item) => record.price,
     },
     {
@@ -201,8 +206,8 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       key: "delay",
       // @ts-ignore
       editable: true,
-      width: '5%',
-      render: (_: any, record: Item) => record.state === 'Completed' ? record.delay : '-',
+      width: '1%',
+      render: (_: any, record: Item) => record.delay,
     },
     {
       title: "Fecha alta",
@@ -259,6 +264,28 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
         ) : (
           <Typography.Link disabled={deletingKey !== ''} onClick={() => delete_flow(record)}>
             Cancelar
+          </Typography.Link>
+        );
+      },
+    },
+    {
+      title: 'operation',
+      dataIndex: 'operation',
+      width: '5%',
+      render: (_: any, record: Item) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link onClick={() => save(record.key)} style={{ marginRight: 8 }}>
+              Guardar cambios
+            </Typography.Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <a>Cancelar</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={editingKey !== ''} onClick={() => editRecord(record)}>
+            Editar
           </Typography.Link>
         );
       },

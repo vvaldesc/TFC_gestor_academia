@@ -41,8 +41,8 @@ export default function Manager_section_details(props: {sessionInfo: sessionInfo
           },
         }}
       >
-        <Details_table detailsResult={details} loadingDetails={loadingDetails} />
         <Detail_post_modal clients={clients_array} employees={employees_array} details={details_array} services={services_array} />
+        <Details_table detailsResult={details} loadingDetails={loadingDetails} />
       </ConfigProvider>
     </>
   );

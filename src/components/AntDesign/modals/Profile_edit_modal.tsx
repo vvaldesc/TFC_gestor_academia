@@ -28,7 +28,7 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
   const [form] = Form.useForm();
   const [file, setFile] = useState<File>();
   const [profilePhotoSrc, setProfilePhotoSrc] 
-  = useState(typeof window !== "undefined" ? window.localStorage.getItem("profilePhotoSrc") : sessionInfoState.sessionInfo.profilePhotoSrc || "" as string);
+  = useState(window && (window.localStorage.getItem("profilePhotoSrc") || sessionInfoState.sessionInfo.OAuth.user.image || "") || "");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -111,7 +111,6 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
                 const url = URL.createObjectURL(file);
                 setProfilePhotoSrc(url);
                 console.log(url);
-                // Aquí puedes manejar la subida del archivo
               }}
             />
             <img
@@ -150,9 +149,6 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
           </Form.Item>
           <Form.Item label="Nombre de usuario" name="username">
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.username} />
-          </Form.Item>
-          <Form.Item label="Confirmado" name="confirmed">
-            <Checkbox defaultChecked={sessionInfoState.sessionInfo.profile?.confirmed} />
           </Form.Item>
           <Form.Item label="Activo" name="active">
             <Checkbox defaultChecked={sessionInfoState.sessionInfo.profile?.active} />

@@ -1,4 +1,6 @@
-import type { sessionInfoState } from "@/models/types";
+// import React, { useState, useEffect } from 'react';
+
+import type { sessionInfoState, Teacher, Student, Employee } from "@/models/types";
 import { ConfigProvider } from 'antd';
 
 import Courses_table from "@/components/AntDesign/tables/Courses_table";
@@ -21,6 +23,9 @@ import useGetStudents from '@/services/client/customhooks/useGetStudents';
 import useGetDisciplines from '@/services/client/customhooks/useGetDisciplines';
 
 export default function Manager_section_classes(props: {sessionInfo: sessionInfoState}) {
+  // const [teachers_ar, setTeachers] = useState<Teacher[] | any[]>([]);
+  // const [students_ar, setStudents] = useState<Student[] | any[]>([]);
+  
     const { teachers, loadingTeachers } = useGetTeachers();
     const { enrolments, loadingEnrolments } = useGetEnrolments();
     const { courses, loadingCourses } = useGetCourses();
@@ -28,6 +33,21 @@ export default function Manager_section_classes(props: {sessionInfo: sessionInfo
     const { subjects, loadingSubjects } = useGetSubjects();
     const { students, loadingStudents } = useGetStudents();
     const { disciplines, loadingDisciplines } = useGetDisciplines();
+
+      //   // Cargar los datos en el estado cuando se hayan obtenido
+      // useEffect(() => {
+      //     if (!loadingTeachers) {
+      //         setTeachers(teachers);
+      //     }
+      // }, [teachers, loadingTeachers]);
+  
+      // useEffect(() => {
+      //     if (!loadingStudents) {
+      //         setStudents(students);
+      //     }
+      // }, [students, loadingStudents]);
+
+
 
     // @ts-ignore
     const subject_array = subjects && subjects.result && subjects.result.data ? subjects.result.data : [];
@@ -41,6 +61,43 @@ export default function Manager_section_classes(props: {sessionInfo: sessionInfo
     const courses_array = courses?.result?.data || [];
     // @ts-ignore
     const disciplines_array = disciplines?.result?.data || [];
+
+    // const addTeacher = (values: Teacher & Employee) => {
+    //     console.log('addTeacher', values);
+    //     console.log('teachers_array', teachers_array);
+    //     values.id = teachers_array[teachers_array.length - 1].Teachers.id + 1 || 1;
+    //     const employee = {
+    //       id: teachers_array[teachers_array.length - 1].Employees.id + 1 || 1,
+    //       salary: values.salary,
+    //       teacher_id: values.id,
+    //       social_security: values.social_security,
+    //     }
+    //     const value = {
+    //       Teachers: values,
+    //       Employees: employee
+    //     }
+    //     teachers_array.push(value);
+    //     console.log('teachers_array', teachers_array);
+    //     setTeachers(teachers_array);
+    // }
+
+    // const addStudent = (values: Student) => {
+    //   console.log('Students');
+    //   values.id = students_array[students_array.length - 1].id + 1 || 1;
+    //   console.log(students_array);
+    //     console.log('addStudent', values);
+    //     students_array.push(values);
+    //     console.log('students_array', students_array);
+    //     setStudents(students_array);
+    // }
+  
+
+    // const newDocent = (values: any, role: string) => {
+    //     console.log('newDocent', values, role);
+    //     role === 'Teacher' ? addTeacher(values) : addStudent(values);
+    // }
+
+    
 
   return (
     <>

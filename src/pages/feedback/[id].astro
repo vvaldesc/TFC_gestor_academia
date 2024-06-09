@@ -3,13 +3,11 @@ title: "Pefil";
 import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
-import Profile_section from "@/sections/Profile_section.astro";
-import Personal_section from "@/sections/Personal_section/Personal_section";
 import Feedback_form from "@/sections/Feedback_form/Feedback_form";
 import Container_card from "@/components/Container_card.astro";
-import Profile_edit_modal from "@/components/AntDesign/modals/Profile_edit_modal";
 import {fetchServiceConsuptionById} from "@/services/server/fetching/fetch";
 import type {ServiceConsumption_type} from "@/models/types";
+
 
 // Obtén el estado de la sesión desde los props pasados por el layout
 const { test } = Astro.props;
@@ -33,7 +31,11 @@ const serviceConsumption = await fetchServiceConsuptionById(Number(Astro.params.
 console.log(serviceConsumption);
 //SERVICE CONSUMPTION HANDLER////////////////////////////////////////
 
-if (sessionInfoState.sessionInfo.profile.id !== serviceConsumption.client_id) return Astro.redirect("/"); // prettier-ignore
+//RESTRICTIONS////////////////////////////////////////
+if (sessionInfoState.sessionInfo.profile.id !== serviceConsumption.client_id) return Astro.redirect("/");
+if (serviceConsumption.rating !== null) return Astro.redirect("/");
+if (serviceConsumption.id != Number(Astro.params.id)) return Astro.redirect("/");
+//RESTRICTIONS////////////////////////////////////////
 
 console.log(test);
 const userName =
@@ -53,7 +55,7 @@ const userName =
       <p>
         {serviceConsumption.state}
       </p>
-      <Feedback_form client:load/>
+      <Feedback_form serviceConsumption_Id={serviceConsumption.id} client:load/>
     </Container_card>
   </Main>
   {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile?.image as string} client:load/>}

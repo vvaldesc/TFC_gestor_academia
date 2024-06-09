@@ -147,6 +147,15 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
       render: (_: any, record: Item) => record.id,
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      // @ts-ignore
+      editable: true,
+      width: '5%',
+      render: (_: any, record: Item) => record.email,
+    },
+    {
       title: "Nombre",
       dataIndex: "name",
       key: "name",

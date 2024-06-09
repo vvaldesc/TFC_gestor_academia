@@ -148,6 +148,24 @@ const App: React.FC<{ teachersResult: any; loadingTeachers: boolean }> = ({
 
   const columns: TableProps<Item>["columns"] = [
     {
+      title: "ID del profesor",
+      dataIndex: "teacher_id",
+      key: "teacher_id",
+      // @ts-ignore
+      editable: false,
+      width: "5%",
+      render: (_: any, record: Item) => record.Teachers.id,
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      // @ts-ignore
+      editable: false,
+      width: "2%",
+      render: (_: any, record: Item) => record.Teachers.email,
+    },
+    {
       title: "Nombre",
       dataIndex: "teacher_name",
       key: "teacher_name",
@@ -166,22 +184,13 @@ const App: React.FC<{ teachersResult: any; loadingTeachers: boolean }> = ({
       render: (_: any, record: Item) => record.Teachers.surname,
     },
     {
-      title: "ID del profesor",
-      dataIndex: "teacher_id",
-      key: "teacher_id",
-      // @ts-ignore
-      editable: false,
-      width: "5%",
-      render: (_: any, record: Item) => record.Teachers.id,
-    },
-    {
       title: "Salario",
       dataIndex: "employee_salary",
       key: "employee_salary",
       // @ts-ignore
       editable: true,
       width: "5%",
-      render: (_: any, record: Item) => record.Employees.salary,
+      render: (_: any, record: Item) => record.Employees?.salary,
     },
     {
       title: "operation",
@@ -258,6 +267,8 @@ const App: React.FC<{ teachersResult: any; loadingTeachers: boolean }> = ({
       }),
     };
   });
+
+
 
   return (
     <Form form={form} component={false}>
