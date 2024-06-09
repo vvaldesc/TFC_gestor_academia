@@ -57,7 +57,8 @@ export const sessionHandler = async (
   const { profileResut } = await fetchProfileByEmail(
     session?.user?.email as string
   ); // BD petition
-  console.log("Profile fetched: ", profileResut);
+  console.log("Profile fetched: ");
+  console.log(profileResut);
   // If client is registered
   if (profileResut) {
     let profile: Client | Student | Teacher | undefined = undefined;

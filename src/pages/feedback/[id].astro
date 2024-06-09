@@ -1,0 +1,60 @@
+---
+title: "Pefil";
+import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Profile_section from "@/sections/Profile_section.astro";
+import Personal_section from "@/sections/Personal_section/Personal_section";
+import Feedback_form from "@/sections/Feedback_form/Feedback_form";
+import Container_card from "@/components/Container_card.astro";
+import Profile_edit_modal from "@/components/AntDesign/modals/Profile_edit_modal";
+import {fetchServiceConsuptionById} from "@/services/server/fetching/fetch";
+import type {ServiceConsumption_type} from "@/models/types";
+
+// Obtén el estado de la sesión desde los props pasados por el layout
+const { test } = Astro.props;
+
+//SERVICE CHECK//////////////////////////////////////////
+import {servicecheck} from "@/services/server/fetching/fetch";
+if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connected");
+//SERVICE CHECK//////////////////////////////////////////
+
+//SESSION HANDLER////////////////////////////////////////
+ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
+ import {SessionState} from "@/models/types"; // prettier-ignore
+ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
+ const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
+  if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
+if (!sessionInfoState.sessionInfo.profile?.active) return Astro.redirect("/403"); // prettier-ignore
+//SESSION HANDLER////////////////////////////////////////
+
+//SERVICE CONSUMPTION HANDLER////////////////////////////////////////
+const serviceConsumption = await fetchServiceConsuptionById(Number(Astro.params.id)) as ServiceConsumption_type;
+console.log(serviceConsumption);
+//SERVICE CONSUMPTION HANDLER////////////////////////////////////////
+
+if (sessionInfoState.sessionInfo.profile.id !== serviceConsumption.client_id) return Astro.redirect("/"); // prettier-ignore
+
+console.log(test);
+const userName =
+  sessionInfoState.sessionInfo.profile?.username ||
+  sessionInfoState.sessionInfo.OAuth.user?.name ||
+  "a Imagen";
+---
+
+<Layout title=`Bienvenido ${userName}`>
+  <Main class="w-full h-full flex flex-col justify-items-center pt-16">
+    <Container_card>
+      <h1>Feedback</h1>
+      <p>Este es el contenido principal</p>
+      <p slot="user">
+        {sessionInfoState.sessionInfo.profile?.username}
+      </p>
+      <p>
+        {serviceConsumption.state}
+      </p>
+      <Feedback_form client:load/>
+    </Container_card>
+  </Main>
+  {sessionInfoState.sessionState === SessionState.Registered && <ProfileFotoSrc imgPerfil={sessionInfoState.sessionInfo.profile?.image as string} client:load/>}
+</Layout>

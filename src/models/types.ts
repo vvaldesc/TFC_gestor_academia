@@ -46,7 +46,6 @@ export interface Client {
   updated_at?: Date;
   username?: string;
   password?: string;
-  confirmed?: boolean;
   image?: string;
   active?: boolean;
   [key: string]: any;
@@ -67,6 +66,7 @@ export interface Employee {
 export enum Role {
   Student = "student",
   Teacher = "teacher",
+  Client = "client",
 }
 
 export interface Student {
@@ -86,7 +86,6 @@ export interface Student {
   updated_at?:           Date;
   username?:             string;
   password?:             string;
-  confirmed?:            boolean;
   image?:                string;
   active?:               boolean;
   is_admin?:             boolean;
@@ -115,7 +114,6 @@ export interface Teacher {
   updated_at?:   Date;
   username:     string;
   password:     string;
-  confirmed:    boolean;
   image?:        string;
   active?:       boolean;
   disciplines?:   Disciplines[];
@@ -193,9 +191,9 @@ export interface ServiceConsumption_type {
   service_name?:           string;
   service_price?:           string;
   created_at?:           Date;
-  updated_at?:           null;
+  updated_at?:           Date;
   reserved_at?:          Date;
-  rating?:               null;
+  rating?:               number;
   price?:                number;
   weather?:              string;
   client_name?:          string;

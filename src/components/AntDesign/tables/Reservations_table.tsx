@@ -89,6 +89,7 @@ const Reservations_table: React.FC<Props> = ({
       title: "Image",
       dataIndex: "image",
       key: "image",
+      render: (text) => <img src={text} alt="image" />,
     },
     {
       title: "Categoría",

@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 
 import type { sessionInfoState, ServiceConsumption_type } from '@/models/types';
 import { Role } from '@/models/types';
-import useGetDetails from '@/services/client/customhooks/useGetDetails';
+import useGetDetailsProfile from '@/services/client/customhooks/useGetDetailsProfile';
 import useGetClients from '@/services/client/customhooks/useGetClients';
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetServices from "@/services/client/customhooks/useGetServices";
@@ -18,29 +18,22 @@ interface PersonalSectionProps {
 
 const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
     const [selectedDetailsDay, setSelectedDetailsDay] = useState(null as ServiceConsumption_type[] | null);
+    const role = sessionInfoState.sessionInfoState.sessionInfo.role;
+    const id = sessionInfoState.sessionInfoState.sessionInfo.profile.id;
 
     // Implement your component logic here
-    const { details, loadingDetails } = useGetDetails();
+    const { details, loadingDetails } = useGetDetailsProfile(role, id);
     const { clients, loadingClients } = useGetClients();
     const { employees, loading } = useGetEmployees();
     const { services, loadingServices } = useGetServices();
 
+    console.log("details", details);
+    console.log("id", id);
+    console.log("role", role);
+
     // @ts-ignore
     const details_array: ServiceConsumption_type[] = details && details.result && details.result?.data ? details.result.data : [];
-    let details_array_filtered: ServiceConsumption_type[] = [];
-    switch (sessionInfoState.sessionInfoState.sessionInfo.role) {
-        case 'Teachers':
-            details_array_filtered = details_array.filter((detail) => detail.employee_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
-            break;
-            case 'Clients':
-            details_array_filtered = details_array.filter((detail) => detail.client_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
-            break;
-            case 'Students':
-             details_array_filtered = details_array.filter((detail) => detail.student_id === sessionInfoState.sessionInfoState.sessionInfo.profile?.id);
-            break;
-        default:
-            break;
-    }
+    console.log("details_array", details_array);
 
     const handleSelectedDay = (detailsDay: ServiceConsumption_type[]) => {
         setSelectedDetailsDay(detailsDay);
@@ -57,7 +50,7 @@ const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
         <>
             <Calendar_personal 
                 role={sessionInfoState.sessionInfoState.sessionInfo.role as Role}
-                profileId={1} details={details_array_filtered} 
+                profileId={1} details={details_array} 
                 services={services_array} 
                 handleSelectedDay={handleSelectedDay} />
             {selectedDetailsDay && <Detail_cards details={selectedDetailsDay} />}

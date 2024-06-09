@@ -1,4 +1,4 @@
-import type { Client, Result, Teacher, Student } from "@/models/types";
+import type { Client, Result, Teacher, Student, ServiceConsumption_type } from "@/models/types";
 import axios from 'axios';
 
 export const fetchClientById = async (id: number): Promise<Client | undefined> => {
@@ -70,5 +70,18 @@ export const servicecheck = async (address: any): Promise<Boolean> => {
     } catch (error) {
         console.error("Error fetching ping data:", error);
         return false;
+    }
+};
+
+export const fetchServiceConsuptionById = async (id: number): Promise<{serviceConsumption: ServiceConsumption_type}> => {
+    try {
+        const response = await fetch(`http://localhost:4321/api/serviceConsumptions/id/${id}`); // BD petition
+        const data = await response.json();
+        const result: Result = data.result as Result;
+        const serviceConsumptions: ServiceConsumption_type = await result.data[0];
+        // @ts-ignore
+        return serviceConsumptions;
+    } catch (error) {
+        console.error("Error fetching student data:", error);
     }
 };

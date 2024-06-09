@@ -55,17 +55,5 @@ export async function sessionHandling(request: any, cookies: any): Promise<sessi
     return sessionInfoState;
   }
 }
-
-export async function sessionHandlingLayout(request: any, cookies: any): Promise<sessionInfoState> {
-  console.log("hay cookie sesion? "+cookies.has("sessionInfoState"));
-  console.log("Hola desde sessionHandlingLayout");
-
-  if (cookies.has("sessionInfoState")) {
-    return JSON.parse(cookies.get("sessionInfoState")?.value) as sessionInfoState;
-  } else {
-    const sessionInfoStateLayout = await sessionFetch(request, cookies);
-    return sessionInfoStateLayout;
-  }
-}
 //End handling//////////////////////////
 ---
