@@ -41,7 +41,7 @@
     "dayjs": "^1.11.11",
     "eslint-plugin-react": "7.34.1",
     "faker": "^5.5.3",
-    "framer-motion": "11.2.6",
+    "framer-motion": "11.2.10",
     "js-cookie": "3.0.5",
     "luxon": "^3.4.4",
     "moment": "^2.30.1",
