@@ -1,13 +1,16 @@
 ---
 const cr = 'all rights reserved';
+const email = 'academia.pelu.1234@gmail.com';
 import CurrentDate from '@/components/getdate.svelte'
 ---
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="italic">&copy; { cr }, <CurrentDate client:visible={{rootMargin: "50px"}} field="Year"/></p>
-            </div>
+<footer class="my-10 w-max m-auto">
+    <div class="container flex flex-col items-center justify-center">
+        <div class="text-center border"></div>
+                <p class="italic">&copy; { cr }, <CurrentDate client:visible={{rootMargin: "50px"}} field="Year"/> | IMAGEN</p>
+                <p>Todos los derechos reservados.</p>
+                <p>Este sitio web está protegido por las leyes de derechos de autor y tratados internacionales.</p>
+                <a href={`mailto:${email}`} style="color: white; text-decoration: none;">Contacto</a>
+                <p>academia.pelu.1234@gmail.com</p>
         </div>
     </div>
 </footer>

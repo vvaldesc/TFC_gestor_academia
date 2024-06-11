@@ -144,7 +144,7 @@ const Docent_post_modal: React.FC = () => {
   <Button type="primary" onClick={showModal}>
     Crear un profesor o estudiante
   </Button>
-  <Modal footer={null} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+  <Modal title="Docencia y estudiantes" footer={null} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     <Form form={form} onFinish={onFinish}>
     <Form.Item name="image">
           <input

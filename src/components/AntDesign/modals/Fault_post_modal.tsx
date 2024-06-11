@@ -63,7 +63,7 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
       <Button type="primary" onClick={showModal}>
         Crear una falta de asistencia
       </Button>
-      <Modal footer={null} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal footer={null} title="Crear una falta de asistencia" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} onFinish={onFinish}>
           <Form.Item label="ID del estudiante" name="student_id">
             <Select placeholder="Selecciona un estudiante" onChange={handleStudentChange}>

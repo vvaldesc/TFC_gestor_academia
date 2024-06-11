@@ -1,5 +1,9 @@
 ---
 import Headernav from "@/components/Headernav.astro";
+import HeaderAdmin from "@/components/HeaderAdmin.astro";
+import HeaderNoAdmin from "@/components/HeaderNoAdmin.astro";
+import Button from "@/components/buttons/Button.astro";
+
 // import Header_nav_astro_nav from "@/components/Header_nav_astro_nav.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
@@ -19,8 +23,9 @@ const { sessionInfoState } = Astro.props;
 
 <header transition:animate={url.includes("manager") ? "slide" : "initial"}>
   <h3 class="header-text-logo">Imagen</h3>
-  <Headernav fields={['Inicio','perfil','manager/perfiles','moodle','registro','reportes','tienda/todos','cursos','reservar','sala_virtual','blog']} />
-  <!-- <Header_nav_astro_nav/> -->
+  {sessionInfoState?.sessionInfo?.profile?.is_admin ? (
+      <HeaderAdmin />
+  ) : (<HeaderNoAdmin />)}
   <div class="flex">
     <div class="flex">
       {sessionInfoState.sessionState != 0 ? (
@@ -38,20 +43,13 @@ const { sessionInfoState } = Astro.props;
             format="webp"
             id="profileThumb_header"
           /> }
-          <p>Bienvenido {sessionInfoState.sessionInfo.profile?.name || sessionInfoState.sessionInfo.OAuth.user?.name || ""}</p>
-          {<Logout><p>Cerrar sesión</p></Logout>}
+          {<Logout/>}
         </>
       ) : (
         <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Iniciar sesión</SignIn>
       )}
 
     </div>
-    <a href="/perfil" >
-      <Icon name="mdi:account" size={22} class="mx-3" />
-    </a>
-    <a href="#">
-      <Icon name="mdi:menu" size={22} />
-    </a>
   </div>
 </header>
 

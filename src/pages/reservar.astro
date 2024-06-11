@@ -23,6 +23,7 @@ import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler
 const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 if (sessionInfoState.sessionState === 1 || sessionInfoState.sessionState === 0) return Astro.redirect("/registro"); // prettier-ignore
 if (!sessionInfoState.sessionInfo.profile?.active) return Astro.redirect("/403"); // prettier-ignore
+if (sessionInfoState.sessionInfo.role === 'Students' || sessionInfoState.sessionInfo.role === 'Teachers') return Astro.redirect("/"); // prettier-ignore;
 //SESSION HANDLER////////////////////////////////////////
 
 const MUI = checkRenderParameter(Astro.request.url);

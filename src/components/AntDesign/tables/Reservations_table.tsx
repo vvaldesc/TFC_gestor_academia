@@ -5,6 +5,8 @@ import type { Result, Student, Teacher, Employee } from "@/models/types";
 import { Role, Disciplines, Turns } from "@/models/types";
 import { checkTimeOfDay } from "@/services/client/utils/utils"
 
+import "@/styles/styles.css";
+
 interface Props {
   employees: any;
   unavailableEmployees: any;
@@ -40,8 +42,6 @@ const Reservations_table: React.FC<Props> = ({
   .filter((employee: Employee) => {
     if(daytime === undefined || daytime === null || daytimeCategory === undefined) return true;
     if(daytimeCategory === Turns.NotLaborable) return false;
-
-    console.log({'daytime': daytime});
     
     const targetTurn: Turns = daytime && checkTimeOfDay(daytime) as Turns;
 
@@ -89,7 +89,7 @@ const Reservations_table: React.FC<Props> = ({
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (text) => <img src={text} alt="image" />,
+      render: (text) => <img className="section-div-profilePhoto m-auto my-4 object-cover" src={text} alt="image" />,
     },
     {
       title: "Categoría",

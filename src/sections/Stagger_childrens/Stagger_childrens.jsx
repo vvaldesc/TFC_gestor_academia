@@ -20,7 +20,7 @@ const Card_promo = ({ children, color }) => {
       whileHover={{
          scale: 1.2,
       }}
-      className="section-div-promo"
+      className="section-div-promo flex items-center justify-center"
     >
       <Sphere color={color} />
       {children}
@@ -43,18 +43,24 @@ export default function StaggerChildren() {
       initial="hidden"
       animate="show"
       exit="hidden"
-      transition={{ duration: 0.5 }}
-      className="flex flex-wrap justify-center gap-4"
+      transition={{ duration: 0.8 }}
+      className="flex flex-wrap justify-center gap-4 text-center"
     >
-    <Card_promo color="red">
-      <p className="main-text-promoTitle" style={{ color: 'white' }}>Matricúlate por menos de 100 euros al mes</p>
-    </Card_promo>
-    <Card_promo color="blue">
-      <p className="main-text-promoTitle" style={{ color: 'white' }}>Accede a nuestra tienda y compra artículos cosméticos</p>
-    </Card_promo>
-    <Card_promo color="green">
-      <p className="main-text-promoTitle" style={{ color: 'white' }}>Certificado de experiencia en la estética y peluquería</p>
-    </Card_promo>
+      <div style={{ cursor: 'pointer' }} onClick={() => window.location.href='/perfil'}>
+        <Card_promo color="black">
+          <h2 className="main-text-promoTitle" style={{ color: 'white', fontSize: '46px' }}>Matricúlate a precios asequibles</h2>
+        </Card_promo>
+      </div>
+      <div style={{ cursor: 'pointer' }} onClick={() => window.location.href='/perfil'}>
+        <Card_promo color="blue">
+          <h2 className="main-text-promoTitle" style={{ color: 'white', fontSize: '46px' }}>Reserva citas online</h2>
+        </Card_promo>
+      </div>
+      <div style={{ cursor: 'pointer' }} onClick={() => window.location.href='/perfil'}>
+        <Card_promo color="red">
+          <h2 className="main-text-promoTitle" style={{ color: 'white', fontSize: '46px' }}>Certificados de experiencia</h2>
+        </Card_promo>
+      </div>
     </motion.section>
   );
 }

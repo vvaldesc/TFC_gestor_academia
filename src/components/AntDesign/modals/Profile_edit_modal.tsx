@@ -93,7 +93,7 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
       </Button>
       <Modal
         footer={null}
-        title="Basic Modal"
+        title="Perfiles"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

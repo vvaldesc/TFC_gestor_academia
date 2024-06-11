@@ -6,7 +6,7 @@ function Logout_react() {
       <a className="block border-fuchsia-100 border-e-gray-950 cursor-pointer" onClick={() => {
         deleteCookieLoacalStorage();
         signOut();
-      }}>Sign Out</a>
+      }}>Cerrar sesión</a>
   );
 }
 export default Logout_react;

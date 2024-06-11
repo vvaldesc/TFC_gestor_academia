@@ -42,7 +42,7 @@ const Subject_post_modal: React.FC<{ teachers: Teacher[], courses: Courses[] }> 
   <Button type="primary" onClick={showModal}>
     Crear una asignatura
   </Button>
-  <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+  <Modal title="Asignaturas" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     <Form form={form} onFinish={onFinish}>
       <Form.Item label="Acrónimo" name="acronym">
         <Input placeholder="Acrónimo" />

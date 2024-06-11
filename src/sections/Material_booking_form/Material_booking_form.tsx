@@ -8,8 +8,11 @@ import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetUnavailableEmployees from "@/services/client/customhooks/useGetUnavailableEmployees";
 import usePostBooking from "@/services/client/customhooks/usePostBooking";
 import usePostServicePrediction from "@/services/client/customhooks/usePostServicePrediction";
-import useGetForecast from "@/services/client/customhooks/useGetForecast";
 import useGetServices from "@/services/client/customhooks/useGetServices";
+
+import getForecast from "@/services/client/fetching/hooks/getForecast";
+import postDetail from "@/services/client/fetching/hooks/postDetail";
+
 
 import Error_alert from "@/components/AntDesign/alert/Error_alert";
 
@@ -33,9 +36,10 @@ import type {
   Service
 } from "@/models/types";
 
+const forecast = getForecast();
+
 export default function Material_booking_form(props: {client_id: any, sessionInfo: ProfileSession}) {
   const { client_id, sessionInfo } = props;
-
   const [selectedTime, setSelectedTime] = useState(new Date() as Date);
   const [selectedEmployee, setSelectedEmployee] = useState({} as Employee);
   const [selectedService, setSelectedService] = useState(null as number | null);
@@ -46,8 +50,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const { forecast, loadingForecast, errorForecast }: { forecast: Weather_res | null, loadingForecast: boolean, errorForecast: any } = 
-  useGetForecast();
+
 
   const { services, loadingServices, errorServices }: { services: any, loadingServices: boolean, errorServices: any } =
   useGetServices();
@@ -80,28 +83,17 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     errorUnavailableEmployees: any;
   } = useGetUnavailableEmployees(selectedTime);
   //@ts-ignore
-  const {
-    sentData,
-    postClientLoading,
-    postClientError,
-    postData,
-  }: {
-    postData: { result: Result };
-    postClientLoading: boolean;
-    postClientError: boolean;
-    sentData: ServiceConsumption_type;
-  } = usePostBooking(booking, submit);
-
-  if (postData && !postClientError && !postClientLoading && submit) {
-    window.location.href = `https://localhost:4322/perfil`;
-}
 
   const handleTimeChange = (time: Date) => {
     console.log({'dias hasta la reserva': calculateDaysFromToday(time)});
     let weather_res = "Sunny";
-    // weather_res = forecast && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
+    console.log('forecast');
+    console.log(forecast);
+
+    forecast.data !== undefined && classifyWeatherCode(forecast.data[calculateDaysFromToday(time)].weather?.code) as string;
     forecast && setWeather(weather_res);
     setSelectedTime(time);
+
     const extendedBooking: ServicePredictionPost_type = {
       client_id: client_id,
       service_id: 1,
@@ -121,7 +113,6 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
 
   const handleTableSelect = (id: number) => {
     const employee: Employee = employees.result.data.find((employee: Employee) => employee.id === id);
-    debugger
 
     const booking: ServiceConsumption_type | null = selectedEmployee ? {
       service_id: service_data.id,
@@ -160,7 +151,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     } : null;
 
     console.log(extendedBooking);
-    (selectedTime && selectedService) ? setIsModalOpen(true) : showError && setTimeout(() => setShowError(false), 3000);;
+    (selectedTime && selectedService) ? setIsModalOpen(true) : setShowError(true) && setTimeout(() => setShowError(false), 3000);
     setSelectedEmployee(employee);
     setExtendedBooking(extendedBooking as ServicePredictionPost_type);
     setBooking(booking as ServiceConsumption_type);
@@ -175,9 +166,19 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setSubmit(true);
     setIsModalOpen(false);
+    try {
+      console.log('booking');
+      console.log(booking);
+      await postDetail(booking);
+      window.location.href = `https://localhost:4322/perfil`;
+    } catch (error) {
+      console.log(error);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+    }
   };
 
   const handleCancel = () => {
@@ -187,14 +188,16 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   return (
     <form className="material-booking-form" onSubmit={(e) => e.preventDefault()}>
 
-      <Modal title="Confirm Booking" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-      <p>Service: {service_data?.name}</p>
-      <p>Employee: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
-      <p>Date and Time: {selectedTime.toLocaleString()}</p>
-      <p>Weather: {weather}</p>
-      <p>Estimated Delay: {estimatedTime_number}</p>
-    </Modal>
-
+      <Modal title="Confirmar" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <p>Servicio: {service_data?.name}</p>
+      <p>Empleado: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
+      <p>Fechaa de cita: {selectedTime.toLocaleString()}</p>
+      <p>Tiempo: {weather}</p>
+      <p>Retraso estimado (minutos):  
+      {estimatedTime_number && <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
+            {estimatedTime_number}
+        </Tag>}</p>
+      </Modal>
 
 
       {showError && <Error_alert message={'Faltan campos por completar'} />}
@@ -213,7 +216,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       <div className="fecha" style={{ marginTop: "20px" }}>
         <Tag color="geekblue">{selectedTime.toLocaleString()}</Tag>
         <Tag color="geekblue">{weather}</Tag>
-        {estimatedTime_number && <Tag color={estimatedTime_number < 5 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
+        {estimatedTime_number && <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
             {estimatedTime_number}
         </Tag>}
       </div>

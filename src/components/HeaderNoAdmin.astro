@@ -1,0 +1,45 @@
+---
+import Button from "@/components/buttons/Button.astro";
+---
+<div>
+    <nav>
+      <ul>
+        <li><Button texto="Inicio" href="/" /></li>
+        <li><Button texto="perfil" href="/perfil" /></li>
+        <li><Button texto="reservar" href="/reservar" /></li>
+      </ul>
+    </nav>
+  </div>
+
+<style>
+  div {
+    display: flex;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100%;
+  }
+  ul {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    margin: 0 1rem;
+  }
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+  a:hover {
+    color: #0070f3;
+  }
+</style>

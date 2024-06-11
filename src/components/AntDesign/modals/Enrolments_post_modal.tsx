@@ -34,7 +34,7 @@ const Enrolments_post_modal: React.FC<{ students: Student[], subjects: Subject[]
   <Button type="primary" onClick={showModal}>
     Crear una matrícula
   </Button>
-  <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>  
+  <Modal title="Matrculas" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>  
     <Form form={form} onFinish={onFinish}>
       <Form.Item label="ID del estudiante" name="student_id">
       <Select placeholder="Selecciona un estudiante">
