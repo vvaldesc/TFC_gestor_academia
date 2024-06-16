@@ -3,7 +3,7 @@ import type {sessionInfoState,Client} from "@/models/types";
 import { Input, Form, Button, Alert } from "antd";
 import { FaPhotoVideo, FaPencilAlt } from 'react-icons/fa';
 import "@/styles/styles.css";
-
+import regex from '@/consts/regex';
 
 import postClient from "@/services/client/fetching/hooks/postClient";
 import postCheckProfilePhoto from "@/services/client/fetching/hooks/postCheckProfilePhoto.tsx";
@@ -91,94 +91,100 @@ const Register_form: React.FC<{sessionInfoState: sessionInfoState}> = ({sessionI
           </div>
         </Form.Item>
         <Form.Item
-  label="Nombre"
-  name="name"
-  rules={[
-    {
-      pattern: /^[a-zA-Z]+$/,
-      message: 'Por favor, introduce un nombre válido',
-    },
-  ]}
->
-  <Input type="text" placeholder="Name" />
-</Form.Item>
-<Form.Item
-  label="Apellido"
-  name="surname"
-  rules={[
-    {
-      pattern: /^[a-zA-Z]+$/,
-      message: 'Por favor, introduce un apellido válido',
-    },
-  ]}
->
-  <Input type="text" placeholder="Surname" />
-</Form.Item>
-<Form.Item
-  label="Número de teléfono"
-  name="phone_number"
-  rules={[
-    {
-      pattern: /^[0-9]{9}$/,
-      message: 'Por favor, introduce un número de teléfono válido',
-    },
-  ]}
->
-  <Input type="text" placeholder="TLF" />
-</Form.Item>
-<Form.Item
-  label="Dirección"
-  name="address"
-  rules={[
-    {
-      required: true,
-      message: 'Por favor, introduce una dirección',
-    },
-  ]}
->
-  <Input type="text" placeholder="Dirección" />
-</Form.Item>
-<Form.Item
-  label="Ciudad"
-  name="city"
-  rules={[
-    {
-      pattern: /^[a-zA-Z\s]+$/,
-      message: 'Por favor, introduce una ciudad válida',
-    },
-  ]}
->
-  <Input type="text" placeholder="Ciudad" />
-</Form.Item>
-<Form.Item
-  label="Nombre de usuario"
-  name="username"
-  rules={[
-    {
-      required: true,
-      message: 'Por favor, introduce un nombre de usuario',
-    },
-  ]}
->
-  <Input type="text" placeholder="Usuario" defaultValue={sessionInfoState.sessionInfo.OAuth.user?.name as string} />
-</Form.Item>
-<Form.Item
-  label="Fecha de nacimiento"
-  name="bornDate"
-  rules={[
-    {
-      required: true,
-      message: 'Por favor, introduce una fecha de nacimiento',
-    },
-  ]}
->
-  <Input type="date" placeholder="fecha_nacimiento" />
-</Form.Item>
-<Form.Item>
-  <Button type="primary" htmlType="submit">
-    Register
-  </Button>
-</Form.Item>
+          label="Nombre"
+          name="name"
+          rules={[
+            {
+              required: true,
+              pattern: regex.regularName,
+              message: 'Por favor, introduce un nombre válido',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="Name" />
+        </Form.Item>
+        <Form.Item
+          label="Apellido"
+          name="surname"
+          rules={[
+            {
+              required: true,
+              pattern: regex.regularName,
+              message: 'Por favor, introduce un apellido válido',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="Surname" />
+        </Form.Item>
+        <Form.Item
+          label="Número de teléfono"
+          name="phone_number"
+          rules={[
+            {
+              required: true,
+              pattern: regex.phone,
+              message: 'Por favor, introduce un número de teléfono válido',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="TLF" />
+        </Form.Item>
+        <Form.Item
+          label="Dirección"
+          name="address"
+          rules={[
+            {
+              required: true,
+              pattern: regex.address,
+              message: 'Por favor, introduce una dirección',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="Dirección" />
+        </Form.Item>
+        <Form.Item
+          label="Ciudad"
+          name="city"
+          rules={[
+            {
+              required: true,
+              pattern: regex.regularName,
+              message: 'Por favor, introduce una ciudad válida',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="Ciudad" />
+        </Form.Item>
+        <Form.Item
+          label="Nombre de usuario"
+          name="username"
+          rules={[
+            {
+              required: true,
+              pattern: regex.username,
+              message: 'Por favor, introduce un nombre de usuario',
+            },
+          ]}
+        >
+          <Input type="text" placeholder="Usuario" defaultValue={sessionInfoState.sessionInfo.OAuth.user?.name as string} />
+        </Form.Item>
+        <Form.Item
+          label="Fecha de nacimiento"
+          name="bornDate"
+          rules={[
+            {
+              required: true,
+              message: 'Por favor, introduce una fecha de nacimiento',
+            },
+          ]}
+        >
+          <Input type="date" placeholder="fecha_nacimiento" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
       </Form>
     </>
   );

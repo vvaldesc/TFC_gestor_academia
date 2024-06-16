@@ -20,3 +20,14 @@ export const checkTimeOfDay = (time) => {
         return Turns.NotLaborable; // Añade un caso para las horas que no caen en los otros rangos
     }
 }
+
+export const disciplineParser = (name) => {
+    switch (name) {
+        case 'Hairdressing':
+            return 'Peluquería';
+        case 'Esthetics':
+            return 'Estética';
+        default:
+            return name || 'No especificado';
+    }
+}
