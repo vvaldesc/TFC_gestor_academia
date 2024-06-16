@@ -52,16 +52,16 @@ const App: React.FC<DetailCardsProps> = ({ detail }) => {
 
   <div className="p-4 pt-8">
     <p>ID de servicio: {detail.id}</p>
-      <p>Nombre del cliente: {detail.client_name}</p>
-      <p>Apellido del cliente: {detail.client_surname}</p>
-      <p>
+    <p>Nombre del cliente: {detail.client_name + ' ' + detail.client_surname}</p>
+    {detail.teacher_name && <p>Nombre del profesor: {detail.teacher_name}</p>}
+    {detail.student_name && <p>Nombre del estudiante: {detail.student_name}</p>}
+    <p>
         Fecha de reserva: {new Date(detail.reserved_at!).toLocaleDateString()}
-      </p>
-      <p>Estado: {detail.state}</p>
-      <p>Precio del servicio: {detail.service_price}</p>
-      <p>Precio: {detail.price}</p>
-      <p>Reserva:</p>
-  </div>
+    </p>
+    <p>Estado: {detail.state}</p>
+    <p>Precio: {detail.price}</p>
+    {detail.state && <p>Reserva: {detail.state === "Pending" ? "Pendiente" : (detail.state === "Cancelled" ? "Cancelada" : "Completada")}</p>}
+</div>
 
 
 

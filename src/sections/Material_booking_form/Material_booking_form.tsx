@@ -3,6 +3,7 @@ import Material_static_date_time_picker from "@/components/Material_static_date_
 import Reservations_table from "@/components/AntDesign/tables/Reservations_table";
 import Service_cards from "@/sections/Service_cards_section/Service_cards";
 import { Tag, Button, Modal } from "antd";
+import { ConfigProvider } from 'antd';
 
 import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetUnavailableEmployees from "@/services/client/customhooks/useGetUnavailableEmployees";
@@ -188,6 +189,18 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   return (
     <form className="material-booking-form" onSubmit={(e) => e.preventDefault()}>
 
+<ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#ff69d4',
+            borderRadius: 5,
+            colorBgElevated: '#fff1fa',
+            colorLinkHover: '#ff69d4',
+            colorLinkActive: '#ff69d4',
+          },
+        }}
+      >
+
       <Modal title="Confirmar" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <p>Servicio: {service_data?.name}</p>
       <p>Empleado: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
@@ -227,6 +240,8 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
         daytime={selectedTime}
         onValueChange={handleTableSelect}
       />
+      </ConfigProvider>
+
     </form>
   );
 }

@@ -29,3 +29,4 @@ certs/
 *.report.html
 # Local Netlify folder
 .netlify
+.vercel

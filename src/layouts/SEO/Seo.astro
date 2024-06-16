@@ -4,33 +4,41 @@ interface Props {
   // TypeScript interface for props
   title: string;
 }
-const {title} = Astro.props;
+const { title } = Astro.props;
 ---
 
 <SEO
-    title={title}
-    description="Academia de peluquería y estética. Aprende las últimas tendencias en cortes de pelo, peinados y tratamientos de belleza. Cursos y formación profesional para convertirte en un experto en el mundo de la belleza."
-    openGraph={{
+  title={title}
+  description="Academia de peluquería y estética. Aprende las últimas tendencias en cortes de pelo, peinados y tratamientos de belleza. Cursos y formación profesional para convertirte en un experto en el mundo de la belleza."
+  openGraph={{
     basic: {
-        title: "Peluquería Imagen",
-        type: "A type.",
-        image: "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
-    }
-    }}
-    twitter={{
-    creator: "@jonasmerlins1"
-    }}
-    extend={{
+      title: "Peluquería Imagen",
+      type: "A type.",
+      image: "/icons/favicon/photo_1.png",
+    },
+  }}
+  extend={{
     // extending the default link tags
     link: [{ rel: "icon", href: "/assets/icons/favicon/photo_1" }],
     // extending the default meta tags
     meta: [
-        {
-        name: "twitter:image",
-        content: "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
-        },
-        { name: "twitter:title", content: "Tinker Tailor Soldier Spy" },
-        { name: "twitter:description", content: "Agent" },
+      {
+        name: "facebook:image",
+        content:
+          "https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png",
+      },
+      { name: "twitter:title", content: "Tinker Tailor Soldier Spy" },
+      { name: "twitter:description", content: "Agent" },
     ],
-    }}
+  }}
+  openGraph={
+    {
+      // extending the default open graph tags
+      basic: {
+        title: "Peluquería Imagen",
+        type: "A type.",
+        image: "/icons/favicon/photo_1.png",
+      },
+    }
+  }
 />

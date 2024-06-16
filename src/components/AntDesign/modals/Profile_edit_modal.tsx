@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import {deleteCookieLoacalStorage} from "@/services/client/utils/utils_typed";
 import Refresh from "@/services/client/logic/Refresh";
 import postCheckProfilePhoto from "@/services/client/fetching/hooks/postCheckProfilePhoto.tsx";
+import { ConfigProvider } from 'antd';
 
 const { Option } = Select;
 
@@ -81,11 +82,23 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
       updateProfile(values, sessionInfoState, setError, setLoadingUpload);
     } else {
       setError(true);
+      setLoadingUpload(false);
     }
   };
 
   return (
     <>
+          <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#ff69d4',
+            borderRadius: 5,
+            colorBgElevated: '#fff1fa',
+            colorLinkHover: '#ff69d4',
+            colorLinkActive: '#ff69d4',
+          },
+        }}
+      >
       {loadingUpload && <Alert className="text-center" message="Cargando edición de perfil..." type="info" showIcon />}
       {error && <Alert className="text-center" message="Hubo un error editando el perfil" type="error" showIcon />}
       <Button type="primary" onClick={showModal}>
@@ -163,6 +176,8 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
           </Form.Item>
         </Form>
       </Modal>
+      </ConfigProvider>
+      
     </>
   );
 };

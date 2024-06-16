@@ -19,6 +19,7 @@ const BalanceDisplay: React.FC<Props> = ({ balance_reports }) => {
 
   const monthNumber = new Date().getMonth() - 1;
   console.log(monthNumber);
+  console.log(balance_reports.total[monthNumber].totalBalance);
 
   const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
@@ -44,7 +45,7 @@ const BalanceDisplay: React.FC<Props> = ({ balance_reports }) => {
         }
         {balance_reports.total[monthNumber] && 
           <Col span={12}>
-            <Statistic title="Balance total" value={"+"+balance_reports.total[monthNumber].totalBalance} precision={2} formatter={formatter} />
+            <Statistic title="Balance total" value={balance_reports.total[monthNumber].totalBalance} precision={2} formatter={formatter} />
           </Col>
         }
       </Row>

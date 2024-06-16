@@ -3,6 +3,7 @@ import Calendar_personal from "@/components/AntDesign/calendar/Calendar_personal
 import Detail_cards from "@/sections/Detail_cards/Detail_cards"
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import { ConfigProvider } from 'antd';
 
 import type { sessionInfoState, ServiceConsumption_type } from '@/models/types';
 import { Role } from '@/models/types';
@@ -48,12 +49,25 @@ const Personal_section: React.FC<PersonalSectionProps> = (sessionInfoState) => {
     
     return (
         <>
+                  <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#ff69d4',
+            borderRadius: 5,
+            colorBgElevated: '#fff1fa',
+            colorLinkHover: '#ff69d4',
+            colorLinkActive: '#ff69d4',
+          },
+        }}
+      >
             <Calendar_personal 
                 role={sessionInfoState.sessionInfoState.sessionInfo.role as Role}
                 profileId={1} details={details_array} 
                 services={services_array} 
                 handleSelectedDay={handleSelectedDay} />
             {selectedDetailsDay && <Detail_cards details={selectedDetailsDay} />}
+      </ConfigProvider>
+        
         </>
     );
 };

@@ -9,7 +9,8 @@ import path from 'path'; // Añade esta línea
 import mkcert from 'vite-plugin-mkcert'
 // import serviceWorker from "astrojs-service-worker";
 import auth from "auth-astro";
-import netlify from '@astrojs/netlify';
+// import netlify from '@astrojs/netlify';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,5 +54,5 @@ export default defineConfig({
   // , serviceWorker()
 ],
   output: "server",
-  adapter: netlify()
+  adapter: vercel()
 });

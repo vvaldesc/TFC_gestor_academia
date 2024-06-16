@@ -47,13 +47,8 @@ const userName =
 <Layout title=`Bienvenido ${userName}`>
   <Main class="w-full h-full flex flex-col justify-items-center pt-16">
     <Container_card>
-      <h1>Feedback</h1>
-      <p>Este es el contenido principal</p>
       <p slot="user">
         {sessionInfoState.sessionInfo.profile?.username}
-      </p>
-      <p>
-        {serviceConsumption.state}
       </p>
       <Feedback_form serviceConsumption_Id={serviceConsumption.id} client:load/>
     </Container_card>

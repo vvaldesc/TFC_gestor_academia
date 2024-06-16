@@ -30,7 +30,7 @@ export default function Manager_section_details(props: {sessionInfo: sessionInfo
 
   return (
     <>
-          <ConfigProvider
+      <ConfigProvider
         theme={{
           token: {
             colorPrimary: '#ff69d4',
