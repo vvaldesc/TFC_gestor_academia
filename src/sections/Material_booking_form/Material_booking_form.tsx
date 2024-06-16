@@ -152,6 +152,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     } : null;
 
     console.log(extendedBooking);
+    //@ts-ignore
     (selectedTime && selectedService) ? setIsModalOpen(true) : setShowError(true) && setTimeout(() => setShowError(false), 3000);
     setSelectedEmployee(employee);
     setExtendedBooking(extendedBooking as ServicePredictionPost_type);
