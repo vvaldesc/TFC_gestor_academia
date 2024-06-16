@@ -12,7 +12,10 @@ import auth from "auth-astro";
 // import netlify from '@astrojs/netlify';
 
 import vercel from "@astrojs/vercel/serverless";
+import { fileURLToPath } from 'url';
+import path from 'path';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://astro.build/config
 export default defineConfig({
   image: {
@@ -38,13 +41,15 @@ export default defineConfig({
     })],
     resolve: {
       alias: {
-        '@/*': path.resolve('./src/*'),
-        '@/components/*': path.resolve('./src/components/*'),
-        '@/layouts/*': path.resolve('./src/layouts/*'),
-        '@/pages/*': path.resolve('./src/pages/*'),
-        '@/services/*': path.resolve('./src/services/*'),
-        '@/sections/*': path.resolve('./src/sections/*'),
-        '@/consts/*': path.resolve('./src/consts/*')
+        '@/*': path.resolve(__dirname, './src/*'),
+        '@/components/*': path.resolve(__dirname, './src/components/*'),
+        '@/layouts/*': path.resolve(__dirname, './src/layouts/*'),
+        '@/pages/*': path.resolve(__dirname, './src/pages/*'),
+        '@/services/*': path.resolve(__dirname, './src/services/*'),
+        '@/sections/*': path.resolve(__dirname, './src/sections/*'),
+        '@/consts/*': path.resolve(__dirname, './src/consts/*'),
+        '@/public/*': path.resolve(__dirname, './public/*'),
+        '@/styles/*': path.resolve(__dirname, './src/styles/*')
       }
     }
   },
