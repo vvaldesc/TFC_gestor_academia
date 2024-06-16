@@ -11,6 +11,7 @@ import {deleteCookieLoacalStorage} from "@/services/client/utils/utils_typed";
 import Refresh from "@/services/client/logic/Refresh";
 import postCheckProfilePhoto from "@/services/client/fetching/hooks/postCheckProfilePhoto.tsx";
 import { ConfigProvider } from 'antd';
+import regex from '@/consts/regex';
 
 const { Option } = Select;
 
@@ -112,7 +113,7 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
         onCancel={handleCancel}
       >
         <Form className="relative" form={form} onFinish={onFinish}>
-        <Form.Item name="image">
+        <Form.Item required={true} name="image">
             <input
               type="file"
               id="fileUpload"
@@ -139,31 +140,31 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
               <FaPencilAlt size={20} />
             </div>
           </Form.Item>
-          <Form.Item className="pt-10" label="Nombre" name="name">
+          <Form.Item className="pt-10" label="Nombre" name="name" rules={[{ required: true, pattern: regex.regularName, message: 'Nombre inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.name} />
           </Form.Item>
-          <Form.Item label="Apellido" name="surname">
+          <Form.Item label="Apellido" name="surname" rules={[{ required: true, pattern: regex.regularName, message: 'Apellido inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.surname} />
           </Form.Item>
-          <Form.Item label="Email" name="email">
+          <Form.Item label="Email" name="email" rules={[{ required: true, pattern: regex.email, message: 'Email inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.email} />
           </Form.Item>
-          <Form.Item label="Número de teléfono" name="phone_number">
+          <Form.Item label="Número de teléfono" name="phone_number" rules={[{ required: true, pattern: regex.phone, message: 'Número de teléfono inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.phone_number} />
           </Form.Item>
-          <Form.Item label="Dirección" name="address">
+          <Form.Item label="Dirección" name="address" rules={[{ required: true, pattern: regex.address, message: 'Dirección inválida' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.address} />
           </Form.Item>
-          <Form.Item label="Ciudad" name="city">
+          <Form.Item label="Ciudad" name="city" rules={[{ required: true, pattern: regex.regularName, message: 'Ciudad inválida' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.city} />
           </Form.Item>
-          <Form.Item label="Fecha de nacimiento" name="bornDate">
+          <Form.Item label="Fecha de nacimiento" name="bornDate" rules={[{ required: true, message: 'Fecha de nacimiento requerida' }]}>
             <DatePicker defaultValue={dayjs(sessionInfoState.sessionInfo.profile?.bornDate)} />
           </Form.Item>
-          <Form.Item label="Nombre de usuario" name="username">
+          <Form.Item label="Nombre de usuario" name="username" rules={[{ required: true, pattern: regex.username, message: 'Nombre de usuario inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.username} />
           </Form.Item>
-          <Form.Item label="Activo" name="active">
+          <Form.Item label="Activo" name="active" >
             <Checkbox defaultChecked={sessionInfoState.sessionInfo.profile?.active} />
           </Form.Item>
           <Form.Item>
