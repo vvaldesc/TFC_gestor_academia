@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@astrojs/check": "0.7.0",
-    "@astrojs/netlify": "^5.2.1",
     "@astrojs/react": "^3.5.0",
     "@astrojs/svelte": "^5.5.0",
     "@astrojs/tailwind": "5.1.0",
