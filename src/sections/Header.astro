@@ -1,11 +1,9 @@
 ---
-import Headernav from "@/components/Headernav.astro";
 import HeaderAdmin from "@/components/HeaderAdmin.astro";
-import HeaderNoAdmin from "@/components/HeaderNoAdmin.astro";
-import Button from "@/components/buttons/Button.astro";
+import HeaderClient from "@/components/HeaderClient.astro";
+import HeaderEmployee from "@/components/HeaderEmployee.astro";
 
 // import Header_nav_astro_nav from "@/components/Header_nav_astro_nav.astro";
-import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { SignIn } from "auth-astro/components";
 // @ts-ignore
@@ -14,41 +12,65 @@ import type {sessionInfoState} from "@/models/types"; // prettier-ignore
 
 const url = Astro.url.pathname;
 
-
 interface Props {
   sessionInfoState: sessionInfoState;
 }
 const { sessionInfoState } = Astro.props;
+
+let headerType = "Client";
+if (sessionInfoState?.sessionInfo) {
+  switch (sessionInfoState.sessionInfo.role) {
+    case "Teachers":
+      headerType = sessionInfoState.sessionInfo.profile.is_admin
+        ? "Admin"
+        : "Employee";
+      break;
+    case "Students":
+      headerType = "Employee";
+      break;
+  }
+}
 ---
 
 <header transition:animate={url.includes("manager") ? "slide" : "initial"}>
   <h3 class="header-text-logo">Imagen</h3>
-  {sessionInfoState?.sessionInfo?.profile?.is_admin ? (
+  {
+    headerType === "Admin" ? (
       <HeaderAdmin />
-  ) : (<HeaderNoAdmin />)}
+    ) : headerType === "Employee" ? (
+      <HeaderEmployee />
+    ) : (
+      <HeaderClient />
+    )
+  }
   <div class="flex">
     <div class="flex">
-      {sessionInfoState.sessionState != 0 ? (
-        <>
-          { <Image 
-            class="header-image-googleThumb"
-            src={sessionInfoState.sessionInfo.profilePhotoSrc}
-            alt="Google Profile Picture"
-            width={50}
-            height={50}
-            quality={"low"}
-            decoding={"async"}
-            loading={"lazy"}
-            densities={[0.2, 1, 2]}
-            format="webp"
-            id="profileThumb_header"
-          /> }
-          {<Logout/>}
-        </>
-      ) : (
-        <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>Iniciar sesión</SignIn>
-      )}
-
+      {
+        sessionInfoState.sessionState != 0 ? (
+          <>
+            {
+              <Image
+                class="header-image-googleThumb"
+                src={sessionInfoState.sessionInfo.profilePhotoSrc}
+                alt="Google Profile Picture"
+                width={50}
+                height={50}
+                quality={"low"}
+                decoding={"async"}
+                loading={"lazy"}
+                densities={[0.2, 1, 2]}
+                format="webp"
+                id="profileThumb_header"
+              />
+            }
+            {<Logout />}
+          </>
+        ) : (
+          <SignIn provider={"google"} options={{ callbackUrl: "/perfil" }}>
+            Iniciar sesión
+          </SignIn>
+        )
+      }
     </div>
   </div>
 </header>
