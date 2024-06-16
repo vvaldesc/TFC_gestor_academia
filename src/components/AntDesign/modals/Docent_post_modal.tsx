@@ -34,15 +34,18 @@ const Docent_post_modal: React.FC = () => {
     setIsModalOpen(false);
   };
 
+
   async function createProfile(
     values: (Student & Employee) | (Teacher & Employee),
     setError: React.Dispatch<React.SetStateAction<boolean>>,
     setMessage: React.Dispatch<React.SetStateAction<string>>,
     setLoadingUpload: React.Dispatch<React.SetStateAction<boolean>>
   ) {
+    //@ts-ignore
     if (values.matriculation_number) {
       let response;
       try {
+        // @ts-ignore
         response = await postStudent(values as Teacher);
         if (response.status !== 201)
           throw new Error("Error creando registro estudiante");
@@ -144,7 +147,7 @@ const Docent_post_modal: React.FC = () => {
   <Button type="primary" onClick={showModal}>
     Crear un profesor o estudiante
   </Button>
-  <Modal title="Docencia y estudiantes" footer={null} title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+  <Modal title="Docencia y estudiantes" footer={null} visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     <Form form={form} onFinish={onFinish}>
     <Form.Item name="image">
           <input

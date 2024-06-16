@@ -71,7 +71,7 @@ export enum Role {
 
 export interface Student {
   id?:                   number;
-  matriculation_number?: string;
+  matriculation_number: string;
   DNI?:                  string;
   employed?:             boolean;
   educational_level?:    string;

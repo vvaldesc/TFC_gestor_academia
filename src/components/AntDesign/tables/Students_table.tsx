@@ -280,15 +280,6 @@ const App: React.FC<{ studentsResult: any; loadingStudents: boolean }> = ({
       render: (_: any, record: Item) => record.username,
     },
     {
-      title: "Confirmado",
-      dataIndex: "confirmed",
-      key: "confirmed",
-      // @ts-ignore
-      editable: true,
-      width: "5%",
-      render: (_: any, record: Item) => record.confirmed ? "Sí" : "No",
-    },
-    {
       title: "Imagen",
       dataIndex: "image",
       key: "image",
