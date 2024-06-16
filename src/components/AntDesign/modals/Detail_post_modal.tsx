@@ -90,7 +90,7 @@ const ServiceConsumptionModal: React.FC<ServiceConsumptionModalProps> = ({
     footer={null}
   >
   <Form form={form} onFinish={onFinish}>
-    <Form.Item label="Servicio" name="service_id">
+    <Form.Item label="Servicio" name="service_id" required={true}>
       <Select placeholder="Selecciona un servicio" onChange={handleServiceChange}>
         {services.map((service) => (
           <Option key={service.id} value={service.id}>
@@ -99,7 +99,7 @@ const ServiceConsumptionModal: React.FC<ServiceConsumptionModalProps> = ({
         ))}
       </Select>
     </Form.Item>
-    <Form.Item label="Empleado" name="employee_id">
+    <Form.Item label="Empleado" name="employee_id" required={true}>
       <Select placeholder="Selecciona un empleado" onChange={handleEmployeeChange}>
         {filteredEmployees.map((employee) => (
           <Option key={employee.id} value={employee.id}>
@@ -112,14 +112,14 @@ const ServiceConsumptionModal: React.FC<ServiceConsumptionModalProps> = ({
         ))}
       </Select>
     </Form.Item>
-    <Form.Item label="Cliente" name="client_id">
+    <Form.Item label="Cliente" name="client_id" required={true}>
       <Select placeholder="Selecciona un cliente">
         {clients.map((client) => (
           <Option key={client.id} value={client.id}>{client.name}</Option>
         ))}
       </Select>
     </Form.Item>
-    <Form.Item label="Fecha y hora reservada" name="reserved_at">
+    <Form.Item label="Fecha y hora reservada" name="reserved_at" required={true}>
       <DatePicker showTime format="YYYY-MM-DD HH:mm" disabledDate={isDateDisabled} />
     </Form.Item>
     <Form.Item>

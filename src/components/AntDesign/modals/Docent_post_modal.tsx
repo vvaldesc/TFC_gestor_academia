@@ -4,6 +4,7 @@ import { FaPhotoVideo, FaPencilAlt } from 'react-icons/fa';
 import "@/styles/styles.css";
 import imageBase64 from "@/services/client/logic/imageBase64";
 import postCheckProfilePhoto from "@/services/client/fetching/hooks/postCheckProfilePhoto.tsx";
+import regex from '@/consts/regex';
 
 import postStudent from '@/services/client/fetching/hooks/postStudent'
 import postTeacher from '@/services/client/fetching/hooks/postTeacher'
@@ -149,7 +150,7 @@ const Docent_post_modal: React.FC = () => {
   </Button>
   <Modal title="Docencia y estudiantes" footer={null} visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
     <Form form={form} onFinish={onFinish}>
-    <Form.Item name="image">
+    <Form.Item name="image" required={true}>
           <input
             type="file"
             id="fileUpload"
@@ -177,70 +178,70 @@ const Docent_post_modal: React.FC = () => {
             {profilePhotoSrc ? <FaPencilAlt size={20} /> : <FaPhotoVideo size={20} />}
           </div>
         </Form.Item>
-      <Form.Item label="Nombre" name="name">
-        <Input placeholder="Nombre" />
-      </Form.Item>
-      <Form.Item label="Apellido" name="surname">
-        <Input placeholder="Apellido" />
-      </Form.Item>
-      <Form.Item label="Email" name="email">
-        <Input placeholder="Email" />
-      </Form.Item>
-      <Form.Item label="Número de teléfono" name="phone_number">
-        <Input placeholder="Número de teléfono" />
-      </Form.Item>
-      <Form.Item label="Dirección" name="address">
-        <Input placeholder="Dirección" />
-      </Form.Item>
-      <Form.Item label="Ciudad" name="city">
-        <Input placeholder="Ciudad" />
-      </Form.Item>
-      <Form.Item label="Fecha de nacimiento" name="bornDate">
-        <DatePicker />
-      </Form.Item>
-      <Form.Item label="Nombre de usuario" name="username">
-        <Input placeholder="Nombre de usuario" />
-      </Form.Item>
-      <Form.Item label="Activo" name="active">
-        <Checkbox onChange={e => form.setFieldsValue({ active: e.target.checked })} />
-      </Form.Item>
-      <Form.Item label="Salario" name="salary">
-        <Input type='number' placeholder="Salario" />
-      </Form.Item>
-      <Form.Item label="Seguridad social" name="social_security">
-        <Input placeholder="Seguridad social" />
-      </Form.Item>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Estudiante" key="1">
-          <Form.Item label="Número de matrícula" name="matriculation_number">
-            <Input placeholder="Número de matrícula" />
-          </Form.Item>
-          <Form.Item label="DNI" name="DNI">
-            <Input placeholder="DNI" />
-          </Form.Item>
-          <Form.Item label="Empleo" name="employed">
-            <Checkbox onChange={e => form.setFieldsValue({ employed: e.target.checked })} />
-          </Form.Item>
-          <Form.Item label="Nivel educativo" name="educational_level">
-            <Input placeholder="Nivel educativo" />
-          </Form.Item>
-        </TabPane>
-        <TabPane tab="Profesor" key="2">
-          <Form.Item label="Es administrador" name="is_admin">
-            <Checkbox onChange={e => form.setFieldsValue({ is_admin: e.target.checked })} />
-          </Form.Item>
-        </TabPane>
-      </Tabs>
-      <Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Enviar
-          </Button>
-          <Button type="default" htmlType="button" onClick={handleCancel}>
-            Cancelar
-          </Button>
+        <Form.Item required={true} label="Nombre" name="name" rules={[{ pattern: regex.regularName, message: 'Nombre inválido' }]}>
+          <Input placeholder="Nombre" />
         </Form.Item>
-      </Form.Item>
+        <Form.Item required={true} label="Apellido" name="surname" rules={[{ pattern: regex.regularName, message: 'Apellido inválido' }]}>
+          <Input placeholder="Apellido" />
+        </Form.Item>
+        <Form.Item required={true} label="Email" name="email" rules={[{ pattern: regex.email, message: 'Email inválido' }]}>
+          <Input placeholder="Email" />
+        </Form.Item>
+        <Form.Item required={true} label="Número de teléfono" name="phone_number" rules={[{ pattern: regex.phone, message: 'Número de teléfono inválido' }]}>
+          <Input placeholder="Número de teléfono" />
+        </Form.Item>
+        <Form.Item required={true} label="Dirección" name="address" rules={[{ pattern: regex.address, message: 'Dirección inválida' }]}>
+          <Input placeholder="Dirección" />
+        </Form.Item>
+        <Form.Item required={true} label="Ciudad" name="city" rules={[{ pattern: regex.regularName, message: 'Ciudad inválida' }]}>
+          <Input placeholder="Ciudad" />
+        </Form.Item>
+        <Form.Item required={true} label="Fecha de nacimiento" name="bornDate">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item required={true} label="Nombre de usuario" name="username" rules={[{ pattern: regex.username, message: 'Nombre de usuario inválido' }]}>
+          <Input placeholder="Nombre de usuario" />
+        </Form.Item>
+        <Form.Item required={true} label="Activo" name="active">
+          <Checkbox onChange={e => form.setFieldsValue({ active: e.target.checked })} />
+        </Form.Item>
+        <Form.Item label="Salario" name="salary">
+          <Input type='number' placeholder="Salario" />
+        </Form.Item>
+        <Form.Item required={true} label="Seguridad social" name="social_security" rules={[{ pattern: /^[0-9]{9}$/, message: 'Número de seguridad social inválido' }]}>
+          <Input placeholder="Seguridad social" />
+        </Form.Item>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Estudiante" key="1">
+            <Form.Item label="Número de matrícula" name="matriculation_number" rules={[{ pattern: /^[0-9]{7}$/, message: 'Número de matrícula inválido' }]}>
+              <Input placeholder="Número de matrícula" />
+            </Form.Item>
+            <Form.Item label="DNI" name="DNI" rules={[{ pattern: regex.dni, message: 'DNI inválido' }]}>
+              <Input placeholder="DNI" />
+            </Form.Item>
+            <Form.Item label="Empleo" name="employed">
+              <Checkbox onChange={e => form.setFieldsValue({ employed: e.target.checked })} />
+            </Form.Item>
+            <Form.Item label="Nivel educativo" name="educational_level" rules={[{ pattern: regex.regularName, message: 'Nivel educativo inválido' }]}>
+              <Input placeholder="Nivel educativo" />
+            </Form.Item>
+          </TabPane>
+          <TabPane tab="Profesor" key="2">
+            <Form.Item label="Es administrador" name="is_admin">
+              <Checkbox onChange={e => form.setFieldsValue({ is_admin: e.target.checked })} />
+            </Form.Item>
+          </TabPane>
+        </Tabs>
+        <Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Enviar
+            </Button>
+            <Button type="default" htmlType="button" onClick={handleCancel}>
+              Cancelar
+            </Button>
+          </Form.Item>
+        </Form.Item>
     </Form>
   </Modal>
 </>

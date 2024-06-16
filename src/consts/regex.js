@@ -6,7 +6,9 @@ const regex = {
     courseAcronym: /^[A-Z]{2}_[A-Z]{2}[0-9]$/,
     regularName: /^[a-zA-Z\s]+$/,
     address: /^[a-zA-Z0-9\s\.,#-]+$/,
-    username: /^[a-zA-Z0-9_]{4,16}$/
+    username: /^[a-zA-Z0-9_]{4,16}$/,
+    description: /^[a-zA-Z0-9\s\.,#-]{1,200}$/,
+    dni: /^[0-9]{8}[A-Z]$/
 };
 
 export default regex;

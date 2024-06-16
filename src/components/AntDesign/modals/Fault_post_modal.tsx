@@ -3,6 +3,7 @@ import { Button, Modal, Form, Input, DatePicker, Checkbox, Select, Upload } from
 import type { Student, Subject, StudentSubjectEnrolments } from '@/models/types';
 
 import postFault from '@/services/client/fetching/hooks/postFault'
+import regex from '@/consts/regex';
 
 const { Option } = Select;
 
@@ -46,12 +47,6 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
     )
   : [];
 
-  console.log('filteredSubjects');
-  console.log(filteredSubjects);
-  console.log('enrolments');
-  console.log(enrolments);
-  console.log(selectedStudent);
-
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     handleOk();
@@ -65,27 +60,34 @@ const DocentPostModal: React.FC<DocentPostModalProps> = ({ students, subjects, e
       </Button>
       <Modal footer={null} title="Crear una falta de asistencia" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} onFinish={onFinish}>
-          <Form.Item label="ID del estudiante" name="student_id">
+          <Form.Item required={true} label="ID del estudiante" name="student_id">
             <Select placeholder="Selecciona un estudiante" onChange={handleStudentChange}>
               {students.map((student: Student) => (
                 <Option key={student.id} value={student.id}>{student.name + ' ' + student.surname}</Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item label="Acrónimo de la materia" name="subject_acronym">
+          <Form.Item required={true} label="Acrónimo de la materia" name="subject_acronym">
             <Select placeholder="Selecciona una materia">
               {filteredSubjects.map((subject) => (
                 <Option key={subject.acronym} value={subject.acronym}>{subject.name + ' - (' + subject.acronym + ')'}</Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item label="Fecha" name="date">
+          <Form.Item required={true} label="Fecha" name="date">
             <DatePicker />
           </Form.Item>
-          <Form.Item label="Justificado" name="justified" valuePropName="checked">
+          <Form.Item required={true} label="Justificado" name="justified" valuePropName="checked">
             <Checkbox onChange={e => form.setFieldsValue({ justified: e.target.checked })} />
           </Form.Item>
-          <Form.Item label="Descripción" name="description">
+          <Form.Item label="Descripción" name="description"
+            rules={[
+              {
+                pattern: regex.description,
+                message: 'Por favor, introduce una descripción',
+              },
+            ]}
+          >
             <Input placeholder="Descripción" />
           </Form.Item>
           <Form.Item>
