@@ -3,37 +3,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-      "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/layouts/*": [
-        "./src/layouts/*"
-      ],
-      "@/pages/*": [
-        "./src/pages/*"
-      ],
-      "@/services/*": [
-        "./src/services/*"
-      ],
-      "@/sections/*": [
-        "./src/sections/*"
-      ],
-      "@/consts/*": [
-        "./src/consts/*"
-      ],
-      "@/public/*": [
-        "./public/*"
-      ],      
-      "@/styles/*": [
-        "./src/styles/*"
-      ]
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/sections/*": ["./src/sections/*"],
+      "@/consts/*": ["./src/consts/*"],
+      "@/public/*": ["./public/*"],      
+      "@/styles/*": ["./src/styles/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "strict": false
+    "strict": false,
+    "types": ["react"] // Añade esta línea
   }
 }
