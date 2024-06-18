@@ -1,4 +1,3 @@
-import Facebook from '@auth/core/providers/facebook';
 import Google from '@auth/core/providers/google';
 
 import { defineConfig } from 'auth-astro';

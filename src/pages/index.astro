@@ -2,16 +2,12 @@
 title: "Home";
 import Layout from "@/layouts/Layout.astro";
 import Slider from "@/sections/Slider.astro";
-import Section_plans from "@/sections/Section_plans.astro";
-import ProfileFotoSrc from "@/services/client/utils/ProfileFotoSrc.svelte";
 import StaggerChildren from "@/sections/Stagger_childrens/Stagger_childrens";
 
 import Animated_main_div from "@/components/Animated_main_div.astro";
 import Main from "@/components/Main.astro";
 import Div_images from "@/components/Div_images.astro";
-import Button_suggestion from "@/components/buttons/Button_suggestion.astro";
 import Button_basic_framer from "@/components/buttons/Button_basic_framer/Button_basic_framer";
-import Cards_animated from "@/sections/Cards_animated/Cards_animated";
 
 import main_promo from "@/consts/main_promo.json";
 
@@ -22,7 +18,6 @@ if(!await servicecheck(Astro.clientAddress)) return Astro.redirect("/not_connect
 
 //SESSION HANDLER////////////////////////////////////////
  import type {sessionInfoState} from "@/models/types"; // prettier-ignore
- import {SessionState} from "@/models/types"; // prettier-ignore
  import { sessionHandling } from "@/services/server/logic/handlers/sessionhandler.astro";
  const sessionInfoState = await sessionHandling(Astro.request, Astro.cookies); // prettier-ignore
 //SESSION HANDLER////////////////////////////////////////
