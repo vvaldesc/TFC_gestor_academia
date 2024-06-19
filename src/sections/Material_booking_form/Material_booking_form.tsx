@@ -233,10 +233,10 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       <p>Empleado: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
       <p>Fechaa de cita: {selectedTime.toLocaleString()}</p>
       <p>Tiempo: {weather}</p>
-      <p>Retraso estimado (minutos):  
-      {estimatedTime_number && <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
+      {estimatedTime_number && <p>Retraso estimado (minutos):  
+      <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
             {estimatedTime_number}
-        </Tag>}</p>
+        </Tag></p>}
       </Modal>
 
 
