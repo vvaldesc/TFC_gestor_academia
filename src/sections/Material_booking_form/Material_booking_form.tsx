@@ -231,7 +231,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       <Modal title="Confirmar" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <p>Servicio: {service_data?.name}</p>
       <p>Empleado: {selectedEmployee?.teacher?.name || selectedEmployee?.student?.name}</p>
-      <p>Fechaa de cita: {selectedTime.toLocaleString()}</p>
+      <p>Fecha de cita: {selectedTime.toLocaleString()}</p>
       <p>Tiempo: {weather}</p>
       {estimatedTime_number && <p>Retraso estimado (minutos):  
       <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
