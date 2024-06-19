@@ -14,7 +14,6 @@ import useGetServices from "@/services/client/customhooks/useGetServices";
 import getForecast from "@/services/client/fetching/hooks/getForecast";
 import postDetail from "@/services/client/fetching/hooks/postDetail";
 
-
 import Error_alert from "@/components/AntDesign/alert/Error_alert";
 
 import { WEB_URL } from '@/consts/consts';
@@ -44,6 +43,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const [selectedTime, setSelectedTime] = useState(new Date() as Date);
   const [selectedEmployee, setSelectedEmployee] = useState({} as Employee);
   const [selectedService, setSelectedService] = useState(null as number | null);
+  const [selectedDiscipline, setSelectedDiscipline] = useState(null as string);
   const [submit, setSubmit] = useState(false);
   const [booking, setBooking] = useState({} as ServiceConsumption_type);
   const [weather, setWeather] = useState("Sunny");
@@ -64,7 +64,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
   const service_data = setSelectedService !== null ? services?.result?.data?.find((service: Service) => service.id === selectedService) : null;
 
   //@ts-ignore
-  const {
+  let {
     employees,
     loadingEmployees,
     errorEmployees,
@@ -73,6 +73,31 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
     loadingEmployees: boolean;
     errorEmployees: any;
   } = useGetEmployees();
+
+    if (selectedDiscipline && employees?.result?.data ) {
+      const filteredEmployees = employees.result.data.filter((person: any) => {
+        if (person.role === "teacher" && person.teacher?.disciplines?.includes(selectedDiscipline)) {
+            console.log('teacher');
+            return true;
+        } else if (person.role === "student" && person.student?.disciplines?.includes(selectedDiscipline)) {
+            console.log('student');
+            return true;
+        }
+        return false;
+    });
+
+
+      
+      if (filteredEmployees.length > 0) {
+        employees.result.data = filteredEmployees;
+      } else {
+        // Mostrar un mensaje al usuario indicando que no hay empleados para la disciplina seleccionada
+        console.log('no hay empleados');
+      }
+
+      console.log('filteredEmployees');
+      console.log(filteredEmployees);
+  }
   //@ts-ignore
   const {
     unavailableEmployees,
@@ -161,6 +186,7 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
 
   const handleServiceSelect = (id: number) => {
     setSelectedService(id);
+    setSelectedDiscipline(services?.result?.data?.find((service: Service) => service.id === id)?.discipline);
     console.log(id);
   };
 

@@ -20,7 +20,8 @@ const Reservations_table: React.FC<Props> = ({
   daytime,
   onValueChange,
 }) => {
-  
+    console.log('employees')
+    console.log(employees)
   const employeesArr: Employee[] = employees.result ? employees.result.data : [];
   const unavailableEmployeesArr: Employee[] = unavailableEmployees.result ? unavailableEmployees.result.data : [];
   const daytimeCategory = checkTimeOfDay(daytime);

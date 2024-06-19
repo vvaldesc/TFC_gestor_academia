@@ -61,6 +61,7 @@ export interface Employee {
   teacher?:         Teacher;
   student?:         Student;
   rating?:          number;
+  categories?:     string[];
 }
 
 export enum Role {
