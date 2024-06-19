@@ -4,6 +4,7 @@ import { parseRole } from "@/services/server/logic/handlers/logic";
 import { Icon } from "astro-icon/components";
 
 import Div_profile_rounded_image from "@/components/misc/Div_profile_rounded_image.astro";
+import Categories from "@/components/AntDesign/misc/Categories";
 
 interface Props {
   profilePhotoSrc: string | null | undefined;
@@ -44,16 +45,19 @@ const role = parseRole(Astro.props.role);
       <slot name="user" />
     </section>
 </section>
-<section class="w-1/2 border-r border-gray-200 px-4">
+<section class="w-1/2 border-r border-gray-200 px-4 text-center main-section-bigProfileCard">
   <section>
-    <slot name="id" />
+    <slot name="completeName" />
   </section>
   <section>
-    <slot name="mail" />
+    <p>Role: {role}</p>
   </section>
   <main>
     <slot />
   </main>
+  <!-- <section class="w-full">
+    <Categories/>
+  </section> -->
 </section>
 
 <style>
