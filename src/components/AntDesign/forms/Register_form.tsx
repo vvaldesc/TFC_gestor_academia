@@ -27,7 +27,7 @@ const Register_form: React.FC<{sessionInfoState: sessionInfoState}> = ({sessionI
   function createProfile(values: Client, setError: React.Dispatch<React.SetStateAction<boolean>>, setLoadingUpload: React.Dispatch<React.SetStateAction<boolean>>) {
     console.log(values);
     //  postFaceCheck(values.image);
-    postClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); setLoadingUpload(false); deleteCookieLoacalStorage(); window.location.reload();})
+    postClient(values).then((response) => { if (response.status !== 201) throw new Error(response.statusText); setLoadingUpload(false); deleteCookieLoacalStorage(); window.location.href = "/perfil";})
       .catch((err) => { setError(true); });
     setLoadingUpload(false);
   }
@@ -43,7 +43,7 @@ const Register_form: React.FC<{sessionInfoState: sessionInfoState}> = ({sessionI
       values.email = sessionInfoState.sessionInfo.OAuth.user?.email as string;
       values.active = true;
       if (values.name === undefined) values.username = sessionInfoState.sessionInfo.OAuth.user?.name as string;
-      values.image = await imageBase64(values.image) as string;
+      if(file) values.image = await imageBase64(values.image) as string;
       const validPhoto = values.image && await postCheckProfilePhoto(file);
       if(validPhoto){
         createProfile(values, setError, setLoadingUpload);
@@ -54,6 +54,7 @@ const Register_form: React.FC<{sessionInfoState: sessionInfoState}> = ({sessionI
       }
     } catch (error) {
       setError(true);
+      setLoadingUpload(false);
     }
   };
   

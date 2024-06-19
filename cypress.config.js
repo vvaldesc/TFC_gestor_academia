@@ -7,12 +7,14 @@ export default defineConfig({
     // supportFile: "cypress/support/commands.js",
     supportFile: false,
   },
-  // env: {
-  //   googleRefreshToken: 'xxxxxxx',
-  //   googleClientId: 'xxxxxxx',
-  //   googleClientSecret: 'xxxxxxx',
-  // },
-  video: false,
+  env: {
+    googleRefreshToken: 'xxxxxxx',
+    googleClientId: 'xxxxxxx',
+    googleClientSecret: 'xxxxxxx',
+    hostApi: 'http://localhost:4321',
+  },
+  video: true,
+  screenshotOnRunFailure: true,
   retries: {
     runMode: 2,
     openMode: 0,
