@@ -256,9 +256,11 @@ export default function Material_booking_form(props: {client_id: any, sessionInf
       <div className="fecha" style={{ marginTop: "20px" }}>
         <Tag color="geekblue">{selectedTime.toLocaleString()}</Tag>
         <Tag color="geekblue">{weather}</Tag>
-        {estimatedTime_number && <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
-            {estimatedTime_number}
-        </Tag>}
+        {estimatedTime_number && (
+            <Tag color={estimatedTime_number < 7 ? "green" : estimatedTime_number <= 10 ? "blue" : "red"}>
+              {estimatedTime_number} minutos estimados
+            </Tag>
+        )}
       </div>
 
       <Reservations_table

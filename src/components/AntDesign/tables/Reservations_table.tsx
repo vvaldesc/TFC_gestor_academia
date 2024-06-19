@@ -26,11 +26,6 @@ const Reservations_table: React.FC<Props> = ({
   const unavailableEmployeesArr: Employee[] = unavailableEmployees.result ? unavailableEmployees.result.data : [];
   const daytimeCategory = checkTimeOfDay(daytime);
 
-  console.log({'daytime': daytime});
-  console.log({'daytimeCategory': daytimeCategory});
-  console.log({'unavailableEmployeesArr': unavailableEmployeesArr});
-  console.log({'employeesArr': employeesArr});
-
   interface DataType {
     key: number;
     name: string;
@@ -111,22 +106,17 @@ const Reservations_table: React.FC<Props> = ({
       ),
     },
     {
-      title: "Rating",
+      title: "Media",
       key: "rating",
       dataIndex: "rating",
-      // render: (_, { rating }) => (
-      //   <Space>
-      //     {[...Array(5)].map((_, i) => (
-      //       <StarTwoTone
-      //         twoToneColor={i < Math.round(rating/2) ? "gold" : "gray"}
-      //         key={i}
-      //       />
-      //     ))}
-      //   </Space>
-      // ),
+      render: (_, { rating }) => (
+        <Tag color={rating < 4 ? "red" : rating <= 7 ? "blue" : "green"}>
+          {rating} puntos
+        </Tag>
+       ),
     },
     {
-      title: "Action",
+      title: "Reservar",
       key: "action",
       render: (_, record) => (
         <Button
