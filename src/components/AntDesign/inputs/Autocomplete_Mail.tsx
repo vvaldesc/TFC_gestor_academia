@@ -34,7 +34,7 @@ const Autocomplete_Mail: React.FC<{ profiles: any; loading: boolean; setEmailFil
         style={{ width: 200 }}
         onSelect={onSelect}
         onChange={onChange}
-        placeholder="email"
+        placeholder="Email del perfil"
       />
     </>
   );

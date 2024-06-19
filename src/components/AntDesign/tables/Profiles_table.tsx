@@ -180,7 +180,9 @@ const App: React.FC<{profiles: any, loading: boolean}> = ({ profiles, loading })
       // @ts-ignore
       editable: true,
       width: '1%',
-      render: (_: any, record: Item) => <img src={record.image} alt="image" />,
+      render: (_: any, record: Item) => {
+        return record.image ? <img src={record.image} alt="image" /> : null;
+      },
     },
     {
       title: "Alta",
