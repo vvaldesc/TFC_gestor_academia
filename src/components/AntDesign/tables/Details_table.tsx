@@ -55,18 +55,15 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
   );
 };
 
-const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsResult, loadingDetails }) => {
+const App: React.FC<{detailsArray: ServiceConsumption_type[], loadingDetails: boolean}> = ({ detailsArray, loadingDetails }) => {
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [deletingKey, setDeletingKey] = useState('');
 
-  const details = detailsResult?.result?.data as ServiceConsumption_type[];
-  const result = detailsResult?.result as Result;
-
   useEffect(() => {
-    if (result?.count > 0) {
-      const dataWithKeys = details.map((row, index) => {
+    if (detailsArray.length > 0) {
+      const dataWithKeys = detailsArray.map((row, index) => {
         let rowData = {};
         Object.entries(row).forEach(([key, value]) => {
           rowData[key] = value;
@@ -75,7 +72,7 @@ const App: React.FC<{detailsResult: any, loadingDetails: boolean}> = ({ detailsR
       });
       setData(dataWithKeys);
     }
-  }, [details]);
+  }, [detailsArray]);
 
   const isEditing = (record: Item) => record.key === editingKey;
 
