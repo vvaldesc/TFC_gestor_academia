@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AutoComplete } from "antd";
 
-const Autocomplete_ClientNameDetails: React.FC<{ details_array: any; loading: boolean; value: string; setNamesFilter: (value: string) => void }> = ({
+const Autocomplete_ClientNameDetails: React.FC<{ details_array: any; loading: boolean; setNamesFilter: (value: string) => void }> = ({
     details_array,
   loading,
   setNamesFilter

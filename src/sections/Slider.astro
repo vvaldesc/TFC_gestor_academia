@@ -1,7 +1,7 @@
 <section>
   <div class="section-div-color">
   </div>
-  <div class="section-div-contenido" >
+  <div class="section-div-contenido relative" >
     <h1 class="header-text-promoTitle">
       Imagen <i>Estética</i>
       <br>
@@ -12,33 +12,42 @@
   </div>
 </section>
 <style>
+
   h1 {
     animation: slideInFromLeft 900ms ease-in-out;
+    position: relative;
   }
 
-  i {
-    animation: slideInFromRight 900ms ease-in-out;
+  h1 > i {
+    animation: slideInFromRight 2000ms ease-in-out;
+    position: relative;
   }
 
   @keyframes slideInFromRight {
     0% {
       opacity: 0%;
-      transform: translateX(10px);
+      left: 30px;
+    }
+    50% {
+      opacity: 0%;
+      left: 30px;
+      top: -5px;
     }
     100% {
       opacity: 100%;
-      transform: translateX(0);
+      left: 0;
+      top: 0;
     }
   }
 
   @keyframes slideInFromLeft {
     0% {
       opacity: 0%;
-      transform: translateX(-10px);
+      transform: translate(-10px, -80px);
     }
     100% {
       opacity: 100%;
-      transform: translateX(0);
+      transform: translate(0, -83px);
     }
   }
 
@@ -52,10 +61,12 @@
     padding: 20px;
     background-color: var(--primary);
   }
+
   .section-div-contenido {
     width: 50%;
     padding: 20px;
   }
+
   .header-text-promoTitle {
     /* Typography */
     color: var(--header-text-color);
@@ -68,7 +79,7 @@
     top: 50%;
     transform: translate(0%, -50%);
     text-transform: uppercase;
-}
+  }
 
   .header-text-promoTitle i {
     color: var(--primary);

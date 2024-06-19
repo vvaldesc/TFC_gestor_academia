@@ -12,7 +12,7 @@ import useGetEmployees from "@/services/client/customhooks/useGetEmployees";
 import useGetServices from "@/services/client/customhooks/useGetServices";
 
 export default function Manager_section_details(props: {sessionInfo: sessionInfoState}) {
-  const { details, loadingDetails } = useGetDetails();
+  const { details, loadingDetails }: { details: any, loadingDetails: boolean } = useGetDetails();
   const { clients, loadingClients } = useGetClients();
   const { employees, loading } = useGetEmployees();
   const { services, loadingServices } = useGetServices();

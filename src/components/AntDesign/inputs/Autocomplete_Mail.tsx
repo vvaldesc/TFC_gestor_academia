@@ -5,7 +5,7 @@ const mockVal = (str: string, repeat = 1) => ({
   value: str.repeat(repeat),
 });
 
-const Autocomplete_Mail: React.FC<{ profiles: any; loading: boolean; value: string; setEmailFilter: (value: string) => void }> = ({
+const Autocomplete_Mail: React.FC<{ profiles: any; loading: boolean; setEmailFilter: (value: string) => void }> = ({
   profiles,
   loading,
   setEmailFilter

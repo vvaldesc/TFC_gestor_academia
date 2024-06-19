@@ -8,7 +8,7 @@ import Autocomplete_Mail from "@/components/AntDesign/inputs/Autocomplete_Mail";
 import useGetProfiles from '@/services/client/customhooks/useGetProfiles';
 
 export default function Manager_section_profiles(props: {sessionInfo: sessionInfoState}) {
-    const { profiles, loading } = useGetProfiles();
+    const {profiles, loading}: {profiles: any, loading: boolean} = useGetProfiles();
     const [filteredProfilesResult, setFilteredProfilesResult] = useState(null);
 
     const setNewEmailFilter = (value: string) => {
