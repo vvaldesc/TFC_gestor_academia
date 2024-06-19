@@ -140,28 +140,28 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
               <FaPencilAlt size={20} />
             </div>
           </Form.Item>
-          <Form.Item className="pt-10" label="Nombre" name="name" rules={[{ required: true, pattern: regex.regularName, message: 'Nombre inválido' }]}>
+          <Form.Item className="pt-10" label="Nombre" name="name" rules={[{ pattern: regex.regularName, message: 'Nombre inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.name} />
           </Form.Item>
-          <Form.Item label="Apellido" name="surname" rules={[{ required: true, pattern: regex.regularName, message: 'Apellido inválido' }]}>
+          <Form.Item label="Apellido" name="surname" rules={[{ pattern: regex.regularName, message: 'Apellido inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.surname} />
           </Form.Item>
-          <Form.Item label="Email" name="email" rules={[{ required: true, pattern: regex.email, message: 'Email inválido' }]}>
+          <Form.Item label="Email" name="email" rules={[{ pattern: regex.email, message: 'Email inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.email} />
           </Form.Item>
-          <Form.Item label="Número de teléfono" name="phone_number" rules={[{ required: true, pattern: regex.phone, message: 'Número de teléfono inválido' }]}>
+          <Form.Item label="Número de teléfono" name="phone_number" rules={[{ pattern: regex.phone, message: 'Número de teléfono inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.phone_number} />
           </Form.Item>
-          <Form.Item label="Dirección" name="address" rules={[{ required: true, pattern: regex.address, message: 'Dirección inválida' }]}>
+          <Form.Item label="Dirección" name="address" rules={[{ pattern: regex.address, message: 'Dirección inválida' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.address} />
           </Form.Item>
-          <Form.Item label="Ciudad" name="city" rules={[{ required: true, pattern: regex.regularName, message: 'Ciudad inválida' }]}>
+          <Form.Item label="Ciudad" name="city" rules={[{ pattern: regex.regularName, message: 'Ciudad inválida' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.city} />
           </Form.Item>
-          <Form.Item label="Fecha de nacimiento" name="bornDate" rules={[{ required: true, message: 'Fecha de nacimiento requerida' }]}>
+          <Form.Item label="Fecha de nacimiento" name="bornDate" rules={[{ message: 'Fecha de nacimiento requerida' }]}>
             <DatePicker defaultValue={dayjs(sessionInfoState.sessionInfo.profile?.bornDate)} />
           </Form.Item>
-          <Form.Item label="Nombre de usuario" name="username" rules={[{ required: true, pattern: regex.username, message: 'Nombre de usuario inválido' }]}>
+          <Form.Item label="Nombre de usuario" name="username" rules={[{ pattern: regex.username, message: 'Nombre de usuario inválido' }]}>
             <Input defaultValue={sessionInfoState.sessionInfo.profile?.username} />
           </Form.Item>
           <Form.Item label="Activo" name="active" >

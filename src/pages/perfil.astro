@@ -40,7 +40,9 @@ const userName =
         role={sessionInfoState.sessionInfo.role}
       >
         <p slot="user">{sessionInfoState.sessionInfo.profile?.username}</p>
-        <p slot="completeName">Nombre completo: {sessionInfoState.sessionInfo.profile?.name} {sessionInfoState.sessionInfo.profile?.surname}</p>
+        <p slot="completeName">Nombre: {sessionInfoState.sessionInfo.profile?.name} {sessionInfoState.sessionInfo.profile?.surname}</p>
+        <p slot="email">Email: {sessionInfoState.sessionInfo.profile?.email}</p>
+        <p slot="tlf">tlf: {sessionInfoState.sessionInfo.profile?.phone_number}</p>
       </Profile_section>
     </Container_card>
     <div class="mt-8"><Profile_edit_modal sessionInfoState={sessionInfoState} client:only="react" /></div>

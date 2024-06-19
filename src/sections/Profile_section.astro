@@ -50,7 +50,10 @@ const role = parseRole(Astro.props.role);
     <slot name="completeName" />
   </section>
   <section>
-    <p>Role: {role}</p>
+    <slot name="email" />
+  </section>
+  <section>
+    <slot name="tlf" />
   </section>
   <main>
     <slot />
@@ -82,6 +85,7 @@ const role = parseRole(Astro.props.role);
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: small;
   }
   h1 {
     font-size: 1.5rem; /* Aumentar el tamaño de la fuente del título */
