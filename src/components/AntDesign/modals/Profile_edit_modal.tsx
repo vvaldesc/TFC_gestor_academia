@@ -71,12 +71,13 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
     setError(false);
     setLoadingUpload(true);
     values = form.getFieldsValue();
-    console.log("Received values of form: ", values);
     file && (values.image = file);
     values.id = sessionInfoState.sessionInfo.profile?.id;
+    console.log("Received values of form: ", values);
     handleOk();
-    values.image = await imageBase64(values.image) as string;
+    if(values.image) values.image = await imageBase64(values.image) as string;
     const validPhoto = values.image && await postCheckProfilePhoto(file);
+    console.log("validPhoto", validPhoto);
     if(validPhoto){
       updateProfile(values, sessionInfoState, setError, setLoadingUpload);
     } else if(!values.image){
@@ -113,7 +114,7 @@ const Profile_edit_modal: React.FC<DocentPostModalProps> = ({
         onCancel={handleCancel}
       >
         <Form className="relative" form={form} onFinish={onFinish}>
-        <Form.Item required={true} name="image">
+        <Form.Item required={false} name="image">
             <input
               type="file"
               id="fileUpload"
