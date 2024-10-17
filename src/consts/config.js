@@ -16,3 +16,8 @@ const WEB_URL = data.VITE_HOST;
 const WEB_PORT = data.VITE_PORT;
 
 export const WEB_URL_PORT = { url: WEB_URL, port: WEB_PORT };
+
+const TFC_API_HOST = 'https://tfc-servicio-academia.vercel.app/';
+const TFC_STATS_HOST = 'https://delaypredict.onrender.com/';
+
+export const TFC_SERVICES = { TFC_API_HOST: TFC_API_HOST, TFC_STATS_HOST: TFC_STATS_HOST };
