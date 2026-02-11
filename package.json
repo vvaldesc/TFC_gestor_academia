@@ -35,7 +35,7 @@
     "astro-seo": "0.8.3",
     "astrojs-service-worker": "^2.0.0",
     "auth-astro": "4.1.1",
-    "axios": "1.7.2",
+    "axios": "1.13.5",
     "browser-image-compression": "2.0.2",
     "chart.js": "^4.4.3",
     "dayjs": "^1.11.11",
